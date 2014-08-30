@@ -174,37 +174,37 @@ module.exports = function Game() {
   };
 
   this.start = function() {
-<<<<<<< HEAD
-    self.stage.addChild(lightGraphics);
-    self.stage.addChild(lightContainer);
-=======
-    var imgsArr = [],
-      i;
+    var imgsArr = [], i;
 
     // start scenes
-    stage.addChild(lightGraphics);
-    stage.addChild(lightContainer);
->>>>>>> 00a1b7cc079df9258ea8d25dc4acf83c5520c77a
+    self.stage.addChild(lightGraphics);
+    self.stage.addChild(lightContainer);
 
     // start screens
     begin = new Begin(this);
     levelend = new LevelEnd(this);
     gameover = new GameOver(this);
-    preloader = new Preloader(this);
+    // preloader = new Preloader(this);
 
     // start loop
     self.loop();
+
+    // FIXME
+    self.load();
   };
 
   this.load = function() {
     // loader
     loader = new PIXI.AssetLoader(self.resources.getImages());
     loader.addEventListener('onComplete', function() {
-      preloader.hide();
+      // preloader.hide();
       begin.show();
     });
     loader.addEventListener('onProgress', function(e) {
-      preloader.progress(e.content.loadCount * 100 / e.content.assetURLs.length);
+      // don't track progress event on iOS
+      if (typeof(ejecta)!=="undefined") { return; };
+
+      // preloader.progress(e.content.loadCount * 100 / e.content.assetURLs.length);
     });
     loader.load();
   }
