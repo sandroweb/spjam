@@ -8,9 +8,6 @@ Dependencies
 npm install
 ```
 
-Dependencies
----
-
 Development / Watch
 ```
 make watch
