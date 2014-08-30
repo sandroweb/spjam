@@ -1,7 +1,7 @@
 var Level = require('./Level');
 var Gameplay = require('./Gameplay');
 var Light = require('./Light');
-window.TWEEN = require('./vendor/tween.min.js')
+var TWEEN = require('./vendor/tween.min.js');
 
 module.exports = function Game() {
 
@@ -22,26 +22,26 @@ module.exports = function Game() {
   // Game methods
   //
 
-  window.light = new Light(200, 50);
+  window.light = new Light(50, 50);
   var lightGraphics = new PIXI.Graphics();
 
   ////LevelIndex
   var levelIndex = 0;
   var self = this;
 
-  this.setLevel = function(level) {
+  this.setLevel = function(levelData) {
     var h = renderer.height,
         w = renderer.width;
 
     var level = new Level();
 
-    // // add stage border to level segments
+    // add stage border to level segments
     level.segments.unshift( {a:{x:0,y:0}, b:{x:w,y:0}} );
     level.segments.unshift( {a:{x:w,y:0}, b:{x:w,y:h}} );
     level.segments.unshift( {a:{x:w,y:h}, b:{x:0,y:h}} );
     level.segments.unshift( {a:{x:0,y:h}, b:{x:0,y:0}} );
 
-    // level.parse(levelData);
+    level.parse(levelData);
 
     self.level = level;
 
@@ -61,21 +61,7 @@ module.exports = function Game() {
     loader.load();
   }
 
-  this.loadLevel = function(levelIndex) {
-    console.log("level/level" + levelIndex + ".json");
-    var loader = new PIXI.JsonLoader("level/level" + levelIndex + ".json");
-    loader.on('loaded', function(evt) {
-      //data is in evt.content.json
-      console.log("json loaded!");
-
-      self.setLevel(evt.content.json);
-    });
-
-    loader.load();
-  }
-
   this.start = function() {
-    light.setSegments(this.level.segments);
     stage.addChild(lightGraphics);
     this.loop();
   };
@@ -85,6 +71,11 @@ module.exports = function Game() {
   this.updateLights = function() {
     // nothing to update, skip
     if (light.x == lastLightX && light.y == lastLightY) {
+      return;
+    }
+
+    // FIXME
+    if (light.segments.lenght == 0 || !this.level || this.level.segments.length == 0) {
       return;
     }
 
@@ -121,11 +112,15 @@ module.exports = function Game() {
     lastLightY = light.y;
   };
 
+  this.update = function() {
+    this.updateLights();
+  };
+
   this.loop = function() {
     requestAnimFrame(animate);
 
     function animate() {
-      self.updateLights();
+      self.update(); // logic
       renderer.render(stage);
       requestAnimFrame( animate );
     }

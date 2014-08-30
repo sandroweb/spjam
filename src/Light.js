@@ -2,6 +2,7 @@ module.exports = function Light(x, y) {
   this.x = x;
   this.y = y;
 
+  this.segments = [];
   this.fuzzyRadius = 10;
 
   this.setSegments = function(segments) {
