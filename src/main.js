@@ -1,4 +1,4 @@
-var Game = require('./Game');
-
-var game = new Game();
-game.loadLevel(1);
+var Game = require('./Game'),
+	Begin = require('./Begin'),
+	game = new Game(),
+	begin = new Begin(game);
