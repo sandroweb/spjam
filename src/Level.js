@@ -26,6 +26,7 @@ module.exports = function Level(game) {
       var BehaviourClass = require(className);
 
       behaviour = new BehaviourClass(data.layers[0].objects[index].type.properties);
+
       levelobjects.push(behaviour);
 
       ////create shadow
