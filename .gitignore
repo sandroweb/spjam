@@ -1,3 +1,5 @@
 build.js
 node_modules
 .DS_Store
+app/App/build.js
+app/App/pixi.dev.js
