@@ -1,8 +1,11 @@
 module.exports = function Level(game) {
-  this.polygons = [];
+  var self = this;
+
+  var levelobjects = [];
+  self.levelobjects = [];
 
   var segments = [];
-  this.segments = segments;
+  self.segments = segments;
 
   //
   // Level methods
@@ -13,6 +16,22 @@ module.exports = function Level(game) {
     console.log("parse level"+data.layers[0].objects);
 
     for (index = 0; index < data.layers[0].objects.length; ++index) {
+      ////setup behavior
+      var behaviour = null;
+      switch data.layers[0].objects[index].type
+      {
+          case "platform":
+            behaviour = new PlatformBehavior();
+            break;
+
+          case "switch"
+            behaviour = new SwitchBehavior(data.layers[0].objects[index].type.properties.move);
+            break;
+      }
+      
+      levelobjects.push(behaviour);
+
+      ////create shadow
       if(!data.layers[0].objects[index].properties.shadow)
         continue;
 
