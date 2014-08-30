@@ -5,6 +5,7 @@ var GameOver = require('./GameOver');
 var Gameplay = require('./Gameplay');
 var Light = require('./Light');
 var TWEEN = require('./vendor/tween.min.js');
+var GameInput = require('./GameInput.js');
 
 module.exports = function Game() {
 
@@ -20,6 +21,9 @@ module.exports = function Game() {
   document.body.appendChild(renderer.view);
 
   this.renderer = renderer;
+
+  ////Input
+  var input = new GameInput();
 
   // LevelIndex
   var levelIndex = 0;

@@ -21,7 +21,7 @@ module.exports = function Level(game) {
       var behaviour = null;
       var className =  "./behaviors/" + data.layers[0].objects[index].type + ".js"
       var BehaviourClass = require(className);
-      behaviour = new BehaviourClass(data.layers[0].objects[index].type.properties);
+      behaviour = new BehaviourClass(data.layers[0].objects[index].properties);
       levelobjects.push(behaviour);
 
       /////retrive position and size specs
@@ -47,6 +47,7 @@ module.exports = function Level(game) {
       var segmentD = {a:{x:originX,y:originY + size}, b:{x:originX,y:originY}};
 
       this.segments.push(segmentA);
+      
       this.segments.push(segmentB);
       this.segments.push(segmentC);
       this.segments.push(segmentD);
