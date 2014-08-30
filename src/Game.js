@@ -6,7 +6,6 @@ var Resources = require('./Resources'),
   Gameplay = require('./Gameplay'),
   Light = require('./Light'),
   Tweenable = require('./vendor/shifty'),
-  TWEEN = require('./vendor/tween.min.js'),
   GameInput = require('./GameInput.js'),
   Player = require('./Player.js');
 
