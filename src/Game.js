@@ -42,6 +42,7 @@ module.exports = function Game() {
     level.segments.unshift( {a:{x:0,y:h}, b:{x:0,y:0}} );
 
     level.parse(levelData);
+    light.setSegments(level.segments);
 
     self.level = level;
 

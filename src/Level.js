@@ -18,17 +18,17 @@ module.exports = function Level(game) {
     for (index = 0; index < data.layers[0].objects.length; ++index) {
       ////setup behavior
       var behaviour = null;
-      switch data.layers[0].objects[index].type
+      switch (data.layers[0].objects[index].type)
       {
           case "platform":
             behaviour = new PlatformBehavior();
             break;
 
-          case "switch"
+          case "switch":
             behaviour = new SwitchBehavior(data.layers[0].objects[index].type.properties.move);
             break;
       }
-      
+
       levelobjects.push(behaviour);
 
       ////create shadow
