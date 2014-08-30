@@ -16,30 +16,27 @@ module.exports = function Level(game) {
   //
 
   this.parse = function(data) {
-    // TODO: @epaneto
-    console.log("parse level"+data.layers[0].objects);
-
     for (index = 0; index < data.layers[0].objects.length; ++index) {
       ////setup behavior
       var behaviour = null;
       var className =  "./behaviors/" + data.layers[0].objects[index].type + ".js"
       var BehaviourClass = require(className);
-
       behaviour = new BehaviourClass(data.layers[0].objects[index].type.properties);
-
       levelobjects.push(behaviour);
 
+      /////retrive position and size specs
       var size = data.layers[0].objects[index].width;
       var originX = data.layers[0].objects[index].x;
       var originY = data.layers[0].objects[index].y;
 
-      /////cerate visual
+      /////create visual
       var visual = new PIXI.Sprite(PIXI.Texture.fromImage("img/" + data.layers[0].objects[index].properties.img));
       visual.position.x = originX;
       visual.position.y = originY;
       game.stage.addChild(visual);
 
       console.log(visual + " " + "img/" + data.layers[0].objects[index].properties.img + " " + originX + " " + originY);
+
       ////create shadow
       if(!data.layers[0].objects[index].properties.shadow)
         continue;
