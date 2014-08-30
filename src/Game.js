@@ -86,7 +86,7 @@ module.exports = function Game() {
     }
 
     if(!player){
-      player = new Player(self, input, 100,880);
+      player = new Player(self, 100,880);
     }
 
     console.log("level/level" + levelIndex + ".json");
@@ -159,6 +159,9 @@ module.exports = function Game() {
     if(!input)
       return;
 
+    if(player)
+      player.update(input);
+
     if (input.Key.isDown(input.Key.LEFT)) player.moveLeft();
     if (input.Key.isDown(input.Key.RIGHT)) player.moveRight();
   };
@@ -174,6 +177,7 @@ module.exports = function Game() {
   };
 
   this.start = function() {
+    var imgsArr = [], i;
 
     // start scenes
     self.stage.addChild(lightGraphics);
@@ -187,6 +191,9 @@ module.exports = function Game() {
 
     // start loop
     self.loop();
+
+    // FIXME
+    // self.load();
   };
 
   this.load = function() {
@@ -198,6 +205,7 @@ module.exports = function Game() {
     });
     loader.addEventListener('onProgress', function(e) {
       preloader.progress((e.content.assetURLs.length - e.content.loadCount) * 100 / e.content.assetURLs.length);
+      if (typeof(ejecta)!=="undefined") { return; };
     });
     loader.load();
   }
