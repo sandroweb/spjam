@@ -174,17 +174,10 @@ module.exports = function Game() {
   };
 
   this.start = function() {
-<<<<<<< HEAD
-    self.stage.addChild(lightGraphics);
-    self.stage.addChild(lightContainer);
-=======
-    var imgsArr = [],
-      i;
 
     // start scenes
-    stage.addChild(lightGraphics);
-    stage.addChild(lightContainer);
->>>>>>> 00a1b7cc079df9258ea8d25dc4acf83c5520c77a
+    self.stage.addChild(lightGraphics);
+    self.stage.addChild(lightContainer);
 
     // start screens
     begin = new Begin(this);
