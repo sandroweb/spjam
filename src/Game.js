@@ -11,7 +11,7 @@ module.exports = function Game() {
 
   this.stage = stage;
 
-  var renderer = PIXI.autoDetectRenderer(640, 960, null, false /* transparent */, true /* antialias */);
+  var renderer = new PIXI.CanvasRenderer(640, 960, null, false /* transparent */, true /* antialias */);
   renderer.view.style.display = "block";
   renderer.view.style.border = "1px solid";
   document.body.appendChild(renderer.view);
