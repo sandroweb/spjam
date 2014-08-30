@@ -1,7 +1,7 @@
-{ "height":24,
+{ "height":16,
  "layers":[
         {
-         "height":24,
+         "height":16,
          "name":"objects",
          "objects":[
                 {
@@ -15,9 +15,9 @@
                  "type":"PlatformBehavior",
                  "visible":true,
                  "width":120,
-                 "x":320,
-                 "y":840
-                },
+                 "x":440,
+                 "y":520
+                }, 
                 {
                  "height":40,
                  "name":"s",
@@ -29,13 +29,13 @@
                  "type":"SwitchBehavior",
                  "visible":true,
                  "width":40,
-                 "x":160,
-                 "y":920
+                 "x":200,
+                 "y":600
                 }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":16,
+         "width":24,
          "x":0,
          "y":0
         }],
@@ -48,5 +48,5 @@
  "tilesets":[],
  "tilewidth":40,
  "version":1,
- "width":16
+ "width":24
 }
