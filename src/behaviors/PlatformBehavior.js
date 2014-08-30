@@ -1,3 +1,2 @@
-module.exports = function PlatformBehavior() {
-
+module.exports = function PlatformBehavior(properties) {
 }

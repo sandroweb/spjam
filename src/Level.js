@@ -1,3 +1,7 @@
+
+var PlatformBehavior = require('./behaviors/PlatformBehavior.js');
+var SwitchBehavior = require('./behaviors/SwitchBehavior.js');
+
 module.exports = function Level(game) {
   var self = this;
 
@@ -18,17 +22,10 @@ module.exports = function Level(game) {
     for (index = 0; index < data.layers[0].objects.length; ++index) {
       ////setup behavior
       var behaviour = null;
-      switch data.layers[0].objects[index].type
-      {
-          case "platform":
-            behaviour = new PlatformBehavior();
-            break;
+      var className =  "./behaviors/" + data.layers[0].objects[index].type + ".js"
+      var BehaviourClass = require(className);
 
-          case "switch"
-            behaviour = new SwitchBehavior(data.layers[0].objects[index].type.properties.move);
-            break;
-      }
-      
+      behaviour = new BehaviourClass(data.layers[0].objects[index].type.properties);
       levelobjects.push(behaviour);
 
       ////create shadow
