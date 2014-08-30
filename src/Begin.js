@@ -1,4 +1,5 @@
 module.exports = function Begin(game) {
+  window.game = game;
 
   var content,
     self = this,

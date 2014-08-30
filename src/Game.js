@@ -13,22 +13,19 @@ window.tweenable = new Tweenable();
 
 module.exports = function Game() {
 
-  // Stage setup
-  var stage = new PIXI.Stage(0xFFFFFF, true);
-  stage.setInteractive(true);
-  this.stage = stage;
-
   // stage.click = function(e) {
   //   light.x = e.originalEvent.x;
   //   light.y = e.originalEvent.y;
   // }
 
-  var renderer = new PIXI.CanvasRenderer(640, 960, null, false /* transparent */, true /* antialias */);
-  renderer.view.style.display = "block";
-  renderer.view.style.border = "1px solid";
-  document.body.appendChild(renderer.view);
+  var screenWidth = (typeof(ejecta)=="undefined") ? 640 : 320;
+  var screenHeight = (typeof(ejecta)=="undefined") ? 960 : 480;
 
-  this.renderer = renderer;
+  this.renderer = new PIXI.CanvasRenderer(screenWidth, screenHeight, document.getElementById('canvas'), false /* transparent */, true /* antialias */);
+  this.renderer.view.style.display = "block";
+  this.renderer.view.style.border = "1px solid";
+
+  this.stage = new PIXI.Stage(0xFFFFFF, true);;
 
   ////Input
   var input = null;
@@ -60,8 +57,8 @@ module.exports = function Game() {
   }
 
   this.setLevel = function(levelData) {
-    var h = renderer.height,
-        w = renderer.width;
+    var h = self.renderer.height,
+        w = self.renderer.width;
 
     var level = new Level(self);
 
@@ -168,7 +165,7 @@ module.exports = function Game() {
 
     function animate() {
       self.update(); // logic
-      renderer.render(stage);
+      self.renderer.render(self.stage);
       requestAnimFrame( animate );
     }
   };
@@ -184,8 +181,8 @@ module.exports = function Game() {
   }
 
   this.start = function() {
-    stage.addChild(lightGraphics);
-    stage.addChild(lightContainer);
+    self.stage.addChild(lightGraphics);
+    self.stage.addChild(lightContainer);
 
     begin = new Begin(this);
     levelend = new LevelEnd(this);
