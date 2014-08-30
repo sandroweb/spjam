@@ -18,6 +18,7 @@ module.exports = function Game() {
 
   ////LevelIndex
   var levelIndex = 0;
+  var self = this;
 
   var setLevel = function(levelData) {
     var h = renderer.height,
@@ -33,8 +34,11 @@ module.exports = function Game() {
 
     level.parse(levelData);
 
-    this.level = level;
+    self.level = level;
+
+    self.loop();
   };
+
   this.setLevel = setLevel;
 
   this.loadLevel = function(levelIndex) {

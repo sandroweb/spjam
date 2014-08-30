@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="16" height="24" tilewidth="40" tileheight="40">
  <objectgroup name="objects" width="16" height="24">
-  <object name="a" type="platform" x="320" y="840" width="120" height="120"/>
+  <object name="a" type="platform" x="320" y="840" width="120" height="120">
+   <properties>
+    <property name="shadow" value="true"/>
+   </properties>
+  </object>
   <object name="s" type="switch" x="160" y="920" width="40" height="40">
    <properties>
+    <property name="" value=""/>
     <property name="move" value="13"/>
    </properties>
   </object>
