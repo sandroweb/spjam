@@ -17,19 +17,25 @@ module.exports = function Begin(game) {
     content.addChild(bg);
 
     btn = new PIXI.Sprite(PIXI.Texture.fromImage(images[1]));
+    content.addChild(btn);
     btn.buttonMode = true;
     btn.position.x = (game.renderer.width / 2) - (btn.width / 2);
     btn.position.y = (game.renderer.height / 2) - (btn.height / 2);
     btn.interactive = true;
-    content.addChild(btn);
     btn.click = function(data) {
       hide();
       game.loadLevel(1);
     };
   }
 
+  function setPositions() {
+    btn.position.x = (game.renderer.width / 2) - (btn.width / 2);
+    btn.position.y = (game.renderer.height / 2) - (btn.height / 2);
+  }
+
   this.show = function() {
     content.visible = true;
+    setPositions();
   }
 
   function hide() {

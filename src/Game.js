@@ -1,5 +1,6 @@
 var Level = require('./Level');
 var Begin = require('./Begin');
+var LevelEnd = require('./LevelEnd');
 var GameOver = require('./GameOver');
 
 module.exports = function Game() {
@@ -23,13 +24,17 @@ module.exports = function Game() {
 
   // level images
   var images = [],
-    begin = new Begin(self),
-    gameover = new GameOver(self),
+    begin = new Begin(this),
+    levelend = new LevelEnd(this),
+    gameover = new GameOver(this),
     loader;
 
-
   this.restart = function() {
-    alert('restart game');
+    alert('Game.js - this.restart()');
+  }
+
+  this.nextLevel = function() {
+    alert('Game.js - this.nextLevel()');
   }
 
   var setLevel = function(levelData) {
@@ -49,6 +54,7 @@ module.exports = function Game() {
 
     this.level = level;
   };
+
   this.setLevel = setLevel;
 
   this.loadLevel = function(levelIndex) {
@@ -258,6 +264,7 @@ module.exports = function Game() {
 
   function init() {
     addImages(begin);
+    addImages(levelend);
     addImages(gameover);
     loader = new PIXI.AssetLoader(images);
     loader.onComplete = begin.show;
