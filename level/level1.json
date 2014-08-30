@@ -9,9 +9,10 @@
                  "name":"a",
                  "properties":
                     {
-
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
                     },
-                 "type":"platform",
+                 "type":"PlatformBehavior",
                  "visible":true,
                  "width":120,
                  "x":320,
@@ -22,9 +23,10 @@
                  "name":"s",
                  "properties":
                     {
+                     "img":"switch.png",
                      "move":"13"
                     },
-                 "type":"switch",
+                 "type":"SwitchBehavior",
                  "visible":true,
                  "width":40,
                  "x":160,

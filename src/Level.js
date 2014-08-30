@@ -1,42 +1,15 @@
+
+var PlatformBehavior = require('./behaviors/PlatformBehavior.js');
+var SwitchBehavior = require('./behaviors/SwitchBehavior.js');
+
 module.exports = function Level(game) {
-  this.polygons = [];
+  var self = this;
 
-  this.segments = [
+  var levelobjects = [];
+  self.levelobjects = [];
 
-    // Polygon #1
-    {a:{x:100,y:150}, b:{x:120,y:50}},
-    {a:{x:120,y:50}, b:{x:200,y:80}},
-    {a:{x:200,y:80}, b:{x:140,y:210}},
-    {a:{x:140,y:210}, b:{x:100,y:150}},
-
-    // Polygon #2
-    {a:{x:100,y:200}, b:{x:120,y:250}},
-    {a:{x:120,y:250}, b:{x:60,y:300}},
-    {a:{x:60,y:300}, b:{x:100,y:200}},
-
-    // Polygon #3
-    {a:{x:200,y:260}, b:{x:220,y:150}},
-    {a:{x:220,y:150}, b:{x:300,y:200}},
-    {a:{x:300,y:200}, b:{x:350,y:320}},
-    {a:{x:350,y:320}, b:{x:200,y:260}},
-
-    // Polygon #4
-    {a:{x:540,y:60}, b:{x:560,y:40}},
-    {a:{x:560,y:40}, b:{x:570,y:70}},
-    {a:{x:570,y:70}, b:{x:540,y:60}},
-
-    // Polygon #5
-    {a:{x:650,y:190}, b:{x:760,y:170}},
-    {a:{x:760,y:170}, b:{x:740,y:270}},
-    {a:{x:740,y:270}, b:{x:630,y:290}},
-    {a:{x:630,y:290}, b:{x:650,y:190}},
-
-    // Polygon #6
-    {a:{x:600,y:95}, b:{x:780,y:50}},
-    {a:{x:780,y:50}, b:{x:680,y:150}},
-    {a:{x:680,y:150}, b:{x:600,y:95}}
-
-  ];
+  var segments = [];
+  self.segments = segments;
 
   //
   // Level methods
@@ -44,7 +17,43 @@ module.exports = function Level(game) {
 
   this.parse = function(data) {
     // TODO: @epaneto
-    console.log("parse level"+data);
+    console.log("parse level"+data.layers[0].objects);
+
+    for (index = 0; index < data.layers[0].objects.length; ++index) {
+      ////setup behavior
+      var behaviour = null;
+      var className =  "./behaviors/" + data.layers[0].objects[index].type + ".js"
+      var BehaviourClass = require(className);
+
+      behaviour = new BehaviourClass(data.layers[0].objects[index].type.properties);
+
+      levelobjects.push(behaviour);
+
+      var size = data.layers[0].objects[index].width;
+      var originX = data.layers[0].objects[index].x;
+      var originY = data.layers[0].objects[index].y;
+
+      /////cerate visual
+      var visual = new PIXI.Sprite(PIXI.Texture.fromImage("img/" + data.layers[0].objects[index].properties.img));
+      visual.position.x = originX;
+      visual.position.y = originY;
+      game.stage.addChild(visual);
+
+      console.log(visual + " " + "img/" + data.layers[0].objects[index].properties.img + " " + originX + " " + originY);
+      ////create shadow
+      if(!data.layers[0].objects[index].properties.shadow)
+        continue;
+
+      var segmentA = {a:{x:originX,y:originY}, b:{x:originX + size,y:originY}};
+      var segmentB = {a:{x:originX+size,y:originY}, b:{x:originX + size,y:originY+size}};
+      var segmentC = {a:{x:originX+size,y:originY+size}, b:{x:originX,y:originY + size}};
+      var segmentD = {a:{x:originX,y:originY + size}, b:{x:originX,y:originY}};
+
+      this.segments.push(segmentA);
+      this.segments.push(segmentB);
+      this.segments.push(segmentC);
+      this.segments.push(segmentD);
+    }
   }
 
 };
