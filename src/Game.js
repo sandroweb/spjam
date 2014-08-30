@@ -33,7 +33,7 @@ module.exports = function Game() {
     var h = renderer.height,
         w = renderer.width;
 
-    var level = new Level();
+    var level = new Level(self);
 
     // add stage border to level segments
     level.segments.unshift( {a:{x:0,y:0}, b:{x:w,y:0}} );

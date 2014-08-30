@@ -29,13 +29,20 @@ module.exports = function Level(game) {
 
       levelobjects.push(behaviour);
 
-      ////create shadow
-      if(!data.layers[0].objects[index].properties.shadow)
-        continue;
-
       var size = data.layers[0].objects[index].width;
       var originX = data.layers[0].objects[index].x;
       var originY = data.layers[0].objects[index].y;
+
+      /////cerate visual
+      var visual = new PIXI.Sprite(PIXI.Texture.fromImage("img/" + data.layers[0].objects[index].properties.img));
+      visual.position.x = originX;
+      visual.position.y = originY;
+      game.stage.addChild(visual);
+
+      console.log(visual + " " + "img/" + data.layers[0].objects[index].properties.img + " " + originX + " " + originY);
+      ////create shadow
+      if(!data.layers[0].objects[index].properties.shadow)
+        continue;
 
       var segmentA = {a:{x:originX,y:originY}, b:{x:originX + size,y:originY}};
       var segmentB = {a:{x:originX+size,y:originY}, b:{x:originX + size,y:originY+size}};
@@ -46,8 +53,6 @@ module.exports = function Level(game) {
       this.segments.push(segmentB);
       this.segments.push(segmentC);
       this.segments.push(segmentD);
-
-      console.log(segments);
     }
   }
 
