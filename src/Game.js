@@ -6,6 +6,7 @@ var Gameplay = require('./Gameplay');
 var Light = require('./Light');
 var TWEEN = require('./vendor/tween.min.js');
 var GameInput = require('./GameInput.js');
+var Player = require('./Player.js');
 
 module.exports = function Game() {
 
@@ -24,6 +25,9 @@ module.exports = function Game() {
 
   ////Input
   var input = new GameInput();
+
+  /////Player
+  var player = new Player(this, input, 0,0);
 
   // LevelIndex
   var levelIndex = 0;
@@ -127,6 +131,10 @@ module.exports = function Game() {
 
   this.update = function() {
     this.updateLights();
+
+    // console.log(input + " " + input.Key);
+    if (input.Key.isDown(input.Key.LEFT)) player.moveLeft();
+    if (input.Key.isDown(input.Key.RIGHT)) player.moveRight();
   };
 
   this.loop = function() {
