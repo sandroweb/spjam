@@ -16,7 +16,6 @@ module.exports = function Game() {
   // Stage setup
   var stage = new PIXI.Stage(0xFFFFFF, true);
   stage.setInteractive(true);
-
   this.stage = stage;
 
   // stage.click = function(e) {
@@ -32,10 +31,10 @@ module.exports = function Game() {
   this.renderer = renderer;
 
   ////Input
-  var input = new GameInput();
+  var input = null;
 
   /////Player
-  var player = new Player(this, input, 0,0);
+  var player = null;
 
   // LevelIndex
   var levelIndex = 0;
@@ -81,6 +80,15 @@ module.exports = function Game() {
   };
 
   this.loadLevel = function(levelIndex) {
+    if(!input)
+    {
+      input = new GameInput();
+    }
+
+    if(!player){
+      player = new Player(self, input, 100,880);
+    }
+
     console.log("level/level" + levelIndex + ".json");
     var loader = new PIXI.JsonLoader("level/level" + levelIndex + ".json");
     loader.on('loaded', function(evt) {
@@ -148,6 +156,9 @@ module.exports = function Game() {
     this.updateLights();
 
     // console.log(input + " " + input.Key);
+    if(!input)
+      return;
+
     if (input.Key.isDown(input.Key.LEFT)) player.moveLeft();
     if (input.Key.isDown(input.Key.RIGHT)) player.moveRight();
   };
