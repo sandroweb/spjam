@@ -5,6 +5,7 @@ var GameOver = require('./GameOver');
 var Gameplay = require('./Gameplay');
 var Light = require('./Light');
 var Tweenable = require('./vendor/shifty')
+var GameInput = require('./GameInput.js');
 
 window.Tweenable = Tweenable;
 window.tweenable = new Tweenable();
@@ -28,6 +29,9 @@ module.exports = function Game() {
   document.body.appendChild(renderer.view);
 
   this.renderer = renderer;
+
+  ////Input
+  var input = new GameInput();
 
   // LevelIndex
   var levelIndex = 0;

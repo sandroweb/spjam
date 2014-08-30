@@ -42,6 +42,7 @@ module.exports = function Level(game) {
       var segmentD = {a:{x:originX,y:originY + size}, b:{x:originX,y:originY}};
 
       this.segments.push(segmentA);
+
       this.segments.push(segmentB);
       this.segments.push(segmentC);
       this.segments.push(segmentD);
