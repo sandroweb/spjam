@@ -197,7 +197,7 @@ module.exports = function Game() {
       begin.show();
     });
     loader.addEventListener('onProgress', function(e) {
-      preloader.progress(e.content.loadCount * 100 / e.content.assetURLs.length);
+      preloader.progress((e.content.assetURLs.length - e.content.loadCount) * 100 / e.content.assetURLs.length);
     });
     loader.load();
   }
