@@ -40,6 +40,7 @@ module.exports = function Game() {
   // LevelIndex
   var levelIndex = 0;
   var self = this;
+  var level = null;
   window.light = new Light(50, 50);
 
   var lightGraphics = new PIXI.Graphics(),
@@ -63,18 +64,19 @@ module.exports = function Game() {
     var h = self.renderer.height,
         w = self.renderer.width;
 
-    var level = new Level(self);
+    var newLevel = new Level(self);
 
     // add stage border to level segments
-    level.segments.unshift( {a:{x:0,y:0}, b:{x:w,y:0}} );
-    level.segments.unshift( {a:{x:w,y:0}, b:{x:w,y:h}} );
-    level.segments.unshift( {a:{x:w,y:h}, b:{x:0,y:h}} );
-    level.segments.unshift( {a:{x:0,y:h}, b:{x:0,y:0}} );
+    newLevel.segments.unshift( {a:{x:0,y:0}, b:{x:w,y:0}} );
+    newLevel.segments.unshift( {a:{x:w,y:0}, b:{x:w,y:h}} );
+    newLevel.segments.unshift( {a:{x:w,y:h}, b:{x:0,y:h}} );
+    newLevel.segments.unshift( {a:{x:0,y:h}, b:{x:0,y:0}} );
 
-    level.parse(levelData);
-    light.setSegments(level.segments);
+    newLevel.parse(levelData);
 
-    self.level = level;
+    self.level = newLevel;
+
+    light.setSegments(newLevel.segments);
 
     self.loop();
   };
@@ -87,6 +89,7 @@ module.exports = function Game() {
 
     if(!player){
       player = new Player(self, 100,880);
+      self.player = player;
     }
 
     console.log("level/level" + levelIndex + ".json");
@@ -161,6 +164,9 @@ module.exports = function Game() {
 
     if(player)
       player.update(input);
+
+    if(self.level)
+      self.level.update(player);
 
     if (input.Key.isDown(input.Key.LEFT)) player.moveLeft();
     if (input.Key.isDown(input.Key.RIGHT)) player.moveRight();

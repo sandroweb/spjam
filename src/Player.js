@@ -4,10 +4,13 @@ module.exports = function Player(game, xPos, yPos) {
 	var acceleration = 0.1;
 	var maxspeed = 3.0;
 	var dir = 1;
+	
 	 var view = new PIXI.Sprite(PIXI.Texture.fromImage("img/player.png"));
      view.position.x = xPos;
      view.position.y = yPos;
      game.stage.addChild(view);
+
+     self.view = view;
 
 	this.update = function(input)
 	{
