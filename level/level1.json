@@ -17,15 +17,14 @@
                  "width":120,
                  "x":320,
                  "y":840
-                }, 
+                },
                 {
                  "height":40,
                  "name":"s",
                  "properties":
                     {
                      "img":"switch.png",
-                     "move":"13",
-                     "shadow":"true"
+                     "move":"13"
                     },
                  "type":"SwitchBehavior",
                  "visible":true,
