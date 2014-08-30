@@ -5,11 +5,8 @@ var SwitchBehavior = require('./behaviors/SwitchBehavior.js');
 module.exports = function Level(game) {
   var self = this;
 
-  var levelobjects = [];
-  self.levelobjects = [];
-
-  var segments = [];
-  self.segments = segments;
+  this.segments = [];
+  this.levelobjects = [];
 
   //
   // Level methods
@@ -18,11 +15,9 @@ module.exports = function Level(game) {
   this.parse = function(data) {
     for (index = 0; index < data.layers[0].objects.length; ++index) {
       ////setup behavior
-      var behaviour = null;
-      var className =  "./behaviors/" + data.layers[0].objects[index].type + ".js"
-      var BehaviourClass = require(className);
-      behaviour = new BehaviourClass(data.layers[0].objects[index].properties);
-      levelobjects.push(behaviour);
+      var BehaviourClass = require("./behaviors/" + data.layers[0].objects[index].type + ".js");
+      var behaviour = new BehaviourClass(data.layers[0].objects[index].properties);
+      self.levelobjects.push(behaviour);
 
       /////retrive position and size specs
       var size = data.layers[0].objects[index].width;
@@ -47,7 +42,7 @@ module.exports = function Level(game) {
       var segmentD = {a:{x:originX,y:originY + size}, b:{x:originX,y:originY}};
 
       this.segments.push(segmentA);
-      
+
       this.segments.push(segmentB);
       this.segments.push(segmentC);
       this.segments.push(segmentD);

@@ -1,6 +1,5 @@
 module.exports = function Light(x, y) {
-  this.x = x;
-  this.y = y;
+  this.position = {x: x, y: y};
 
   this.segments = [];
   this.fuzzyRadius = 10;
@@ -10,12 +9,12 @@ module.exports = function Light(x, y) {
   };
 
   this.getSightPolygons = function() {
-    var polygons = [ light.getSightPolygon(this.x, this.y) ];
+    var polygons = [ light.getSightPolygon(this.position.x, this.position.y) ];
 
     for(var angle=0;angle<Math.PI*2;angle+=(Math.PI*2)/10){
       var dx = Math.cos(angle)*this.fuzzyRadius;
       var dy = Math.sin(angle)*this.fuzzyRadius;
-      polygons.push(light.getSightPolygon(light.x+dx,light.y+dy));
+      polygons.push(this.getSightPolygon(this.position.x+dx,this.position.y+dy));
     };
 
     return polygons;

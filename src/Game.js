@@ -4,9 +4,12 @@ var LevelEnd = require('./LevelEnd');
 var GameOver = require('./GameOver');
 var Gameplay = require('./Gameplay');
 var Light = require('./Light');
-var TWEEN = require('./vendor/tween.min.js');
+var Tweenable = require('./vendor/shifty')
 var GameInput = require('./GameInput.js');
 var Player = require('./Player.js');
+
+window.Tweenable = Tweenable;
+window.tweenable = new Tweenable();
 
 module.exports = function Game() {
 
@@ -16,7 +19,12 @@ module.exports = function Game() {
 
   this.stage = stage;
 
-  var renderer = PIXI.autoDetectRenderer(640, 960, null, false /* transparent */, true /* antialias */);
+  // stage.click = function(e) {
+  //   light.x = e.originalEvent.x;
+  //   light.y = e.originalEvent.y;
+  // }
+
+  var renderer = new PIXI.CanvasRenderer(640, 960, null, false /* transparent */, true /* antialias */);
   renderer.view.style.display = "block";
   renderer.view.style.border = "1px solid";
   document.body.appendChild(renderer.view);
@@ -33,7 +41,9 @@ module.exports = function Game() {
   var levelIndex = 0;
   var self = this;
   window.light = new Light(50, 50);
-  var lightGraphics = new PIXI.Graphics();
+
+  var lightGraphics = new PIXI.Graphics(),
+      lightContainer = new PIXI.DisplayObjectContainer();
 
   // level images
   var images = [],
@@ -87,7 +97,7 @@ module.exports = function Game() {
 
   this.updateLights = function() {
     // nothing to update, skip
-    if (light.x == lastLightX && light.y == lastLightY) {
+    if (light.position.x == lastLightX && light.position.y == lastLightY) {
       return;
     }
 
@@ -98,14 +108,19 @@ module.exports = function Game() {
 
     lightGraphics.clear();
 
+    // remove previous added light items
+    if (lightContainer.children.length > 0) {
+      lightContainer.removeChildren();
+    }
+
     // Sight Polygons
     var polygons = light.getSightPolygons();
 
     // DRAW AS A GIANT POLYGON
     for(var i=1;i<polygons.length;i++){
-      stage.addChild( light.getPolygonGraphics(polygons[i], "rgba(255,255,255,0.2)") );
+      lightContainer.addChild( light.getPolygonGraphics(polygons[i]) );
     }
-    stage.addChild( light.getPolygonGraphics(polygons[0], "#fff") );
+    lightContainer.addChild( light.getPolygonGraphics(polygons[0]) );
 
     // // Masked Foreground
     // ctx.globalCompositeOperation = "source-in";
@@ -113,20 +128,20 @@ module.exports = function Game() {
     // ctx.globalCompositeOperation = "source-over";
 
     // Draw dots
-    lightGraphics.beginFill(0xfff);
-    lightGraphics.arc(light.x, light.y, 2, 0, 2*Math.PI, false);
+    lightGraphics.beginFill(0xfff, 0.5);
+    lightGraphics.arc(light.position.x, light.position.y, 2, 0, 2*Math.PI, false);
     lightGraphics.endFill();
 
     for(var angle=0;angle<Math.PI*2;angle+=(Math.PI*2)/10){
       var dx = Math.cos(angle)*light.fuzzyRadius;
       var dy = Math.sin(angle)*light.fuzzyRadius;
-      lightGraphics.beginFill(0xfff);
-      lightGraphics.arc(light.x+dx, light.y+dy, 2, 0, 2*Math.PI, false);
+      lightGraphics.beginFill(0xfff, 0.5);
+      lightGraphics.arc(light.position.x+dx, light.position.y+dy, 2, 0, 2*Math.PI, false);
       lightGraphics.endFill();
     }
 
-    lastLightX = light.x;
-    lastLightY = light.y;
+    lastLightX = light.position.x;
+    lastLightY = light.position.y;
   };
 
   this.update = function() {
@@ -159,6 +174,8 @@ module.exports = function Game() {
 
   this.start = function() {
     stage.addChild(lightGraphics);
+    stage.addChild(lightContainer);
+
     begin = new Begin(this);
     levelend = new LevelEnd(this);
     gameover = new GameOver(this);
