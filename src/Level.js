@@ -49,10 +49,10 @@ module.exports = function Level(game) {
     }
   }
 
-  this.update = function(player)
+  this.update = function(game)
   {
     for (index = 0; index < self.levelobjects.length; ++index) {
-      self.levelobjects[index].update(player);
+      self.levelobjects[index].update(game);
     }
   }
 };

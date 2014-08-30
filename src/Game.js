@@ -85,6 +85,7 @@ module.exports = function Game() {
     if(!input)
     {
       input = new GameInput();
+      self.input = input;
     }
 
     if(!player){
@@ -166,7 +167,7 @@ module.exports = function Game() {
       player.update(input);
 
     if(self.level)
-      self.level.update(player);
+      self.level.update(self);
 
     if (input.Key.isDown(input.Key.LEFT)) player.moveLeft();
     if (input.Key.isDown(input.Key.RIGHT)) player.moveRight();
