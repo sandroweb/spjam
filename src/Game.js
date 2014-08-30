@@ -1,3 +1,4 @@
+var Level = require('./Level');
 var Gameplay = require('./Gameplay');
 var Light = require('./Light');
 window.TWEEN = require('./vendor/tween.min.js')
@@ -20,18 +21,52 @@ module.exports = function Game() {
   window.light = new Light(200, 50);
   var lightGraphics = new PIXI.Graphics();
 
+  ////LevelIndex
+  var levelIndex = 0;
+
   this.setLevel = function(level) {
     var h = renderer.height,
         w = renderer.width;
 
-    // add stage border to level segments
+    var level = new Level();
+
+    // // add stage border to level segments
     level.segments.unshift( {a:{x:0,y:0}, b:{x:w,y:0}} );
     level.segments.unshift( {a:{x:w,y:0}, b:{x:w,y:h}} );
     level.segments.unshift( {a:{x:w,y:h}, b:{x:0,y:h}} );
     level.segments.unshift( {a:{x:0,y:h}, b:{x:0,y:0}} );
 
+    level.parse(levelData);
+
     this.level = level;
   };
+  this.setLevel = setLevel;
+
+  this.loadLevel = function(levelIndex) {
+    console.log("level/level" + levelIndex + ".json");
+    var loader = new PIXI.JsonLoader("level/level" + levelIndex + ".json");
+    loader.on('loaded', function(evt) {
+      //data is in evt.content.json
+      console.log("json loaded!");
+
+      setLevel(evt.content.json);
+    });
+
+    loader.load();
+  }
+
+  this.loadLevel = function(levelIndex) {
+    console.log("level/level" + levelIndex + ".json");
+    var loader = new PIXI.JsonLoader("level/level" + levelIndex + ".json");
+    loader.on('loaded', function(evt) {
+      //data is in evt.content.json
+      console.log("json loaded!");
+
+      setLevel(evt.content.json);
+    });
+
+    loader.load();
+  }
 
   this.start = function() {
     light.setSegments(this.level.segments);
