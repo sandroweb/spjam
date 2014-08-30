@@ -1,5 +1,7 @@
 default: build
 
 build:
-	cat src/vendor/pixi.dev.js \
-		src/main.js > app/App/index.js
+	./node_modules/browserify/bin/cmd.js src/main.js -o build.js
+
+watch:
+	./node_modules/watchify/bin/cmd.js src/main.js -o build.js
