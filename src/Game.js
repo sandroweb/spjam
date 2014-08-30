@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function Game() {
 
   // Stage setup
   var stage = new PIXI.Stage(0xFFFFFF, true);
@@ -17,13 +17,15 @@ module.exports = function() {
     var h = renderer.height,
         w = renderer.width;
 
-    // // add stage border to level segments
-    // this.level.segments.unshift( {a:{x:0,y:0}, b:{x:w,y:0}} );
-    // this.level.segments.unshift( {a:{x:w,y:0}, b:{x:w,y:h}} );
-    // this.level.segments.unshift( {a:{x:w,y:h}, b:{x:0,y:h}} );
-    // this.level.segments.unshift( {a:{x:0,y:h}, b:{x:0,y:0}} );
+    console.log(level);
 
-    return this.level;
+    // // add stage border to level segments
+    level.segments.unshift( {a:{x:0,y:0}, b:{x:w,y:0}} );
+    level.segments.unshift( {a:{x:w,y:0}, b:{x:w,y:h}} );
+    level.segments.unshift( {a:{x:w,y:h}, b:{x:0,y:h}} );
+    level.segments.unshift( {a:{x:0,y:h}, b:{x:0,y:0}} );
+
+    this.level = level;
   };
 
   this.loop = function() {

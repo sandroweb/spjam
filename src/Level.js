@@ -1,13 +1,7 @@
-module.exports = function() {
+module.exports = function Level() {
   this.polygons = [];
 
   this.segments = [
-
-    // Border
-    {a:{x:0,y:0}, b:{x:840,y:0}},
-    {a:{x:840,y:0}, b:{x:840,y:360}},
-    {a:{x:840,y:360}, b:{x:0,y:360}},
-    {a:{x:0,y:360}, b:{x:0,y:0}},
 
     // Polygon #1
     {a:{x:100,y:150}, b:{x:120,y:50}},
