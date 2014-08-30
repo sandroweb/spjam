@@ -17,7 +17,16 @@ module.exports = function GameInput() {
 	  
 	  onKeyup: function(event) {
 	    delete this._pressed[event.keyCode];
-	  }
+	  },
+
+	  isEmpty: function () {
+    		for(var prop in this._pressed) {
+        		if(this._pressed.hasOwnProperty(prop))
+           		return false;
+    		}
+
+    		return true;
+		}
 	};
 
 	this.Key = Key;

@@ -1,26 +1,39 @@
-module.exports = function Player(game, input, xPos, yPos) {
+module.exports = function Player(game, xPos, yPos) {
 	var self = this;
-	var speed = 0.6;
+	var velocity = 0;
+	var acceleration = 0.1;
+	var maxspeed = 3.0;
+	var dir = 1;
 	 var view = new PIXI.Sprite(PIXI.Texture.fromImage("img/player.png"));
      view.position.x = xPos;
      view.position.y = yPos;
      game.stage.addChild(view);
 
-	this.update = function()
+	this.update = function(input)
 	{
+		view.position.x += dir * velocity;
 
+		///no key pressed
+		if(input.Key.isEmpty()){
+			velocity -= acceleration;
+			if(velocity < 0)
+				velocity = 0;
+		}
+
+		if(velocity > maxspeed)
+			velocity = maxspeed;
 	}
 
 	this.moveLeft = function()
 	{
-		if(view.x > view.width)
-			view.x -= speed;
+		dir = -1;
+		velocity += acceleration;
 	}
 
 	this.moveRight = function()
 	{
-		if(view.x < game.renderer.width)
-			view.x += speed;
+		dir = 1;
+		velocity += acceleration;
 	}
 
 
