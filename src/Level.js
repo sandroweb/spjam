@@ -42,8 +42,9 @@ module.exports = function Level(game) {
   // Level methods
   //
 
-  this.parse = function() {
+  this.parse = function(data) {
     // TODO: @epaneto
+    console.log("parse level"+data);
   }
 
 };

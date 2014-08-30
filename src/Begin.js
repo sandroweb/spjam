@@ -13,7 +13,7 @@ module.exports = function Begin(game) {
     game.stage.addChild(btn);
     btn.click = function(data) {
       hide();
-      game.loop();
+      game.loadLevel(1);
     };
   }
 

@@ -1,3 +1,5 @@
+var Level = require('./Level');
+
 module.exports = function Game() {
 
   // Stage setup
@@ -17,11 +19,15 @@ module.exports = function Game() {
   // Game methods
   //
 
-  this.setLevel = function(level) {
+
+  ////LevelIndex
+  var levelIndex = 0;
+
+  var setLevel = function(levelData) {
     var h = renderer.height,
         w = renderer.width;
 
-    console.log(level);
+    var level = new Level();
 
     // // add stage border to level segments
     level.segments.unshift( {a:{x:0,y:0}, b:{x:w,y:0}} );
@@ -29,8 +35,24 @@ module.exports = function Game() {
     level.segments.unshift( {a:{x:w,y:h}, b:{x:0,y:h}} );
     level.segments.unshift( {a:{x:0,y:h}, b:{x:0,y:0}} );
 
+    level.parse(levelData);
+
     this.level = level;
   };
+  this.setLevel = setLevel;
+
+  this.loadLevel = function(levelIndex) {
+    console.log("level/level" + levelIndex + ".json");
+    var loader = new PIXI.JsonLoader("level/level" + levelIndex + ".json");
+    loader.on('loaded', function(evt) {
+      //data is in evt.content.json
+      console.log("json loaded!");
+
+      setLevel(evt.content.json);
+    });
+
+    loader.load();
+  }
 
   this.loop = function() {
     var segments = this.level.segments;
