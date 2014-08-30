@@ -9,7 +9,7 @@
                  "name":"a",
                  "properties":
                     {
-
+                     "shadow":"true"
                     },
                  "type":"platform",
                  "visible":true,
@@ -22,6 +22,7 @@
                  "name":"s",
                  "properties":
                     {
+                     "":"",
                      "move":"13"
                     },
                  "type":"switch",

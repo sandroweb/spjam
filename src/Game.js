@@ -9,10 +9,14 @@ module.exports = function Game() {
   var stage = new PIXI.Stage(0xFFFFFF, true);
   stage.setInteractive(true);
 
+  this.stage = stage;
+
   var renderer = PIXI.autoDetectRenderer(960, 640, null, false /* transparent */, true /* antialias */);
   renderer.view.style.display = "block";
   renderer.view.style.border = "1px solid";
   document.body.appendChild(renderer.view);
+
+  this.renderer = renderer;
 
   //
   // Game methods
@@ -23,8 +27,9 @@ module.exports = function Game() {
 
   ////LevelIndex
   var levelIndex = 0;
+  var self = this;
 
-  var setLevel = function(level) {
+  this.setLevel = function(level) {
     var h = renderer.height,
         w = renderer.width;
 
@@ -38,9 +43,10 @@ module.exports = function Game() {
 
     // level.parse(levelData);
 
-    this.level = level;
+    self.level = level;
+
+    self.loop();
   };
-  this.setLevel = setLevel;
 
   this.loadLevel = function(levelIndex) {
     console.log("level/level" + levelIndex + ".json");
@@ -49,7 +55,7 @@ module.exports = function Game() {
       //data is in evt.content.json
       console.log("json loaded!");
 
-      setLevel(evt.content.json);
+      self.setLevel(evt.content.json);
     });
 
     loader.load();
@@ -62,7 +68,7 @@ module.exports = function Game() {
       //data is in evt.content.json
       console.log("json loaded!");
 
-      setLevel(evt.content.json);
+      self.setLevel(evt.content.json);
     });
 
     loader.load();
@@ -76,7 +82,7 @@ module.exports = function Game() {
 
   var lastLightX, lastLightY;
 
-  var updateLights = function() {
+  this.updateLights = function() {
     // nothing to update, skip
     if (light.x == lastLightX && light.y == lastLightY) {
       return;
@@ -114,12 +120,12 @@ module.exports = function Game() {
     lastLightX = light.x;
     lastLightY = light.y;
   };
-  this.updateLights = updateLights;
 
   this.loop = function() {
     requestAnimFrame(animate);
+
     function animate() {
-      updateLights();
+      self.updateLights();
       renderer.render(stage);
       requestAnimFrame( animate );
     }
