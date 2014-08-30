@@ -1,17 +1,21 @@
-var Level = require('./Level');
-var Begin = require('./Begin');
-var LevelEnd = require('./LevelEnd');
-var GameOver = require('./GameOver');
-var Gameplay = require('./Gameplay');
-var Light = require('./Light');
-var Tweenable = require('./vendor/shifty')
-var GameInput = require('./GameInput.js');
-var Player = require('./Player.js');
+var Resources = require('./Resources'),
+  Preloader = require('./Preloader'),
+  Level = require('./Level'),
+  Begin = require('./Begin'),
+  LevelEnd = require('./LevelEnd'),
+  GameOver = require('./GameOver'),
+  Gameplay = require('./Gameplay'),
+  Light = require('./Light'),
+  Tweenable = require('./vendor/shifty'),
+  GameInput = require('./GameInput.js'),
+  Player = require('./Player.js');
 
 window.Tweenable = Tweenable;
 window.tweenable = new Tweenable();
 
 module.exports = function Game() {
+
+  this.resources = new Resources();
 
   // stage.click = function(e) {
   //   light.x = e.originalEvent.x;
@@ -41,11 +45,10 @@ module.exports = function Game() {
   var lightGraphics = new PIXI.Graphics(),
       lightContainer = new PIXI.DisplayObjectContainer();
 
-  // level images
-  var images = [],
-    begin,
+  var begin,
     levelend,
     gameover,
+    preloader,
     loader;
 
   this.restart = function() {
@@ -170,31 +173,41 @@ module.exports = function Game() {
     }
   };
 
-  function addImages(currScreen) {
-    var i, image, total = currScreen.images.length;
-    for (i = 0; i < total; ++i) {
-      image = currScreen.images[i];
-      if (images.indexOf(image) === -1) {
-        images.push(image);
-      }
-    }
-  }
-
   this.start = function() {
+<<<<<<< HEAD
     self.stage.addChild(lightGraphics);
     self.stage.addChild(lightContainer);
+=======
+    var imgsArr = [],
+      i;
 
+    // start scenes
+    stage.addChild(lightGraphics);
+    stage.addChild(lightContainer);
+>>>>>>> 00a1b7cc079df9258ea8d25dc4acf83c5520c77a
+
+    // start screens
     begin = new Begin(this);
     levelend = new LevelEnd(this);
     gameover = new GameOver(this);
+    preloader = new Preloader(this);
+
+    // start loop
     self.loop();
-    addImages(begin);
-    addImages(levelend);
-    addImages(gameover);
-    loader = new PIXI.AssetLoader(images);
-    loader.onComplete = begin.show;
-    loader.load();
   };
+
+  this.load = function() {
+    // loader
+    loader = new PIXI.AssetLoader(self.resources.getImages());
+    loader.addEventListener('onComplete', function() {
+      preloader.hide();
+      begin.show();
+    });
+    loader.addEventListener('onProgress', function(e) {
+      preloader.progress(e.content.loadCount * 100 / e.content.assetURLs.length);
+    });
+    loader.load();
+  }
 
   this.start();
 }
