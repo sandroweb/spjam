@@ -13,6 +13,10 @@ module.exports = function Game() {
   // Game methods
   //
 
+
+  ////LevelIndex
+  var levelIndex = 0;
+
   this.setLevel = function(level) {
     var h = renderer.height,
         w = renderer.width;
@@ -27,6 +31,17 @@ module.exports = function Game() {
 
     this.level = level;
   };
+
+  this.loadLevel = function(levelIndex) {
+    var loader = new PIXI.JsonLoader("level/level" + levelIndex + ".json");
+    loader.on('loaded', function(evt) {
+      //data is in evt.content.json
+      evt.content.json
+      console.log(evt.content.json);
+    });
+  }
+
+  loadLevel(1);
 
   this.loop = function() {
     var segments = this.level.segments;
