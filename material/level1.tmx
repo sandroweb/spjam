@@ -3,12 +3,13 @@
  <objectgroup name="objects" width="16" height="24">
   <object name="a" type="platform" x="320" y="840" width="120" height="120">
    <properties>
+    <property name="img" value="platform_3x3.png"/>
     <property name="shadow" value="true"/>
    </properties>
   </object>
   <object name="s" type="switch" x="160" y="920" width="40" height="40">
    <properties>
-    <property name="" value=""/>
+    <property name="img" value="switch.png"/>
     <property name="move" value="13"/>
    </properties>
   </object>
