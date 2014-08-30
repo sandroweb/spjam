@@ -1,8 +1,8 @@
 module.exports = function Player(game, xPos, yPos) {
 	var self = this;
 	var velocity = 0;
-	var acceleration = 0.1;
-	var maxspeed = 3.0;
+	var acceleration = 0.25;
+	var maxspeed = 2.0;
 	var dir = 1;
 
 	 var view = new PIXI.Sprite(PIXI.Texture.fromImage("img/player.png"));
@@ -41,7 +41,7 @@ module.exports = function Player(game, xPos, yPos) {
 
 	this.doCollide = function(xpos,ypos,width,height)
 	{
-		if(view.position.x >= xpos && view.position.x < (xpos + width) && view.position.y - ypos < 100)
+		if(view.position.x + view.width/2 >= xpos && view.position.x < (xpos + width) && view.position.y - ypos < 100)
 			return true;
 
 		return false;
