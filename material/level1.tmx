@@ -10,7 +10,7 @@
   <object name="s" type="SwitchBehavior" x="200" y="600" width="40" height="40">
    <properties>
     <property name="img" value="switch.png"/>
-    <property name="move" value="13"/>
+    <property name="move" value="23"/>
    </properties>
   </object>
   <object name="e" type="EndBehavior" x="800" y="600" width="40" height="40">

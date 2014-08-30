@@ -24,7 +24,7 @@
                  "properties":
                     {
                      "img":"switch.png",
-                     "move":"13"
+                     "move":"23"
                     },
                  "type":"SwitchBehavior",
                  "visible":true,
