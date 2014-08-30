@@ -1,4 +1,5 @@
 var Resources = require('./Resources'),
+  Preloader = require('./Preloader'),
   Level = require('./Level'),
   Begin = require('./Begin'),
   LevelEnd = require('./LevelEnd'),
@@ -50,6 +51,7 @@ module.exports = function Game() {
   var begin,
     levelend,
     gameover,
+    preloader,
     loader;
 
   this.restart = function() {
@@ -182,18 +184,28 @@ module.exports = function Game() {
     stage.addChild(lightGraphics);
     stage.addChild(lightContainer);
 
+    // start screens
     begin = new Begin(this);
     levelend = new LevelEnd(this);
     gameover = new GameOver(this);
+    preloader = new Preloader(this);
 
     // start loop
     self.loop();
+  };
 
+  this.load = function() {
     // loader
     loader = new PIXI.AssetLoader(self.resources.getImages());
-    loader.onComplete = begin.show;
+    loader.addEventListener('onComplete', function() {
+      preloader.hide();
+      begin.show();
+    });
+    loader.addEventListener('onProgress', function(e) {
+      preloader.progress(e.content.loadCount * 100 / e.content.assetURLs.length);
+    });
     loader.load();
-  };
+  }
 
   this.start();
 }
