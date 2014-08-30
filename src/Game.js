@@ -1,34 +1,35 @@
-var Level = require('./Level');
-var Begin = require('./Begin');
-var LevelEnd = require('./LevelEnd');
-var GameOver = require('./GameOver');
-var Gameplay = require('./Gameplay');
-var Light = require('./Light');
-var Tweenable = require('./vendor/shifty')
-var GameInput = require('./GameInput.js');
-var Player = require('./Player.js');
+var Resources = require('./Resources'),
+  Preloader = require('./Preloader'),
+  Level = require('./Level'),
+  Begin = require('./Begin'),
+  LevelEnd = require('./LevelEnd'),
+  GameOver = require('./GameOver'),
+  Gameplay = require('./Gameplay'),
+  Light = require('./Light'),
+  Tweenable = require('./vendor/shifty'),
+  GameInput = require('./GameInput.js'),
+  Player = require('./Player.js');
 
 window.Tweenable = Tweenable;
 window.tweenable = new Tweenable();
 
 module.exports = function Game() {
 
-  // Stage setup
-  var stage = new PIXI.Stage(0xFFFFFF, true);
-  stage.setInteractive(true);
-  this.stage = stage;
+  this.resources = new Resources();
 
   // stage.click = function(e) {
   //   light.x = e.originalEvent.x;
   //   light.y = e.originalEvent.y;
   // }
 
-  var renderer = new PIXI.CanvasRenderer(640, 960, null, false /* transparent */, true /* antialias */);
-  renderer.view.style.display = "block";
-  renderer.view.style.border = "1px solid";
-  document.body.appendChild(renderer.view);
+  var screenWidth = (typeof(ejecta)=="undefined") ? 640 : 320;
+  var screenHeight = (typeof(ejecta)=="undefined") ? 960 : 480;
 
-  this.renderer = renderer;
+  this.renderer = new PIXI.CanvasRenderer(screenWidth, screenHeight, document.getElementById('canvas'), false /* transparent */, true /* antialias */);
+  this.renderer.view.style.display = "block";
+  this.renderer.view.style.border = "1px solid";
+
+  this.stage = new PIXI.Stage(0xFFFFFF, true);;
 
   ////Input
   var input = null;
@@ -44,11 +45,10 @@ module.exports = function Game() {
   var lightGraphics = new PIXI.Graphics(),
       lightContainer = new PIXI.DisplayObjectContainer();
 
-  // level images
-  var images = [],
-    begin,
+  var begin,
     levelend,
     gameover,
+    preloader,
     loader;
 
   this.restart = function() {
@@ -60,8 +60,8 @@ module.exports = function Game() {
   }
 
   this.setLevel = function(levelData) {
-    var h = renderer.height,
-        w = renderer.width;
+    var h = self.renderer.height,
+        w = self.renderer.width;
 
     var level = new Level(self);
 
@@ -171,36 +171,39 @@ module.exports = function Game() {
 
     function animate() {
       self.update(); // logic
-      renderer.render(stage);
+      self.renderer.render(self.stage);
       requestAnimFrame( animate );
     }
   };
 
-  function addImages(currScreen) {
-    var i, image, total = currScreen.images.length;
-    for (i = 0; i < total; ++i) {
-      image = currScreen.images[i];
-      if (images.indexOf(image) === -1) {
-        images.push(image);
-      }
-    }
-  }
-
   this.start = function() {
-    stage.addChild(lightGraphics);
-    stage.addChild(lightContainer);
 
+    // start scenes
+    self.stage.addChild(lightGraphics);
+    self.stage.addChild(lightContainer);
+
+    // start screens
     begin = new Begin(this);
     levelend = new LevelEnd(this);
     gameover = new GameOver(this);
+    preloader = new Preloader(this);
+
+    // start loop
     self.loop();
-    addImages(begin);
-    addImages(levelend);
-    addImages(gameover);
-    loader = new PIXI.AssetLoader(images);
-    loader.onComplete = begin.show;
-    loader.load();
   };
+
+  this.load = function() {
+    // loader
+    loader = new PIXI.AssetLoader(self.resources.getImages());
+    loader.addEventListener('onComplete', function() {
+      preloader.hide();
+      begin.show();
+    });
+    loader.addEventListener('onProgress', function(e) {
+      preloader.progress(e.content.loadCount * 100 / e.content.assetURLs.length);
+    });
+    loader.load();
+  }
 
   this.start();
 }
