@@ -24,7 +24,7 @@ module.exports = function Game() {
   ////LevelIndex
   var levelIndex = 0;
 
-  this.setLevel = function(level) {
+  var setLevel = function(level) {
     var h = renderer.height,
         w = renderer.width;
 
@@ -36,7 +36,7 @@ module.exports = function Game() {
     level.segments.unshift( {a:{x:w,y:h}, b:{x:0,y:h}} );
     level.segments.unshift( {a:{x:0,y:h}, b:{x:0,y:0}} );
 
-    level.parse(levelData);
+    // level.parse(levelData);
 
     this.level = level;
   };
