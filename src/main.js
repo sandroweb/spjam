@@ -1,7 +1,8 @@
-var Game = require('./Game');
-var Level = require('./Level');
+var Game = require('./Game'),
+	Level = require('./Level'),
+	Begin = require('./Begin'),
+	game = new Game(),
+	begin = new Begin(game),
+	level = new Level(game);
 
-var game = new Game();
-var level = new Level();
 game.setLevel(level);
-game.loop();

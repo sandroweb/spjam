@@ -1,4 +1,4 @@
-module.exports = function Level() {
+module.exports = function Level(game) {
   this.polygons = [];
 
   this.segments = [

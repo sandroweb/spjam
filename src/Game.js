@@ -4,10 +4,14 @@ module.exports = function Game() {
   var stage = new PIXI.Stage(0xFFFFFF, true);
   stage.setInteractive(true);
 
+  this.stage = stage;
+
   var renderer = PIXI.autoDetectRenderer(960, 640, null, false /* transparent */, true /* antialias */);
   renderer.view.style.display = "block";
   renderer.view.style.border = "1px solid";
   document.body.appendChild(renderer.view);
+
+  this.renderer = renderer;
 
   //
   // Game methods
@@ -204,11 +208,12 @@ module.exports = function Game() {
 
     createScene(stage);
 
-    requestAnimFrame(animate);
-    function animate() {
-      renderer.render(stage);
-      requestAnimFrame( animate );
-    }
+    
 
   };
+  requestAnimFrame(animate);
+  function animate() {
+    renderer.render(stage);
+    requestAnimFrame( animate );
+  }
 }
