@@ -1,4 +1,6 @@
 var Level = require('./Level');
+var Begin = require('./Begin');
+var GameOver = require('./GameOver');
 
 module.exports = function Game() {
 
@@ -15,19 +17,27 @@ module.exports = function Game() {
 
   this.renderer = renderer;
 
-  //
-  // Game methods
-  //
-
-
-  ////LevelIndex
+  // LevelIndex
   var levelIndex = 0;
+  var self = this;
+
+  // level images
+  var images = [],
+    begin = new Begin(self),
+    gameover = new GameOver(self),
+    loader;
+
+
+  this.restart = function() {
+    alert('restart game');
+  }
 
   var setLevel = function(levelData) {
     var h = renderer.height,
         w = renderer.width;
 
     var level = new Level();
+    
 
     // // add stage border to level segments
     level.segments.unshift( {a:{x:0,y:0}, b:{x:w,y:0}} );
@@ -229,13 +239,30 @@ module.exports = function Game() {
     }
 
     createScene(stage);
-
-    
-
   };
   requestAnimFrame(animate);
   function animate() {
     renderer.render(stage);
     requestAnimFrame( animate );
   }
+
+  function addImages(currScreen) {
+    var i, image, total = currScreen.images.length;
+    for (i = 0; i < total; ++i) {
+      image = currScreen.images[i];
+      if (images.indexOf(image) === -1) {
+        images.push(image);
+      }
+    }
+  }
+
+  function init() {
+    addImages(begin);
+    addImages(gameover);
+    loader = new PIXI.AssetLoader(images);
+    loader.onComplete = begin.show;
+    loader.load();
+  }
+
+  init();
 }
