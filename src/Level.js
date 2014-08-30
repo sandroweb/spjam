@@ -16,7 +16,7 @@ module.exports = function Level(game) {
     for (index = 0; index < data.layers[0].objects.length; ++index) {
       ////setup behavior
       var BehaviourClass = require("./behaviors/" + data.layers[0].objects[index].type + ".js");
-      var behaviour = new BehaviourClass(data.layers[0].objects[index].type.properties);
+      var behaviour = new BehaviourClass(data.layers[0].objects[index].properties);
       self.levelobjects.push(behaviour);
 
       /////retrive position and size specs
