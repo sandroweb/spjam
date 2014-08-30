@@ -1,13 +1,16 @@
-var Level = require('./Level');
-var Begin = require('./Begin');
-var LevelEnd = require('./LevelEnd');
-var GameOver = require('./GameOver');
-var Gameplay = require('./Gameplay');
-var Light = require('./Light');
-var TWEEN = require('./vendor/tween.min.js');
-var GameInput = require('./GameInput.js');
+var Resources = require('./Resources'),
+  Level = require('./Level'),
+  Begin = require('./Begin'),
+  LevelEnd = require('./LevelEnd'),
+  GameOver = require('./GameOver'),
+  Gameplay = require('./Gameplay'),
+  Light = require('./Light'),
+  TWEEN = require('./vendor/tween.min.js'),
+  GameInput = require('./GameInput.js');
 
 module.exports = function Game() {
+
+  this.resources = new Resources();
 
   // Stage setup
   var stage = new PIXI.Stage(0xFFFFFF, true);
@@ -31,9 +34,7 @@ module.exports = function Game() {
   window.light = new Light(50, 50);
   var lightGraphics = new PIXI.Graphics();
 
-  // level images
-  var images = [],
-    begin,
+  var begin,
     levelend,
     gameover,
     loader;
@@ -139,26 +140,21 @@ module.exports = function Game() {
     }
   };
 
-  function addImages(currScreen) {
-    var i, image, total = currScreen.images.length;
-    for (i = 0; i < total; ++i) {
-      image = currScreen.images[i];
-      if (images.indexOf(image) === -1) {
-        images.push(image);
-      }
-    }
-  }
-
   this.start = function() {
+    var imgsArr = [],
+      i;
+
+    // start scenes
     stage.addChild(lightGraphics);
     begin = new Begin(this);
     levelend = new LevelEnd(this);
     gameover = new GameOver(this);
+
+    // start loop
     self.loop();
-    addImages(begin);
-    addImages(levelend);
-    addImages(gameover);
-    loader = new PIXI.AssetLoader(images);
+
+    // loader
+    loader = new PIXI.AssetLoader(self.resources.getImages());
     loader.onComplete = begin.show;
     loader.load();
   };
