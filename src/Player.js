@@ -18,7 +18,7 @@ module.exports = function Player(container, xPos, yPos) {
 	this.view.position.x = xPos;
 	this.view.position.y = yPos;
 	this.view.animationSpeed = 0.1;
-	game.stage.addChild(this.view);
+	container.addChild(this.view);
 
 	movie.play();
 

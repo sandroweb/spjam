@@ -23,7 +23,7 @@ module.exports = function LightBehavior(container, data) {
   this.view.addChild(movie);
 
   movie.play();
-  game.stage.addChild(this.view);
+  container.addChild(this.view);
 
   light.position.x = originX;
   light.position.y = originY;
