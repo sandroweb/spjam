@@ -1,12 +1,12 @@
 module.exports = function LightBehavior(data) {
+  var self = this;
 
   /////retrive position and size specs
   var size = data.width;
   var originX = data.x;
   var originY = data.y;
 
-  light.x = originX;
-  light.y = originY;
+  console.log("light: ", originX, originY);
 
   var movieClipTextures = [];
   for (var i=1; i <= 10; i++)
@@ -23,8 +23,13 @@ module.exports = function LightBehavior(data) {
   this.view.play();
   game.stage.addChild(this.view);
 
+  light.position.x = originX;
+  light.position.y = originY;
+
   this.update = function()
   {
+      self.view.position.x = light.position.x;
+      self.view.position.y = light.position.y;
   }
 
 }

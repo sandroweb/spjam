@@ -44,10 +44,10 @@ module.exports = function Game() {
   var level = null;
   window.light = new Light(50, 50);
 
-  this.renderer.view.addEventListener("mousedown", function(e) {
-    light.position.x = e.offsetX;
-    light.position.y = e.offsetY;
-  })
+  // this.renderer.view.addEventListener("mousedown", function(e) {
+  //   light.position.x = e.offsetX;
+  //   light.position.y = e.offsetY;
+  // })
 
   var lightGraphics = new PIXI.Graphics(),
       lightContainer = new PIXI.DisplayObjectContainer();
@@ -70,15 +70,16 @@ module.exports = function Game() {
 
   this.setLevel = function(levelData) {
     var h = self.renderer.height,
-        w = self.renderer.width;
+        w = self.renderer.width,
+        frameBorder = 50;
 
     var newLevel = new Level(self);
 
     // add stage border to level segments
-    newLevel.segments.unshift( {a:{x:0,y:0}, b:{x:w,y:0}} );
-    newLevel.segments.unshift( {a:{x:w,y:0}, b:{x:w,y:h}} );
-    newLevel.segments.unshift( {a:{x:w,y:h}, b:{x:0,y:h}} );
-    newLevel.segments.unshift( {a:{x:0,y:h}, b:{x:0,y:0}} );
+    newLevel.segments.unshift( {a:{x:-frameBorder,y:-frameBorder}, b:{x:w,y:-frameBorder}} );
+    newLevel.segments.unshift( {a:{x:w,y:-frameBorder}, b:{x:w,y:h}} );
+    newLevel.segments.unshift( {a:{x:w,y:h}, b:{x:-frameBorder,y:h}} );
+    newLevel.segments.unshift( {a:{x:-frameBorder,y:h}, b:{x:-frameBorder,y:-frameBorder}} );
 
     newLevel.parse(levelData);
 
@@ -176,12 +177,6 @@ module.exports = function Game() {
 
     lastLightX = light.position.x;
     lastLightY = light.position.y;
-
-    // update light movieclip
-    if (light.behavior) {
-      light.behavior.view.x = light.position.x;
-      light.behavior.view.y = light.position.y;
-    }
   };
 
   this.update = function() {
@@ -201,9 +196,9 @@ module.exports = function Game() {
         physics.process(direction, window.polygons);
 
       if(player)
-        player.update(input, physics.playerPosition);  
+        player.update(input, physics.playerPosition);
     }
-    
+
 
     if(self.level)
       self.level.update(self);
