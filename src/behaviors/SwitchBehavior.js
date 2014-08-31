@@ -68,6 +68,7 @@ module.exports = function SwitchBehavior(container, data) {
 		{
 			moving = true;
       game.level.numSwitches --;
+      emitter.emit('switch.pressed');
 			self.trigger();
 		}
 	}

@@ -13,7 +13,6 @@ var Resources = require('./Resources'),
   Tools = require('./Tools.js');
 
 window.Tweenable = Tweenable;
-window.tweenable = new Tweenable();
 
 module.exports = function Game() {
   this.resources = new Resources();
@@ -53,7 +52,7 @@ module.exports = function Game() {
     if (self.level !== null) {
       game.resources.motherSound.play();
     }
-    
+
     var dest = {x:e.offsetX, y:e.offsetY};
     var tweenable = new Tweenable();
     tweenable.tween({
@@ -210,11 +209,11 @@ module.exports = function Game() {
     if(!input)
       return;
 
-    if (input.Key.isDown(input.Key.LEFT) || input.Key.isDown(input.Key.A)) 
+    if (input.Key.isDown(input.Key.LEFT) || input.Key.isDown(input.Key.A))
     {
       direction -= 0.01;
     }
-    else if (input.Key.isDown(input.Key.RIGHT) || input.Key.isDown(input.Key.D)) 
+    else if (input.Key.isDown(input.Key.RIGHT) || input.Key.isDown(input.Key.D))
     {
       direction += 0.01;
     }
