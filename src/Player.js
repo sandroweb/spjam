@@ -25,7 +25,7 @@ module.exports = function Player(game, xPos, yPos) {
 	this.update = function(input, position)
 	{
 		self.view.position.x = position.x;
-		self.view.position.y = position.y - 50;
+		self.view.position.y = position.y - 20;
 		self.view.position.x += dir * velocity;
 	}
 

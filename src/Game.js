@@ -44,10 +44,10 @@ module.exports = function Game() {
   var level = null;
   window.light = new Light(50, 50);
 
-  // this.renderer.view.addEventListener("mousedown", function(e) {
-  //   light.position.x = e.offsetX;
-  //   light.position.y = e.offsetY;
-  // })
+  this.renderer.view.addEventListener("mousedown", function(e) {
+    light.position.x = e.offsetX;
+    light.position.y = e.offsetY;
+  })
 
   var lightGraphics = new PIXI.Graphics(),
   lightContainer = new PIXI.DisplayObjectContainer();
