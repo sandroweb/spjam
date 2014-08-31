@@ -22,6 +22,8 @@ module.exports = function GameOver(game) {
     death = PIXI.Sprite.fromFrame("DeathSilhuet2.png");
     death.anchor.x = 0.5;
     death.anchor.y = 0.5;
+    death.scale.x = 1;
+    death.scale.y = 1;
     content.addChild(death);
     death.position.x = screenWidth/2;
     death.position.y = screenHeight/2;
@@ -38,8 +40,8 @@ module.exports = function GameOver(game) {
   this.update = function()
   {
     if (!content.visible) return;
-    
-    bg.alpha += 0.005;
+
+    bg.alpha += 0.003;
     if (bg.alpha > 1) bg.alpha = 1;
 
     if (bg.alpha == 1)

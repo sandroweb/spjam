@@ -128,7 +128,7 @@ module.exports = function Game() {
       physics = new Physics();
     }
 
-    levelIndex = 2;
+    // levelIndex = 2;
     console.log("level/level" + levelIndex + ".json");
     var pixiLoader = new PIXI.JsonLoader("level/level" + levelIndex + ".json");
     pixiLoader.on('loaded', function(evt) {
