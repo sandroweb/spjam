@@ -90,7 +90,6 @@ module.exports = function EndBehavior(container, data) {
 
       // Fade portal
       var interval = setInterval(function() {
-        console.log("Interval...");
         if (portalOnSprite.alpha >= 1) {
           clearInterval(interval);
         } else {
