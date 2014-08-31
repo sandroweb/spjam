@@ -24,6 +24,8 @@ module.exports = function Level(game, index) {
 
   this.dispose = function() {
     this.levelobjects = null;
+    game.stage.removeChild(self.container);
+    game.stage.removeChild(self.view);
   }
 
   this.parse = function(data) {

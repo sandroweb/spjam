@@ -114,8 +114,6 @@ module.exports = function EndBehavior(container, data) {
         game.level.dispose();
         game.nextLevel();
         game.stage.removeChild(fadeOutShape);
-        game.stage.removeChild(game.level.container);
-        game.stage.removeChild(game.level.view);
       }
 
     } else {
