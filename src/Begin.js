@@ -38,7 +38,7 @@ module.exports = function Begin(game) {
 
     var guardrailDark = PIXI.Sprite.fromFrame("GuardRail.png");
     view.addChild(guardrailDark);
-    guardrailDark.position.y = 500;
+    guardrailDark.position.y = 550;
     guardrailDark.alpha = 0.5;
 
     var front = new PIXI.DisplayObjectContainer();
@@ -78,7 +78,7 @@ module.exports = function Begin(game) {
     car = PIXI.Sprite.fromFrame("Car.png");
     view.addChild(car);
     car.position.x = -3000;
-    car.position.y = 450;
+    car.position.y = guardrailDark.position.y - 75;
     car.passed = false;
 
     particles = new ParticleSystem(
