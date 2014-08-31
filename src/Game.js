@@ -344,5 +344,13 @@ module.exports = function Game() {
     self.begin.show();
   }
 
+  this.showEndStory = function()
+  {
+    if(!self.gameRunning)
+      return;
+    
+    self.gameRunning = false;
+  }
+
   this.start();
 }
