@@ -52,6 +52,21 @@ module.exports = function Game() {
   this.renderer.view.addEventListener("mousedown", function(e) {
     // light.position.x = e.offsetX;
     // light.position.y = e.offsetY;
+
+    if (self.btnSoundOn.visible === true) {
+      if (e.offsetX >= self.btnSoundOn.x && e.offsetX < self.btnSoundOn.x + self.btnSoundOn.width
+        && e.offsetY >= self.btnSoundOn.y && e.offsetY < self.btnSoundOn.y + self.btnSoundOn.height) {
+        return;
+      }
+    }
+
+    if (self.btnSoundOff.visible === true) {
+      if (e.offsetX >= self.btnSoundOff.x && e.offsetX < self.btnSoundOff.x + self.btnSoundOff.width
+        && e.offsetY >= self.btnSoundOff.y && e.offsetY < self.btnSoundOff.y + self.btnSoundOff.height) {
+        return;
+      }
+    }
+
     if (self.level !== null) {
       game.resources.motherSound.play();
     }
@@ -311,6 +326,34 @@ module.exports = function Game() {
     glow.scale.y = 2;
     self.stage.addChild(glow);
     glow.alpha = 0.65;
+
+    self.btnSoundOff = PIXI.Sprite.fromFrame('soundOn.png');
+    self.btnSoundOff.setInteractive(true);
+    self.btnSoundOff.buttonMode = true;
+    self.btnSoundOff.position.x = 10;
+    self.btnSoundOff.position.y = 10;
+
+    self.btnSoundOn = PIXI.Sprite.fromFrame('soundOff.png');
+    self.btnSoundOn.setInteractive(true);
+    self.btnSoundOn.buttonMode = true;
+    self.btnSoundOn.position.x = self.btnSoundOff.position.x;
+    self.btnSoundOn.position.y = self.btnSoundOff.position.y;
+    self.btnSoundOn.visible = false;
+
+    self.stage.addChild(game.btnSoundOff);
+    self.stage.addChild(game.btnSoundOn);
+
+    self.btnSoundOff.click = function(data) {
+      self.btnSoundOn.visible = true;
+      self.btnSoundOff.visible = false;
+      Howler.mute();
+    }
+
+    self.btnSoundOn.click = function(data) {
+      self.btnSoundOn.visible = false;
+      self.btnSoundOff.visible = true;
+      Howler.unmute();
+    }
   }
 
   this.start = function() {
