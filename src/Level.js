@@ -13,6 +13,8 @@ module.exports = function Level(game, index) {
   this.playerPos = {};
   this.container = new PIXI.DisplayObjectContainer();
 
+  this.view = new PIXI.DisplayObjectContainer();
+
   //
   // Level methods
   //
@@ -22,6 +24,20 @@ module.exports = function Level(game, index) {
   }
 
   this.parse = function(data) {
+    self.bg1 = PIXI.Sprite.fromFrame("backgroundForest.png");
+    self.view.addChild(self.bg1);
+
+    self.overlay = new PIXI.Graphics();
+    self.overlay.beginFill(0x00fffa);
+    self.overlay.drawRect(0, 0, screenWidth, screenHeight);
+    self.overlay.endFill();
+    self.overlay.alpha = 0.3;
+    self.view.addChild(self.overlay);
+
+    self.bg2 = PIXI.Sprite.fromFrame("backgroundForest.png");
+    self.view.addChild(self.bg2);
+
+
     for (index = 0; index < data.layers[0].objects.length; ++index) {
 
       ////search for player start point
@@ -62,6 +78,7 @@ module.exports = function Level(game, index) {
       this.segments.push(segmentD);
     }
   }
+
 
   this.update = function(game)
   {

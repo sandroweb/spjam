@@ -17,14 +17,19 @@ window.tweenable = new Tweenable();
 module.exports = function Game() {
   this.resources = new Resources();
 
-  var screenWidth = (typeof(ejecta)=="undefined") ? 960 : 480;
-  var screenHeight = (typeof(ejecta)=="undefined") ? 640 : 320;
+  // stage.click = function(e) {
+  //   light.x = e.originalEvent.x;
+  //   light.y = e.originalEvent.y;
+  // }
 
-  this.renderer = new PIXI.CanvasRenderer(screenWidth, screenHeight, document.getElementById('canvas'), false /* transparent */, true /* antialias */);
+  window.screenWidth = (typeof(ejecta)=="undefined") ? 960 : 480;
+  window.screenHeight = (typeof(ejecta)=="undefined") ? 640 : 320;
+
+  this.renderer = new PIXI.CanvasRenderer(screenWidth, screenHeight, document.getElementById('canvas'), false /* transparent */, false /* antialias */);
   this.renderer.view.style.display = "block";
   this.renderer.view.style.border = "1px solid";
 
-  this.stage = new PIXI.Stage(0xFFFFFF, true);;
+  this.stage = new PIXI.Stage(0x00fffa, true);;
 
   ////Input
   var input = null;
@@ -38,8 +43,13 @@ module.exports = function Game() {
   var level = null;
   window.light = new Light(50, 50);
 
+  this.renderer.view.addEventListener("mousedown", function(e) {
+    light.position.x = e.offsetX;
+    light.position.y = e.offsetY;
+  })
+
   var lightGraphics = new PIXI.Graphics(),
-      lightContainer = new PIXI.DisplayObjectContainer();
+  lightContainer = new PIXI.DisplayObjectContainer();
 
   this.restart = function() {
     console.log('Game.js - this.restart()');
@@ -66,6 +76,8 @@ module.exports = function Game() {
     newLevel.parse(levelData);
 
     self.level = newLevel;
+    self.stage.addChildAt(self.level.view, 0);
+
     light.setSegments(newLevel.segments);
 
     // add level container to stage.
@@ -129,29 +141,39 @@ module.exports = function Game() {
     var polygons = light.getSightPolygons();
 
     // DRAW AS A GIANT POLYGON
-    for(var i=1;i<polygons.length;i++){
-      lightContainer.addChild( light.getPolygonGraphics(polygons[i]) );
-    }
-    lightContainer.addChild( light.getPolygonGraphics(polygons[0]) );
+
+    var vertices = polygons[0];
     window.polygons = polygons[0];
 
-    // // Masked Foreground
-    // ctx.globalCompositeOperation = "source-in";
-    // ctx.drawImage(foreground,0,0);
-    // ctx.globalCompositeOperation = "source-over";
+    // lightGraphics.clear();
+    // lightGraphics.beginFill(0xFFFFFF);
+    // lightGraphics.moveTo(vertices[0].x, vertices[0].y);
+    // for (var i = 1; i<vertices.length; i++) {
+    //   var v = vertices[i];
+    //   lightGraphics.lineTo(v.x, v.y);
+    // }
+    // lightGraphics.endFill();
 
-    // Draw dots
-    lightGraphics.beginFill(0xfff, 0.5);
-    lightGraphics.arc(light.position.x, light.position.y, 2, 0, 2*Math.PI, false);
+    lightGraphics.clear();
+    lightGraphics.beginFill(0xFFFFFF);
+    lightGraphics.moveTo(vertices[0].x, vertices[0].y);
+    for (var i = 1; i<vertices.length; i++) {
+      var v = vertices[i];
+      lightGraphics.lineTo(v.x, v.y);
+    }
     lightGraphics.endFill();
 
-    for(var angle=0;angle<Math.PI*2;angle+=(Math.PI*2)/10){
-      var dx = Math.cos(angle)*light.fuzzyRadius;
-      var dy = Math.sin(angle)*light.fuzzyRadius;
-      lightGraphics.beginFill(0xfff, 0.5);
-      lightGraphics.arc(light.position.x+dx, light.position.y+dy, 2, 0, 2*Math.PI, false);
-      lightGraphics.endFill();
-    }
+    // overlap.addChild(lightGraphics);
+    // overlapShape.mask = lightGraphics;
+
+    self.level.bg2.mask = lightGraphics;
+    // overlay.mask = lightGraphics;
+
+    // for(var i=1;i<polygons.length;i++){
+    //   lightContainer.addChild( light.getPolygonGraphics(polygons[i]) );
+    // }
+    // lightContainer.addChild( light.getPolygonGraphics(polygons[0]) );
+    // window.polygons = polygons[0];
 
     lastLightX = light.position.x;
     lastLightY = light.position.y;
@@ -238,8 +260,7 @@ module.exports = function Game() {
     var imgsArr = [], i;
 
     // start scenes
-    self.stage.addChild(lightGraphics);
-    self.stage.addChild(lightContainer);
+    // self.stage.addChild(lightGraphics);
 
     // start screens
     self.begin = new Begin(this);
