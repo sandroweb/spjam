@@ -177,6 +177,7 @@
             <filename>boy</filename>
             <filename>mom</filename>
             <filename>scenario</filename>
+            <filename>intro</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
