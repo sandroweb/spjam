@@ -4,16 +4,26 @@ var SwitchBehavior = require('./behaviors/SwitchBehavior.js');
 var EndBehavior = require('./behaviors/EndBehavior.js');
 module.exports = function Level(game) {
   var self = this;
+  var playerPos = {};
 
   this.segments = [];
   this.levelobjects = [];
+  self.playerPos = playerPos;
 
   //
   // Level methods
   //
 
-  this.parse = function(data) {
+this.parse = function(data) {
     for (index = 0; index < data.layers[0].objects.length; ++index) {
+
+      ////search for player start point
+      if(data.layers[0].objects[index].type == "start")
+      {
+        self.playerPos = {x:data.layers[0].objects[index].x, y:data.layers[0].objects[index].y};
+        continue;
+      }
+
       ////setup behavior
       var BehaviourClass = require("./behaviors/" + data.layers[0].objects[index].type + ".js");
       var behaviour = new BehaviourClass(data.layers[0].objects[index]);
