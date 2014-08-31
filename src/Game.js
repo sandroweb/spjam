@@ -433,6 +433,9 @@ module.exports = function Game() {
     self.begin.show();
   }
 
+  var phrase1 = null;
+  var phrase2 = null;
+  var phrase3 = null;
   this.showEndStory = function()
   {
     console.log("show end story", gameRunning);
@@ -442,19 +445,19 @@ module.exports = function Game() {
 
     gameRunning = false;
 
-    var phrase1 = new PIXI.Text('HMMM...MY HEAD...WHAT HAPPENED?', {
+    phrase1 = new PIXI.Text('HMMM...MY HEAD...WHAT HAPPENED?', {
       font: '22px Rokkitt',
       fill: '#FFFFFF',
       align: 'center'
     });
 
-    var phrase2 = new PIXI.Text('MOM?...MOM?! NO!!!', {
+    phrase2 = new PIXI.Text('MOM?...MOM?! NO!!!', {
       font: '22px Rokkitt',
       fill: '#FFFFFF',
       align: 'center'
     });
 
-    var phrase3 = new PIXI.Text('BUT...WAIT...THAT LIGHT, IT WAS YOU?', {
+    phrase3 = new PIXI.Text('BUT...WAIT...THAT LIGHT, IT WAS YOU?', {
       font: '22px Rokkitt',
       fill: '#FFFFFF',
       align: 'center'
@@ -521,6 +524,14 @@ module.exports = function Game() {
       finish: function () {
       }
     });
+
+
+    setTimeout(function(){
+      self.stage.removeChild(phrase1);
+      self.stage.removeChild(phrase2);
+      self.stage.removeChild(phrase3);
+      self.goToBeginning();
+    },8000);
 
     self.gameRunning = false;
   }

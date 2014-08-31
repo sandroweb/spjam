@@ -27,6 +27,7 @@ module.exports = function Level(game, index) {
 
   this.dispose = function() {
     this.levelobjects = null;
+    game.resources.forestSound.stop();
     game.stage.removeChild(self.container);
     game.stage.removeChild(self.view);
   }

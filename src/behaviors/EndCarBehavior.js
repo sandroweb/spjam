@@ -79,7 +79,7 @@ module.exports = function EndCarBehavior(container, data) {
     if (!triggered) {
       fadeOutShape.beginFill(0x000);
       fadeOutShape.drawRect(0, 0, game.renderer.width, game.renderer.height);
-      game.stage.addChild(fadeOutShape);
+      container.addChild(fadeOutShape);
       game.player.fadeOut();
       game.resources.portalSound.play();
       game.resources.forestSound.stop();
