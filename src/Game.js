@@ -258,7 +258,7 @@ module.exports = function Game() {
   this.loaded = function() {
     self.preloader.hide();
     self.begin.show();
-    //game.resources.soundLoop.fadeIn(1, 2000);
+    game.resources.soundLoop.fadeIn(.4, 2000);
   }
 
   this.start = function() {

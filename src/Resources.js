@@ -1,6 +1,7 @@
 module.exports = function Resources() {
 
   Howler.iOSAutoEnable = false;
+  Howler.mute();
 
   // images
   this.background = 'img/bg-default.jpg';
@@ -23,6 +24,12 @@ module.exports = function Resources() {
       autoPlay: false,
       loop: true,
       volume: 0
+    },
+    {
+      // game.resources.buttonClick.play();
+      name: 'buttonClick',
+      urls: ['sounds/buttonClick2.mp3'],
+      volume: .3
     },
     {
       // game.resources.soundCarCrash1.play();

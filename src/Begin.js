@@ -19,6 +19,7 @@ module.exports = function Begin(game) {
     btn.buttonMode = true;
     btn.interactive = true;
     btn.click = btn.tap = function(data) {
+      game.resources.buttonClick.play()
       hide();
       game.loadLevel(1);
     };
