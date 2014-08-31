@@ -16,7 +16,6 @@ module.exports = function LightBehavior(data) {
   };
 
   this.view = new PIXI.MovieClip(movieClipTextures);
-  this.view.pivot = new PIXI.Point(this.view.width/2, this.view.height/2);
   this.view.position.x = originX;
   this.view.position.y = originY;
   this.view.animationSpeed = 0.1;
@@ -26,7 +25,6 @@ module.exports = function LightBehavior(data) {
 
   this.update = function()
   {
-
   }
 
 }

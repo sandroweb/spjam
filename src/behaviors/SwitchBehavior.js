@@ -5,13 +5,13 @@ module.exports = function SwitchBehavior(data) {
     gridSize = data.height,
     moveX = data.properties.moveX * gridSize,
     moveY = data.properties.moveY * gridSize,
-    originalMoveX = moveX,
-    originalMoveY = moveY,
+    lightOrig = false,
+    lightDest = { x: data.properties.moveX * gridSize, y: data.properties.moveY * gridSize }
     itemData = data,
-    moving = false;
+    moving = false,
+    pressed = false;
 
   /////retrive position and size specs
-  var size = data.width;
   var originX = data.x;
   var originY = data.y;
 
@@ -22,27 +22,27 @@ module.exports = function SwitchBehavior(data) {
   game.stage.addChild(self.view);
 
   this.trigger = function() {
-    console.log("move light to " + moveX);
+    // when pressing for the first time, the orinal light position is stored to revert.
+    if (!pressed && !lightOrig) {
+      lightOrig = JSON.parse(JSON.stringify(light.position));
+    }
+
+    var dest = (!pressed) ? lightDest : lightOrig;
+    pressed = !pressed;
+
     var tweenable = new Tweenable();
     tweenable.tween({
       from: light.position,
-      to:   { x: moveX, y: moveY },
+      to:   dest,
       duration: 1000,
       easing: 'easeOutCubic',
-      start: function () { console.log('Off I go!'); },
+      start: function () {
+        moving = true;
+      },
       finish: function () {
-        // infinite
-        //self.trigger();
         moving = false;
       }
     });
-
-    // future trigger will invert movement.
-    originalMoveX *= -1;
-    moveX += originalMoveX;
-
-    originalMoveY *= -1;
-    moveY += originalMoveY;
   }
 
 	this.update = function(game)
