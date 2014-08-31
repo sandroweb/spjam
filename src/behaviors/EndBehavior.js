@@ -39,7 +39,7 @@ module.exports = function EndBehavior(container, data) {
     if(game.level.numSwitches == 0) {
 
       particles = new ParticleSystem({
-        "images":["motherShine.png"],
+        "images":["PortalSpark.png"],
         "numParticles":50,
         "emissionsPerUpdate":1,
         "emissionsInterval":2,
@@ -57,7 +57,7 @@ module.exports = function EndBehavior(container, data) {
           "velocityY":-0.02,
           "randomVelocityX":0.2,
           "randomVelocityY":0.4,
-          "scale":0.1,
+          "scale":0.25,
           "growth":0.001,
           "randomScale":0.04,
           "alphaStart":0,

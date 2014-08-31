@@ -90,6 +90,15 @@
 	"sourceSize": {"w":33,"h":66},
 	"pivot": {"x":0.5,"y":0.5}
 },
+"PortalSpark.png":
+{
+	"frame": {"x":876,"y":1258,"w":10,"h":10},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":10,"w":10,"h":10},
+	"sourceSize": {"w":32,"h":32},
+	"pivot": {"x":0.5,"y":0.5}
+},
 "Scenario.png":
 {
 	"frame": {"x":2,"y":2,"w":960,"h":640},
@@ -317,7 +326,7 @@
 },
 "pixelShine.png":
 {
-	"frame": {"x":876,"y":1258,"w":9,"h":9},
+	"frame": {"x":876,"y":1270,"w":9,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":9},
@@ -344,7 +353,7 @@
 },
 "smoke.png":
 {
-	"frame": {"x":876,"y":1269,"w":8,"h":8},
+	"frame": {"x":887,"y":1270,"w":8,"h":8},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":8},
@@ -502,6 +511,6 @@
 	"format": "RGBA8888",
 	"size": {"w":2026,"h":1281},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:186115934d2b007af87598fe571de348:387905df974d97759c13e47be1cfc347:cf827d152df04949dfee256cd0c8efd8$"
+	"smartupdate": "$TexturePacker:SmartUpdate:410fa5b444c76bb3c2bdf8e7514cf85f:d6bef7f5907743fc9b6fa24036e757ac:cf827d152df04949dfee256cd0c8efd8$"
 }
 }

@@ -1,4 +1,5 @@
 var Tweenable = require('../vendor/shifty');
+var ParticleSystem = require('../components/ParticleSystem.js');
 
 module.exports = function SwitchBehavior(container, data) {
 	var self = this,
@@ -14,6 +15,7 @@ module.exports = function SwitchBehavior(container, data) {
   /////retrive position and size specs
   var originX = data.x;
   var originY = data.y;
+  var pressed = false;
 
   /////create visual
   var textureOff = PIXI.Texture.fromImage("switchOff.png");
@@ -22,7 +24,41 @@ module.exports = function SwitchBehavior(container, data) {
   self.view = new PIXI.Sprite(textureOff);
   self.view.position.x = originX;
   self.view.position.y = originY - 2;
-  container.addChild(self.view);
+
+  var particles = new ParticleSystem(
+  {
+      "images":["pixelShine.png"],
+      "numParticles":30,
+      "emissionsPerUpdate":1,
+      "emissionsInterval":10,
+      "alpha":1,
+      "properties":
+      {
+        "randomSpawnX":3,
+        "randomSpawnY":1,
+        "life":40,
+        "randomLife":5,
+        "forceX":0,
+        "forceY":-0.02,
+        "randomForceX":0.0,
+        "randomForceY":0.01,
+        "velocityX":0,
+        "velocityY":-0.1,
+        "randomVelocityX":0.0,
+        "randomVelocityY":0.0,
+        "scale":2,
+        "growth":-0.001,
+        "randomScale":0.5,
+        "alphaStart":1,
+        "alphaFinish":0,
+        "alphaRatio":0.2,
+        "torque":0,
+        "randomTorque":0
+      }
+  });
+
+  container.addChild(this.view);
+  container.addChild(particles.view);
 
   this.trigger = function() {
     // when pressing for the first time, the orinal light position is stored to revert.
@@ -36,7 +72,9 @@ module.exports = function SwitchBehavior(container, data) {
     if (!pressed)
     {
       self.view.texture = textureOn;
+      pressed = true;
       game.resources.swicherSound.play();
+      container.addChild(particles.view);
     }
     // else
     // {
@@ -60,6 +98,16 @@ module.exports = function SwitchBehavior(container, data) {
 
 	this.update = function(game)
 	{
+    if (pressed)
+    {
+        particles.properties.centerX = self.view.position.x + 17;
+        particles.properties.centerY = self.view.position.y + 25;
+        particles.update(); 
+    }
+      
+      
+    
+
     if(pressed)
       return;
 
