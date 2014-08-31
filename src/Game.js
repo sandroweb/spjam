@@ -45,7 +45,7 @@ module.exports = function Game() {
   var level = null;
   window.light = new Light(50, 50);
 
-  this.renderer.view.addEventListener("mousemove", function(e) {
+  this.renderer.view.addEventListener("mousedown", function(e) {
     light.position.x = e.offsetX;
     light.position.y = e.offsetY;
   })
