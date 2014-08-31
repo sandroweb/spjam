@@ -13,7 +13,6 @@ var Resources = require('./Resources'),
   Tools = require('./Tools.js');
 
 window.Tweenable = Tweenable;
-window.tweenable = new Tweenable();
 
 module.exports = function Game() {
   this.resources = new Resources();
@@ -205,11 +204,11 @@ module.exports = function Game() {
     if(!input)
       return;
 
-    if (input.Key.isDown(input.Key.LEFT)) 
+    if (input.Key.isDown(input.Key.LEFT))
     {
       direction -= 0.01;
     }
-    else if (input.Key.isDown(input.Key.RIGHT)) 
+    else if (input.Key.isDown(input.Key.RIGHT))
     {
       direction += 0.01;
     }
