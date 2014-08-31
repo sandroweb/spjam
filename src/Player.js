@@ -8,6 +8,7 @@ module.exports = function Player(container, xPos, yPos) {
 	var maxspeed = 2.0;
 	var dir = 1;
 	var movie = null;
+	var dead = false;
 
 	movie = new PIXI.MovieClip(Tools.getTextures("boy", 7, ".png"));
 	movie.pivot = new PIXI.Point(movie.width/2, movie.height/2);
@@ -58,7 +59,7 @@ module.exports = function Player(container, xPos, yPos) {
 	  container.addChild(particles.view);
 	  container.addChild(this.view);
 
-	this.update = function(input, position, velocity)
+	this.update = function(game, position, velocity)
 	{
 		self.view.position.x = position.x;
 		self.view.position.y = position.y - 10;

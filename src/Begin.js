@@ -153,17 +153,17 @@ module.exports = function Begin(game) {
     overlap.rotation += 0.001;
     car.position.x += 20;
     car.scale.x = 1;
-    if (car.position.x > 7000) car.position.x = -300;
+    if (car.position.x > 7000) car.position.x = -3000;
 
     particles.properties.centerX = car.position.x;
     particles.properties.centerY = car.position.y + 100;
     particles.update();
 
-    logo.scale.x = 0.98 + Math.sin(count)*0.04;
-    logo.scale.y = 0.98 + Math.cos(count*0.3)*0.04;
+    logo.scale.x = 0.99 + Math.sin(count)*0.02;
+    logo.scale.y = 0.99 + Math.cos(count*0.3)*0.02;
 
-    logoDark.scale.x = 0.98 + Math.cos(count)*0.04;
-    logoDark.scale.y = 0.98 + Math.sin(count*0.3)*0.04;
+    logoDark.scale.x = 0.99 + Math.cos(count)*0.02;
+    logoDark.scale.y = 0.99 + Math.sin(count*0.3)*0.02;
 
     btnStart.alpha = 0.75 + Math.cos(count*15)*0.25;
 
