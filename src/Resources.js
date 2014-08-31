@@ -12,6 +12,7 @@ module.exports = function Resources() {
 
   // sprites
   this.textGameOver ='img/sprites/player.json';
+  this.textures ='img/textures.json';
 
   // sounds
   this.sounds = [

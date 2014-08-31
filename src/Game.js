@@ -22,14 +22,14 @@ module.exports = function Game() {
   //   light.y = e.originalEvent.y;
   // }
 
-  var screenWidth = (typeof(ejecta)=="undefined") ? 960 : 480;
-  var screenHeight = (typeof(ejecta)=="undefined") ? 640 : 320;
+  window.screenWidth = (typeof(ejecta)=="undefined") ? 960 : 480;
+  window.screenHeight = (typeof(ejecta)=="undefined") ? 640 : 320;
 
-  this.renderer = new PIXI.CanvasRenderer(screenWidth, screenHeight, document.getElementById('canvas'), false /* transparent */, true /* antialias */);
+  this.renderer = new PIXI.CanvasRenderer(screenWidth, screenHeight, document.getElementById('canvas'), false /* transparent */, false /* antialias */);
   this.renderer.view.style.display = "block";
   this.renderer.view.style.border = "1px solid";
 
-  this.stage = new PIXI.Stage(0xFFFFFF, true);;
+  this.stage = new PIXI.Stage(0x00fffa, true);;
 
   ////Input
   var input = null;
@@ -50,7 +50,7 @@ module.exports = function Game() {
   })
 
   var lightGraphics = new PIXI.Graphics(),
-      lightContainer = new PIXI.DisplayObjectContainer();
+  lightContainer = new PIXI.DisplayObjectContainer();
 
   self.begin;
   self.levelend;
@@ -70,19 +70,21 @@ module.exports = function Game() {
 
   this.setLevel = function(levelData) {
     var h = self.renderer.height,
-        w = self.renderer.width;
+        w = self.renderer.width,
+        frameBorder = 50;
 
     var newLevel = new Level(self);
 
     // add stage border to level segments
-    newLevel.segments.unshift( {a:{x:0,y:0}, b:{x:w,y:0}} );
-    newLevel.segments.unshift( {a:{x:w,y:0}, b:{x:w,y:h}} );
-    newLevel.segments.unshift( {a:{x:w,y:h}, b:{x:0,y:h}} );
-    newLevel.segments.unshift( {a:{x:0,y:h}, b:{x:0,y:0}} );
+    newLevel.segments.unshift( {a:{x:-frameBorder,y:-frameBorder}, b:{x:w,y:-frameBorder}} );
+    newLevel.segments.unshift( {a:{x:w,y:-frameBorder}, b:{x:w,y:h}} );
+    newLevel.segments.unshift( {a:{x:w,y:h}, b:{x:-frameBorder,y:h}} );
+    newLevel.segments.unshift( {a:{x:-frameBorder,y:h}, b:{x:-frameBorder,y:-frameBorder}} );
 
     newLevel.parse(levelData);
 
     self.level = newLevel;
+    self.stage.addChildAt(self.level.view, 0);
 
     light.setSegments(newLevel.segments);
 
@@ -150,38 +152,42 @@ module.exports = function Game() {
     var polygons = light.getSightPolygons();
 
     // DRAW AS A GIANT POLYGON
-    for(var i=1;i<polygons.length;i++){
-      lightContainer.addChild( light.getPolygonGraphics(polygons[i]) );
-    }
-    lightContainer.addChild( light.getPolygonGraphics(polygons[0]) );
+    
+    var vertices = polygons[0];
     window.polygons = polygons[0];
 
-    // // Masked Foreground
-    // ctx.globalCompositeOperation = "source-in";
-    // ctx.drawImage(foreground,0,0);
-    // ctx.globalCompositeOperation = "source-over";
+    // lightGraphics.clear();
+    // lightGraphics.beginFill(0xFFFFFF);
+    // lightGraphics.moveTo(vertices[0].x, vertices[0].y);
+    // for (var i = 1; i<vertices.length; i++) {
+    //   var v = vertices[i];
+    //   lightGraphics.lineTo(v.x, v.y);
+    // }
+    // lightGraphics.endFill();
 
-    // Draw dots
-    lightGraphics.beginFill(0xfff, 0.5);
-    lightGraphics.arc(light.position.x, light.position.y, 2, 0, 2*Math.PI, false);
+    lightGraphics.clear();
+    lightGraphics.beginFill(0xFFFFFF);
+    lightGraphics.moveTo(vertices[0].x, vertices[0].y);
+    for (var i = 1; i<vertices.length; i++) {
+      var v = vertices[i];
+      lightGraphics.lineTo(v.x, v.y);
+    }
     lightGraphics.endFill();
 
-    for(var angle=0;angle<Math.PI*2;angle+=(Math.PI*2)/10){
-      var dx = Math.cos(angle)*light.fuzzyRadius;
-      var dy = Math.sin(angle)*light.fuzzyRadius;
-      lightGraphics.beginFill(0xfff, 0.5);
-      lightGraphics.arc(light.position.x+dx, light.position.y+dy, 2, 0, 2*Math.PI, false);
-      lightGraphics.endFill();
-    }
+    // overlap.addChild(lightGraphics);
+    // overlapShape.mask = lightGraphics;
+
+    self.level.bg2.mask = lightGraphics;
+    // overlay.mask = lightGraphics;
+
+    // for(var i=1;i<polygons.length;i++){
+    //   lightContainer.addChild( light.getPolygonGraphics(polygons[i]) );
+    // }
+    // lightContainer.addChild( light.getPolygonGraphics(polygons[0]) );
+    // window.polygons = polygons[0];
 
     lastLightX = light.position.x;
     lastLightY = light.position.y;
-
-    // update light movieclip
-    if (light.behavior) {
-      light.behavior.view.x = light.position.x;
-      light.behavior.view.y = light.position.y;
-    }
   };
 
   this.update = function() {
@@ -201,9 +207,9 @@ module.exports = function Game() {
         physics.process(direction, window.polygons);
 
       if(player)
-        player.update(input, physics.playerPosition);  
+        player.update(input, physics.playerPosition);
     }
-    
+
 
     if(self.level)
       self.level.update(self);
@@ -270,8 +276,7 @@ module.exports = function Game() {
     var imgsArr = [], i;
 
     // start scenes
-    self.stage.addChild(lightGraphics);
-    self.stage.addChild(lightContainer);
+    // self.stage.addChild(lightGraphics);
 
     // start screens
     self.begin = new Begin(this);

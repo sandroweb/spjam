@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="24" height="16" tilewidth="40" tileheight="40">
+ <objectgroup name="objects" width="24" height="16">
+  <object name="a" type="PlatformBehavior" x="0" y="560" width="240" height="80">
+   <properties>
+    <property name="img" value="platform_3x3.png"/>
+    <property name="shadow" value="true"/>
+   </properties>
+  </object>
+  <object name="s" type="SwitchBehavior" x="120" y="520" width="40" height="40">
+   <properties>
+    <property name="img" value="switch.png"/>
+    <property name="moveX" value="23"/>
+    <property name="moveY" value="4"/>
+   </properties>
+  </object>
+  <object name="e" type="EndBehavior" x="880" y="520" width="40" height="40">
+   <properties>
+    <property name="img" value="goal.png"/>
+   </properties>
+  </object>
+  <object name="p" type="start" x="40" y="440" width="40" height="40"/>
+  <object name="light" type="LightBehavior" x="0" y="40" width="40" height="40"/>
+  <object name="a" type="PlatformBehavior" x="720" y="560" width="240" height="80">
+   <properties>
+    <property name="img" value="platform_3x3.png"/>
+    <property name="shadow" value="true"/>
+   </properties>
+  </object>
+  <object name="a" type="PlatformBehavior" x="240" y="480" width="80" height="80">
+   <properties>
+    <property name="img" value="platform_3x3.png"/>
+    <property name="shadow" value="true"/>
+   </properties>
+  </object>
+  <object name="a" type="PlatformBehavior" x="400" y="400" width="240" height="80">
+   <properties>
+    <property name="img" value="platform_3x3.png"/>
+    <property name="shadow" value="true"/>
+   </properties>
+  </object>
+  <object name="s" type="SwitchBehavior" x="520" y="360" width="40" height="40">
+   <properties>
+    <property name="img" value="switch.png"/>
+    <property name="moveX" value="0"/>
+    <property name="moveY" value="2"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
