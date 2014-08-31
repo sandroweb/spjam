@@ -22,8 +22,8 @@ module.exports = function Game() {
   //   light.y = e.originalEvent.y;
   // }
 
-  var screenWidth = (typeof(ejecta)=="undefined") ? 640 : 320;
-  var screenHeight = (typeof(ejecta)=="undefined") ? 960 : 480;
+  var screenWidth = (typeof(ejecta)=="undefined") ? 960 : 480;
+  var screenHeight = (typeof(ejecta)=="undefined") ? 640 : 320;
 
   this.renderer = new PIXI.CanvasRenderer(screenWidth, screenHeight, document.getElementById('canvas'), false /* transparent */, true /* antialias */);
   this.renderer.view.style.display = "block";
@@ -89,7 +89,7 @@ module.exports = function Game() {
     }
 
     if(!player){
-      player = new Player(self, 100,880);
+      player = new Player(self, 100,558);
       self.player = player;
     }
 
