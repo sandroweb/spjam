@@ -3,5 +3,6 @@ node_modules
 
 app/App/build.js
 app/App/pixi.dev.js
+app/App/howler.min.js
 app/App/img
 app/App/level

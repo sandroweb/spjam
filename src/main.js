@@ -9,23 +9,32 @@ Tweenable.setBezierFunction("customBezier", .92,.34,.6,.8);
 // Event between objects
 window.emitter = new EventEmitter2();
 
-// Init
-WebFontConfig = {
-google: {
-  families: ['Rokkitt']
-},
+console.log("One");
 
-active: function() {
-  // do something
+// Init
+if (typeof(ejecta)!=="undefined") {
   game = Game.instance = new Game();
-}
-};
-(function() {
-var wf = document.createElement('script');
-wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-    '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-wf.type = 'text/javascript';
-wf.async = 'true';
-var s = document.getElementsByTagName('script')[0];
-s.parentNode.insertBefore(wf, s);
+
+} else {
+
+WebFontConfig = {
+  google: {
+    families: ['Rokkitt']
+  },
+
+  active: function() {
+    // do something
+    game = Game.instance = new Game();
+  }
+  };
+  (function() {
+  var wf = document.createElement('script');
+  wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+  wf.type = 'text/javascript';
+  wf.async = 'true';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(wf, s);
 })();
+
+}
