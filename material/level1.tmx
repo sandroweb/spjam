@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="16" height="24" tilewidth="40" tileheight="40">
- <objectgroup name="objects" width="16" height="24">
-  <object name="a" type="PlatformBehavior" x="320" y="840" width="120" height="120">
+<map version="1.0" orientation="orthogonal" width="24" height="16" tilewidth="40" tileheight="40">
+ <objectgroup name="objects" width="24" height="16">
+  <object name="a" type="PlatformBehavior" x="440" y="520" width="120" height="120">
    <properties>
     <property name="img" value="platform_3x3.png"/>
     <property name="shadow" value="true"/>
    </properties>
   </object>
-  <object name="s" type="SwitchBehavior" x="160" y="920" width="40" height="40">
+  <object name="s" type="SwitchBehavior" x="200" y="600" width="40" height="40">
    <properties>
     <property name="img" value="switch.png"/>
-    <property name="move" value="13"/>
+    <property name="move" value="23"/>
+   </properties>
+  </object>
+  <object name="e" type="EndBehavior" x="800" y="600" width="40" height="40">
+   <properties>
+    <property name="img" value="goal.png"/>
    </properties>
   </object>
  </objectgroup>

@@ -1,37 +1,55 @@
-var Level = require('./Level');
-var Begin = require('./Begin');
-var LevelEnd = require('./LevelEnd');
-var GameOver = require('./GameOver');
-var Gameplay = require('./Gameplay');
-var Light = require('./Light');
-var TWEEN = require('./vendor/tween.min.js');
+var Resources = require('./Resources'),
+  Preloader = require('./Preloader'),
+  Level = require('./Level'),
+  Begin = require('./Begin'),
+  LevelEnd = require('./LevelEnd'),
+  GameOver = require('./GameOver'),
+  Gameplay = require('./Gameplay'),
+  Light = require('./Light'),
+  Tweenable = require('./vendor/shifty'),
+  GameInput = require('./GameInput.js'),
+  Player = require('./Player.js');
+
+window.Tweenable = Tweenable;
+window.tweenable = new Tweenable();
 
 module.exports = function Game() {
 
-  // Stage setup
-  var stage = new PIXI.Stage(0xFFFFFF, true);
-  stage.setInteractive(true);
+  this.resources = new Resources();
 
-  this.stage = stage;
+  // stage.click = function(e) {
+  //   light.x = e.originalEvent.x;
+  //   light.y = e.originalEvent.y;
+  // }
 
-  var renderer = PIXI.autoDetectRenderer(640, 960, null, false /* transparent */, true /* antialias */);
-  renderer.view.style.display = "block";
-  renderer.view.style.border = "1px solid";
-  document.body.appendChild(renderer.view);
+  var screenWidth = (typeof(ejecta)=="undefined") ? 960 : 480;
+  var screenHeight = (typeof(ejecta)=="undefined") ? 640 : 320;
 
-  this.renderer = renderer;
+  this.renderer = new PIXI.CanvasRenderer(screenWidth, screenHeight, document.getElementById('canvas'), false /* transparent */, true /* antialias */);
+  this.renderer.view.style.display = "block";
+  this.renderer.view.style.border = "1px solid";
+
+  this.stage = new PIXI.Stage(0xFFFFFF, true);;
+
+  ////Input
+  var input = null;
+
+  /////Player
+  var player = null;
 
   // LevelIndex
   var levelIndex = 0;
   var self = this;
+  var level = null;
   window.light = new Light(50, 50);
-  var lightGraphics = new PIXI.Graphics();
 
-  // level images
-  var images = [],
-    begin,
+  var lightGraphics = new PIXI.Graphics(),
+      lightContainer = new PIXI.DisplayObjectContainer();
+
+  var begin,
     levelend,
     gameover,
+    preloader,
     loader;
 
   this.restart = function() {
@@ -43,26 +61,38 @@ module.exports = function Game() {
   }
 
   this.setLevel = function(levelData) {
-    var h = renderer.height,
-        w = renderer.width;
+    var h = self.renderer.height,
+        w = self.renderer.width;
 
-    var level = new Level(self);
+    var newLevel = new Level(self);
 
     // add stage border to level segments
-    level.segments.unshift( {a:{x:0,y:0}, b:{x:w,y:0}} );
-    level.segments.unshift( {a:{x:w,y:0}, b:{x:w,y:h}} );
-    level.segments.unshift( {a:{x:w,y:h}, b:{x:0,y:h}} );
-    level.segments.unshift( {a:{x:0,y:h}, b:{x:0,y:0}} );
+    newLevel.segments.unshift( {a:{x:0,y:0}, b:{x:w,y:0}} );
+    newLevel.segments.unshift( {a:{x:w,y:0}, b:{x:w,y:h}} );
+    newLevel.segments.unshift( {a:{x:w,y:h}, b:{x:0,y:h}} );
+    newLevel.segments.unshift( {a:{x:0,y:h}, b:{x:0,y:0}} );
 
-    level.parse(levelData);
-    light.setSegments(level.segments);
+    newLevel.parse(levelData);
 
-    self.level = level;
+    self.level = newLevel;
+
+    light.setSegments(newLevel.segments);
 
     self.loop();
   };
 
   this.loadLevel = function(levelIndex) {
+    if(!input)
+    {
+      input = new GameInput();
+      self.input = input;
+    }
+
+    if(!player){
+      player = new Player(self, 100,558);
+      self.player = player;
+    }
+
     console.log("level/level" + levelIndex + ".json");
     var loader = new PIXI.JsonLoader("level/level" + levelIndex + ".json");
     loader.on('loaded', function(evt) {
@@ -79,7 +109,7 @@ module.exports = function Game() {
 
   this.updateLights = function() {
     // nothing to update, skip
-    if (light.x == lastLightX && light.y == lastLightY) {
+    if (light.position.x == lastLightX && light.position.y == lastLightY) {
       return;
     }
 
@@ -90,14 +120,19 @@ module.exports = function Game() {
 
     lightGraphics.clear();
 
+    // remove previous added light items
+    if (lightContainer.children.length > 0) {
+      lightContainer.removeChildren();
+    }
+
     // Sight Polygons
     var polygons = light.getSightPolygons();
 
     // DRAW AS A GIANT POLYGON
     for(var i=1;i<polygons.length;i++){
-      stage.addChild( light.getPolygonGraphics(polygons[i], "rgba(255,255,255,0.2)") );
+      lightContainer.addChild( light.getPolygonGraphics(polygons[i]) );
     }
-    stage.addChild( light.getPolygonGraphics(polygons[0], "#fff") );
+    lightContainer.addChild( light.getPolygonGraphics(polygons[0]) );
 
     // // Masked Foreground
     // ctx.globalCompositeOperation = "source-in";
@@ -105,24 +140,37 @@ module.exports = function Game() {
     // ctx.globalCompositeOperation = "source-over";
 
     // Draw dots
-    lightGraphics.beginFill(0xfff);
-    lightGraphics.arc(light.x, light.y, 2, 0, 2*Math.PI, false);
+    lightGraphics.beginFill(0xfff, 0.5);
+    lightGraphics.arc(light.position.x, light.position.y, 2, 0, 2*Math.PI, false);
     lightGraphics.endFill();
 
     for(var angle=0;angle<Math.PI*2;angle+=(Math.PI*2)/10){
       var dx = Math.cos(angle)*light.fuzzyRadius;
       var dy = Math.sin(angle)*light.fuzzyRadius;
-      lightGraphics.beginFill(0xfff);
-      lightGraphics.arc(light.x+dx, light.y+dy, 2, 0, 2*Math.PI, false);
+      lightGraphics.beginFill(0xfff, 0.5);
+      lightGraphics.arc(light.position.x+dx, light.position.y+dy, 2, 0, 2*Math.PI, false);
       lightGraphics.endFill();
     }
 
-    lastLightX = light.x;
-    lastLightY = light.y;
+    lastLightX = light.position.x;
+    lastLightY = light.position.y;
   };
 
   this.update = function() {
     this.updateLights();
+
+    // console.log(input + " " + input.Key);
+    if(!input)
+      return;
+
+    if(player)
+      player.update(input);
+
+    if(self.level)
+      self.level.update(self);
+
+    if (input.Key.isDown(input.Key.LEFT)) player.moveLeft();
+    if (input.Key.isDown(input.Key.RIGHT)) player.moveRight();
   };
 
   this.loop = function() {
@@ -130,34 +178,44 @@ module.exports = function Game() {
 
     function animate() {
       self.update(); // logic
-      renderer.render(stage);
+      self.renderer.render(self.stage);
       requestAnimFrame( animate );
     }
   };
 
-  function addImages(currScreen) {
-    var i, image, total = currScreen.images.length;
-    for (i = 0; i < total; ++i) {
-      image = currScreen.images[i];
-      if (images.indexOf(image) === -1) {
-        images.push(image);
-      }
-    }
-  }
-
   this.start = function() {
-    stage.addChild(lightGraphics);
+    var imgsArr = [], i;
+
+    // start scenes
+    self.stage.addChild(lightGraphics);
+    self.stage.addChild(lightContainer);
+
+    // start screens
     begin = new Begin(this);
     levelend = new LevelEnd(this);
     gameover = new GameOver(this);
+    preloader = new Preloader(this);
+
+    // start loop
     self.loop();
-    addImages(begin);
-    addImages(levelend);
-    addImages(gameover);
-    loader = new PIXI.AssetLoader(images);
-    loader.onComplete = begin.show;
-    loader.load();
+
+    // FIXME
+    // self.load();
   };
+
+  this.load = function() {
+    // loader
+    loader = new PIXI.AssetLoader(self.resources.getImages());
+    loader.addEventListener('onComplete', function() {
+      preloader.hide();
+      begin.show();
+    });
+    loader.addEventListener('onProgress', function(e) {
+      preloader.progress((e.content.assetURLs.length - e.content.loadCount) * 100 / e.content.assetURLs.length);
+      if (typeof(ejecta)!=="undefined") { return; };
+    });
+    loader.load();
+  }
 
   this.start();
 }

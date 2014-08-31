@@ -4,23 +4,20 @@ module.exports = function LevelEnd(game) {
     self = this,
     bg,
     text,
-    btn,
-    images = ['img/bg-default.jpg', 'img/btn-next.png', 'img/text-level-end.png'];
-
-  this.images = images;
+    btn;
 
   function init() {
     content = new PIXI.DisplayObjectContainer();
     content.visible = false;
     game.stage.addChild(content);
 
-    bg = PIXI.Sprite.fromImage(images[0]);
+    bg = PIXI.Sprite.fromImage(game.resources.background);
     content.addChild(bg);
 
-    text = PIXI.Sprite.fromImage(images[2]);
+    text = PIXI.Sprite.fromImage(game.resources.textLevelEnd);
     content.addChild(text);
 
-    btn = new PIXI.Sprite(PIXI.Texture.fromImage(images[1]));
+    btn = new PIXI.Sprite(PIXI.Texture.fromImage(game.resources.btnNext));
     btn.buttonMode = true;
     btn.interactive = true;
     content.addChild(btn);
