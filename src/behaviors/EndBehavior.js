@@ -40,12 +40,13 @@ module.exports = function EndBehavior(container, data) {
     if (triggered) {
 
       console.log("Triggered... increasing alpha...");
-      fadeOutShape.alpha += 0.005;
+      fadeOutShape.alpha += 0.01;
       if (fadeOutShape.alpha >= 1) {
         game.level.dispose();
         game.nextLevel();
         game.stage.removeChild(fadeOutShape);
         game.stage.removeChild(game.level.container);
+        game.stage.removeChild(game.level.view);
       }
 
     } else {

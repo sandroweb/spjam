@@ -34,8 +34,15 @@ module.exports = function Level(game, index) {
     self.overlay.alpha = 0.3;
     self.view.addChild(self.overlay);
 
+
     self.bg2 = PIXI.Sprite.fromFrame("backgroundForest.png");
     self.view.addChild(self.bg2);
+
+    self.scenario = new PIXI.DisplayObjectContainer();
+    self.view.addChild(self.scenario);
+
+    self.foreground = new PIXI.DisplayObjectContainer();
+    self.view.addChild(self.foreground);
 
 
     for (index = 0; index < data.layers[0].objects.length; ++index) {
@@ -49,7 +56,10 @@ module.exports = function Level(game, index) {
 
       ////setup behavior
       var BehaviourClass = require("./behaviors/" + data.layers[0].objects[index].type + ".js");
-      var behavior = new BehaviourClass(self.container, data.layers[0].objects[index]);
+
+      var c = BehaviourClass == LightBehavior ? self.foreground : self.scenario;
+
+      var behavior = new BehaviourClass(c, data.layers[0].objects[index]);
       self.levelobjects.push(behavior);
 
       if(data.layers[0].objects[index].type == "LightBehavior") {

@@ -3,6 +3,7 @@ var ParticleSystem = require('../components/ParticleSystem.js');
 
 module.exports = function LightBehavior(container, data) {
   var self = this;
+  this.name = "LightBehavior";
 
   /////retrive position and size specs
   var size = data.width;
@@ -24,6 +25,14 @@ module.exports = function LightBehavior(container, data) {
   this.view.addChild(movie);
 
   movie.play();
+
+  var halo = PIXI.Sprite.fromFrame("halo.png");
+  halo.anchor.x = 0.5;
+  halo.anchor.y = 0.5;
+  halo.scale.x = 10;
+  halo.scale.y = 10;
+  halo.alpha = 0.3;
+  this.view.addChild(halo);
 
   light.position.x = originX;
   light.position.y = originY;
