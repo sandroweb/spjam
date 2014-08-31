@@ -2,7 +2,7 @@ var ParticleSystem = require('./components/ParticleSystem.js');
 
 module.exports = function Begin(game) {
   window.game = game;
-  
+
   var self = this;
   var view = new PIXI.DisplayObjectContainer();
   var overlap = null;
@@ -20,13 +20,13 @@ module.exports = function Begin(game) {
 
   init();
 
-  function init() 
+  function init()
   {
     view.visible = false;
     game.stage.addChild(view);
 
     var bg = PIXI.Sprite.fromFrame("Scenario.png");
-    view.addChild(bg); 
+    view.addChild(bg);
 
     logoDark = PIXI.Sprite.fromFrame("DarkLightLogo.png");
     view.addChild(logoDark);
@@ -139,12 +139,12 @@ module.exports = function Begin(game) {
 
   }
 
-  function show() 
+  function show()
   {
     view.visible = true;
   }
 
-  function hide() 
+  function hide()
   {
     view.visible = false;
   }

@@ -81,6 +81,7 @@ module.exports = function LightBehavior(container, data) {
       particles.properties.centerX = self.view.position.x;
       particles.properties.centerY = self.view.position.y - 10;
       particles.update();
+
   }
 
 }

@@ -4,7 +4,6 @@ var Resources = require('./Resources'),
   Begin = require('./Begin'),
   LevelEnd = require('./LevelEnd'),
   GameOver = require('./GameOver'),
-  Gameplay = require('./Gameplay'),
   Light = require('./Light'),
   Tweenable = require('./vendor/shifty'),
   GameInput = require('./GameInput.js'),
@@ -49,9 +48,36 @@ module.exports = function Game() {
 
   self.level = level;
 
+  var lastMouseClick = 0,
+      mouseClickInterval = 2000; // 3 seconds to click again
+
   this.renderer.view.addEventListener("mousedown", function(e) {
+    var clickTime = (new Date()).getTime();
+
+    if (lastMouseClick + mouseClickInterval >= clickTime) {
+      // dissallowed
+      return;
+    }
+
+    lastMouseClick = clickTime;
+
     // light.position.x = e.offsetX;
     // light.position.y = e.offsetY;
+
+    if (self.btnSoundOn.visible === true) {
+      if (e.offsetX >= self.btnSoundOn.x && e.offsetX < self.btnSoundOn.x + self.btnSoundOn.width
+        && e.offsetY >= self.btnSoundOn.y && e.offsetY < self.btnSoundOn.y + self.btnSoundOn.height) {
+        return;
+      }
+    }
+
+    if (self.btnSoundOff.visible === true) {
+      if (e.offsetX >= self.btnSoundOff.x && e.offsetX < self.btnSoundOff.x + self.btnSoundOff.width
+        && e.offsetY >= self.btnSoundOff.y && e.offsetY < self.btnSoundOff.y + self.btnSoundOff.height) {
+        return;
+      }
+    }
+
     if (self.level !== null) {
       game.resources.motherSound.play();
     }
@@ -61,7 +87,7 @@ module.exports = function Game() {
     tweenable.tween({
       from: light.position,
       to:   dest,
-      duration: 1000,
+      duration: mouseClickInterval,
       easing: 'easeOutCubic',
       start: function () {
         moving = true;
@@ -154,7 +180,7 @@ module.exports = function Game() {
     }
 
     // FIXME
-    if (light.segments.lenght == 0 || !this.level || this.level.segments.length == 0) {
+    if (light.segments.length == 0 || !this.level || this.level.segments.length == 0) {
       return;
     }
 
@@ -196,12 +222,6 @@ module.exports = function Game() {
 
     self.level.bg2.mask = lightGraphics;
     // overlay.mask = lightGraphics;
-
-    // for(var i=1;i<polygons.length;i++){
-    //   lightContainer.addChild( light.getPolygonGraphics(polygons[i]) );
-    // }
-    // lightContainer.addChild( light.getPolygonGraphics(polygons[0]) );
-    // window.polygons = polygons[0];
 
     lastLightX = light.position.x;
     lastLightY = light.position.y;
@@ -311,6 +331,34 @@ module.exports = function Game() {
     glow.scale.y = 2;
     self.stage.addChild(glow);
     glow.alpha = 0.65;
+
+    self.btnSoundOff = PIXI.Sprite.fromFrame('soundOn.png');
+    self.btnSoundOff.setInteractive(true);
+    self.btnSoundOff.buttonMode = true;
+    self.btnSoundOff.position.x = 10;
+    self.btnSoundOff.position.y = 10;
+
+    self.btnSoundOn = PIXI.Sprite.fromFrame('soundOff.png');
+    self.btnSoundOn.setInteractive(true);
+    self.btnSoundOn.buttonMode = true;
+    self.btnSoundOn.position.x = self.btnSoundOff.position.x;
+    self.btnSoundOn.position.y = self.btnSoundOff.position.y;
+    self.btnSoundOn.visible = false;
+
+    self.stage.addChild(game.btnSoundOff);
+    self.stage.addChild(game.btnSoundOn);
+
+    self.btnSoundOff.click = function(data) {
+      self.btnSoundOn.visible = true;
+      self.btnSoundOff.visible = false;
+      Howler.mute();
+    }
+
+    self.btnSoundOn.click = function(data) {
+      self.btnSoundOn.visible = false;
+      self.btnSoundOff.visible = true;
+      Howler.unmute();
+    }
   }
 
   this.start = function() {
