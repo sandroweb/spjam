@@ -80,6 +80,16 @@ module.exports = function LightBehavior(container, data) {
       particles.properties.centerY = self.view.position.y - 10;
       particles.update();
 
+      var orientation = light.position.x - game.player.view.position.x;
+
+      if (orientation < 0)
+      {
+        movie.scale.x = -1;
+      }
+      if (orientation > 0)
+      {
+        movie.scale.x = 1;
+      }
   }
 
 }

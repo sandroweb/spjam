@@ -66,6 +66,12 @@ module.exports = function Resources() {
       name: 'carPass',
       urls: ['sounds/carPass2.mp3'],
       volume: .15
+    },
+    {
+      // game.resources.storm.play();
+      name: 'storm',
+      urls: ['sounds/storm2.mp3'],
+      volume: 1
     }
   ];
 

@@ -46,6 +46,8 @@ module.exports = function GameOver(game) {
 
     if (bg.alpha == 1)
     {
+      if (count == 0) game.resources.storm.play();
+
       if (count%15 == 0 && count < 80)
       {
         death.visible = !death.visible;

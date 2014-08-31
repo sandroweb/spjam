@@ -113,6 +113,9 @@ module.exports = function Game() {
 
   this.restart = function() {
     console.log('Game.js - this.restart()');
+    var i = self.level.index;
+    self.level.dispose();
+    this.loadLevel(i);
   }
 
   this.nextLevel = function() {
@@ -294,7 +297,6 @@ module.exports = function Game() {
   };
 
   this.renderLoop = function() {
-    console.log("i'm looping");
     self.update(); // logic
     self.renderer.render(self.stage);
     requestAnimFrame(self.renderLoop);
