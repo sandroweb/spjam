@@ -44,7 +44,7 @@ module.exports = function ParticleSystem(particlesConfig)
 		if (config.properties != null) {
 			for (var field in config.properties) {
 				properties[field] = config.properties[field];
-			}	
+			}
 		}
 
 		var j = 0;
@@ -94,7 +94,7 @@ module.exports = function ParticleSystem(particlesConfig)
 		while (amount--) {
 			var p = nextParticle;
 			if (p == null) p = firstParticle;
-			p.spawn(properties);	
+			p.spawn(properties);
 			nextParticle = p.next;
 		}
 	}
@@ -266,7 +266,7 @@ module.exports = function ParticleSystem(particlesConfig)
 	{
 		if (this.view == null) return;
 		if (this.view.parent) this.view.parent.removeChild(this.view);
-		
+
 		this.living = false;
 		this.next = null;
 		this.view = null;

@@ -1,9 +1,13 @@
 var Game = require('./Game'),
     Tweenable = require('./vendor/shifty'),
+    EventEmitter2 = require('./vendor/EventEmitter2').EventEmitter2,
     game;
 
 // http://cubic-bezier.com/#.92,.34,.6,.8
 Tweenable.setBezierFunction("customBezier", .92,.34,.6,.8);
+
+// Event between objects
+window.emitter = new EventEmitter2();
 
 // Init
 WebFontConfig = {

@@ -1,5 +1,7 @@
 var Tweenable = require('../vendor/shifty'),
-    Game = require('../game');
+    Game = require('../game'),
+    ParticleSystem = require('../components/ParticleSystem.js'),
+    Tweenable = require('../vendor/shifty');
 
 module.exports = function EndBehavior(container, data) {
 	var self = this,
@@ -17,13 +19,75 @@ module.exports = function EndBehavior(container, data) {
   var originY = data.y;
 
   /////create visual
-  self.view = new PIXI.Sprite(PIXI.Texture.fromImage("portal.png"));
-  self.view.position.x = originX;
-  self.view.position.y = originY - 27;
-  container.addChild(self.view);
+  this.view = new PIXI.DisplayObjectContainer();
+  this.view.position.x = originX;
+  this.view.position.y = originY - 27;
+
+  var particles = null;
+  var portalOffSprite = new PIXI.Sprite(PIXI.Texture.fromImage("PortalOff.png"));
+  var portalOnSprite = new PIXI.Sprite(PIXI.Texture.fromImage("portal.png"));
+  portalOnSprite.alpha = 0;
+
+  this.view.addChild(portalOffSprite);
+  container.addChild(this.view);
 
   var fadeOutShape = new PIXI.Graphics();
   fadeOutShape.alpha = 0;
+
+  emitter.on('switch.pressed', function() {
+
+    if(game.level.numSwitches == 0) {
+
+      particles = new ParticleSystem({
+        "images":["motherShine.png"],
+        "numParticles":50,
+        "emissionsPerUpdate":1,
+        "emissionsInterval":2,
+        "alpha":1,
+        "properties": {
+          "randomSpawnX":1,
+          "randomSpawnY":1,
+          "life":30,
+          "randomLife":100,
+          "forceX":0,
+          "forceY":0,
+          "randomForceX":0.001,
+          "randomForceY":0.01,
+          "velocityX":0,
+          "velocityY":-0.02,
+          "randomVelocityX":0.2,
+          "randomVelocityY":0.4,
+          "scale":0.1,
+          "growth":0.001,
+          "randomScale":0.04,
+          "alphaStart":0,
+          "alphaFinish":0,
+          "alphaRatio":0.2,
+          "torque":0,
+          "randomTorque":0
+        }
+      });
+
+      particles.view.alpha = 0.5;
+      particles.properties.centerX += self.view.width / 2;
+      particles.properties.centerY += self.view.height / 2;
+
+      self.view.addChild(particles.view);
+
+      // Fade portal
+      var interval = setInterval(function() {
+        console.log("Interval...");
+        if (portalOnSprite.alpha >= 1) {
+          clearInterval(interval);
+        } else {
+          portalOnSprite.alpha += 0.02;
+        }
+      }, 1)
+
+      self.view.addChild(portalOnSprite);
+    }
+
+  });
 
 	this.trigger = function() {
     if (!triggered) {
@@ -39,9 +103,12 @@ module.exports = function EndBehavior(container, data) {
 
 	this.update = function(game)
 	{
+    if (particles) {
+      particles.update();
+    }
+
     if (triggered) {
 
-      console.log("Triggered... increasing alpha...");
       fadeOutShape.alpha += 0.01;
       if (fadeOutShape.alpha >= 1) {
         game.level.dispose();
@@ -55,9 +122,9 @@ module.exports = function EndBehavior(container, data) {
       //console.log(game.player.doCollide(itemData.x,itemData.y, itemData.width,itemData.height),game.input.Key.isDown(38));
       if(game.player.doCollide(itemData.x,itemData.y, itemData.width,itemData.height))
         {
-          console.log("switches: " + game.level.numSwitches)
-          if(game.level.numSwitches == 0)
+          if(game.level.numSwitches == 0) {
             self.trigger();
+          }
         }
     }
   }
