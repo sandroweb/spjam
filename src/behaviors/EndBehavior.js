@@ -46,7 +46,7 @@ module.exports = function EndBehavior(container, data) {
   halo.visible = false;
 
   emitter.on('switch.pressed', function() {
-    
+
     if(game.level.numSwitches == 0) {
 
       particles = new ParticleSystem({

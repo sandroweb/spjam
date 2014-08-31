@@ -17,8 +17,8 @@ module.exports = function Physics()
 		var walking = axis.x != 0;
 		var offsetX = 20;
 		var offsetY = 20;
-		var velX = walking ? 2 : 0;
-		var velY = 3;
+		var velX = walking ? 4 : 0;
+		var velY = 6;
 
 		// var lineHA = {x:playerPosition.x - 1000, y:playerPosition.y};
 		// var lineHB = {x:playerPosition.x + 1000, y:playerPosition.y};

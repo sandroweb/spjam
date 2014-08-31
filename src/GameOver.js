@@ -41,7 +41,7 @@ module.exports = function GameOver(game) {
   {
     if (!content.visible) return;
 
-    bg.alpha += 0.003;
+    bg.alpha += 0.01;
     if (bg.alpha > 1) bg.alpha = 1;
 
     if (bg.alpha == 1)
@@ -63,6 +63,12 @@ module.exports = function GameOver(game) {
 
   function hide() {
     content.visible = false;
+
+    // game.loadLevel(1);
+    // game.level.dispose();
+    // game.level.index = 0;
+    // game.level = null;
+
     game.goToBeginning();
   }
 

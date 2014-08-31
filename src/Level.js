@@ -104,10 +104,14 @@ module.exports = function Level(game, index) {
 
   this.update = function(game)
   {
-    if (self.levelobjects) {
-      for (index = 0; index < self.levelobjects.length; ++index) {
-        self.levelobjects[index].update(game);
+    // WHY GOD?!?!?!!
+    try {
+      if (self.levelobjects) {
+        for (var index = 0; index < self.levelobjects.length; ++index) {
+          self.levelobjects[index].update(game);
+        }
       }
+    } catch (e) {
     }
   }
 };

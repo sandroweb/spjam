@@ -12,7 +12,7 @@ module.exports = function Player(container, xPos, yPos) {
 
 	movie = new PIXI.MovieClip(Tools.getTextures("boy", 7, ".png"));
 	movie.pivot = new PIXI.Point(movie.width/2, movie.height/2);
-	movie.animationSpeed = 0.1;
+	movie.animationSpeed = 0.2;
 
 	this.view = new PIXI.DisplayObjectContainer();
 	this.view.addChild(movie);

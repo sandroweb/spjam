@@ -10,13 +10,11 @@ module.exports = function LightBehavior(container, data) {
   var originX = data.x;
   var originY = data.y;
 
-  console.log("light: ", originX, originY);
-
   var movie = null;
 
   movie = new PIXI.MovieClip(Tools.getTextures("mother", 12, ".png"));
   movie.pivot = new PIXI.Point(movie.width/2, movie.height/2 + 25);
-  movie.animationSpeed = 0.1;
+  movie.animationSpeed = 0.2;
 
   this.view = new PIXI.DisplayObjectContainer();
   this.view.position.x = originX;

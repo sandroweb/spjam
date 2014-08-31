@@ -49,9 +49,12 @@ module.exports = function Game() {
   self.level = level;
 
   var lastMouseClick = 0,
-      mouseClickInterval = 2000; // 3 seconds to click again
+      mouseClickInterval = 1000; // 1 second to click again
 
   this.renderer.view.addEventListener("mousedown", function(e) {
+    // prevent click on first level
+    // if (!self.level) { return; }
+
     var clickTime = (new Date()).getTime();
 
     if (lastMouseClick + mouseClickInterval >= clickTime) {
@@ -89,7 +92,7 @@ module.exports = function Game() {
       game.resources.motherSound.play();
     }
 
-    var dest = {x:e.offsetX, y:e.offsetY};
+    var dest = { x:e.offsetX, y:e.offsetY };
     var tweenable = new Tweenable();
     tweenable.tween({
       from: light.position,
@@ -283,15 +286,19 @@ module.exports = function Game() {
     }
   };
 
+  var loopBounded =  false ;
   this.loop = function() {
-    requestAnimFrame(animate);
-
-    function animate() {
-      self.update(); // logic
-      self.renderer.render(self.stage);
-      requestAnimFrame(animate);
-    }
+    if (loopBounded){ return; }
+    loopBounded = true;
+    requestAnimFrame(self.renderLoop);
   };
+
+  this.renderLoop = function() {
+    console.log("i'm looping");
+    self.update(); // logic
+    self.renderer.render(self.stage);
+    requestAnimFrame(self.renderLoop);
+  }
 
   this.loadPixi = function() {
     self.itemsLoaded = 0,
@@ -416,6 +423,11 @@ module.exports = function Game() {
 
   this.goToBeginning = function()
   {
+    // game.loadLevel(1);
+    game.level.dispose();
+    game.level.index = 0;
+    game.level = null;
+
     self.begin.show();
   }
 
@@ -425,7 +437,7 @@ module.exports = function Game() {
 
     if(!gameRunning)
       return;
-    
+
     gameRunning = false;
 
     var phrase1 = new PIXI.Text('HMMM...MY HEAD...WHAT HAPPENED?', {
@@ -507,6 +519,8 @@ module.exports = function Game() {
       finish: function () {
       }
     });
+
+    self.gameRunning = false;
   }
 
   this.start();
