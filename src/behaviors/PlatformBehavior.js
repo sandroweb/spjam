@@ -17,6 +17,7 @@ module.exports = function PlatformBehavior(container, properties) {
 		var amount = cols*rows;
 		var px = 0;
 		var py = 0;
+		
 
 		for (var i = 0; i < amount; i++)
 		{

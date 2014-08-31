@@ -1,11 +1,11 @@
-{ "height":16,
+{ "height":32,
  "layers":[
         {
-         "height":16,
+         "height":32,
          "name":"objects",
          "objects":[
                 {
-                 "height":80,
+                 "height":40,
                  "name":"a",
                  "properties":
                     {
@@ -14,9 +14,63 @@
                     },
                  "type":"PlatformBehavior",
                  "visible":true,
-                 "width":240,
+                 "width":120,
+                 "x":180,
+                 "y":40
+                }, 
+                {
+                 "height":40,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":160,
+                 "x":800,
+                 "y":600
+                }, 
+                {
+                 "height":40,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":120,
                  "x":0,
-                 "y":560
+                 "y":100
+                }, 
+                {
+                 "height":20,
+                 "name":"p",
+                 "properties":
+                    {
+
+                    },
+                 "type":"start",
+                 "visible":true,
+                 "width":20,
+                 "x":20,
+                 "y":60
+                }, 
+                {
+                 "height":20,
+                 "name":"light",
+                 "properties":
+                    {
+
+                    },
+                 "type":"LightBehavior",
+                 "visible":true,
+                 "width":20,
+                 "x":20,
+                 "y":60
                 }, 
                 {
                  "height":40,
@@ -24,14 +78,127 @@
                  "properties":
                     {
                      "img":"switch.png",
-                     "moveX":"23",
-                     "moveY":"4"
+                     "moveX":"12",
+                     "moveY":"0",
+                     "size":"20"
                     },
                  "type":"SwitchBehavior",
                  "visible":true,
                  "width":40,
-                 "x":120,
+                 "x":220,
+                 "y":0
+                }, 
+                {
+                 "height":40,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":120,
+                 "x":280,
+                 "y":160
+                }, 
+                {
+                 "height":40,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":120,
+                 "x":160,
+                 "y":280
+                }, 
+                {
+                 "height":40,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":120,
+                 "x":280,
+                 "y":380
+                }, 
+                {
+                 "height":40,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":120,
+                 "x":0,
+                 "y":480
+                }, 
+                {
+                 "height":40,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":120,
+                 "x":220,
                  "y":520
+                }, 
+                {
+                 "height":40,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":140,
+                 "x":480,
+                 "y":480
+                }, 
+                {
+                 "height":40,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":140,
+                 "x":700,
+                 "y":320
+                }, 
+                {
+                 "height":40,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":120,
+                 "x":800,
+                 "y":160
                 }, 
                 {
                  "height":40,
@@ -42,77 +209,9 @@
                     },
                  "type":"EndBehavior",
                  "visible":true,
-                 "width":40,
-                 "x":880,
-                 "y":520
-                }, 
-                {
-                 "height":40,
-                 "name":"p",
-                 "properties":
-                    {
-
-                    },
-                 "type":"start",
-                 "visible":true,
-                 "width":40,
-                 "x":40,
-                 "y":440
-                }, 
-                {
-                 "height":40,
-                 "name":"light",
-                 "properties":
-                    {
-
-                    },
-                 "type":"LightBehavior",
-                 "visible":true,
-                 "width":40,
-                 "x":0,
-                 "y":40
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":240,
-                 "x":720,
+                 "width":20,
+                 "x":920,
                  "y":560
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
-                 "x":240,
-                 "y":480
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":240,
-                 "x":400,
-                 "y":400
                 }, 
                 {
                  "height":40,
@@ -120,19 +219,64 @@
                  "properties":
                     {
                      "img":"switch.png",
-                     "moveX":"0",
-                     "moveY":"2"
+                     "moveX":"34",
+                     "moveY":"16",
+                     "size":"20"
                     },
                  "type":"SwitchBehavior",
                  "visible":true,
                  "width":40,
+                 "x":740,
+                 "y":280
+                }, 
+                {
+                 "height":40,
+                 "name":"s",
+                 "properties":
+                    {
+                     "img":"switch.png",
+                     "moveX":"34",
+                     "moveY":"16",
+                     "size":"20"
+                    },
+                 "type":"SwitchBehavior",
+                 "visible":true,
+                 "width":40,
+                 "x":260,
+                 "y":480
+                }, 
+                {
+                 "height":40,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":120,
                  "x":520,
-                 "y":360
+                 "y":80
+                }, 
+                {
+                 "height":40,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":120,
+                 "x":460,
+                 "y":280
                 }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":24,
+         "width":48,
          "x":0,
          "y":0
         }],
@@ -141,9 +285,9 @@
     {
 
     },
- "tileheight":40,
+ "tileheight":20,
  "tilesets":[],
- "tilewidth":40,
+ "tilewidth":20,
  "version":1,
- "width":24
+ "width":48
 }

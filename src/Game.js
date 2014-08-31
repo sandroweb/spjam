@@ -45,7 +45,7 @@ module.exports = function Game() {
   var level = null;
   window.light = new Light(50, 50);
 
-  this.renderer.view.addEventListener("mousedown", function(e) {
+  this.renderer.view.addEventListener("mousemove", function(e) {
     light.position.x = e.offsetX;
     light.position.y = e.offsetY;
   })
@@ -210,12 +210,9 @@ module.exports = function Game() {
 
       if(player)
         player.update(input, physics.playerPosition, physics.playerVelocity);
+
+       self.level.update(self);
     }
-
-
-    if(self.level)
-      self.level.update(self);
-
   };
 
   this.loop = function() {

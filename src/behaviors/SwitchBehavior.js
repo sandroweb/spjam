@@ -2,11 +2,11 @@ var Tweenable = require('../vendor/shifty');
 
 module.exports = function SwitchBehavior(container, data) {
 	var self = this,
-    gridSize = data.height,
+    gridSize = data.properties.size || data.height,
     moveX = data.properties.moveX * gridSize,
     moveY = data.properties.moveY * gridSize,
     lightOrig = false,
-    lightDest = { x: data.properties.moveX * gridSize, y: data.properties.moveY * gridSize }
+    lightDest = { x: data.properties.moveX * gridSize, y: data.properties.moveY * gridSize },
     itemData = data,
     moving = false,
     pressed = false;
@@ -26,43 +26,47 @@ module.exports = function SwitchBehavior(container, data) {
 
   this.trigger = function() {
     // when pressing for the first time, the orinal light position is stored to revert.
-    if (!pressed && !lightOrig) {
-      lightOrig = JSON.parse(JSON.stringify(light.position));
-    }
+    // if (!pressed && !lightOrig) {
+    //   lightOrig = JSON.parse(JSON.stringify(light.position));
+    // }
 
-    var dest = (!pressed) ? lightDest : lightOrig;
-    pressed = !pressed;
+    // var dest = (!pressed) ? lightDest : lightOrig;
+    // pressed = !pressed;
 
-    if (pressed)
+    if (!pressed)
     {
       self.view.texture = textureOn;
     }
-    else
-    {
-      self.view.texture = textureOff;
-    }
+    // else
+    // {
+    //   self.view.texture = textureOff;
+    // }
 
-    var tweenable = new Tweenable();
-    tweenable.tween({
-      from: light.position,
-      to:   dest,
-      duration: 1000,
-      easing: 'easeOutCubic',
-      start: function () {
-        moving = true;
-      },
-      finish: function () {
-        moving = false;
-      }
-    });
+    // var tweenable = new Tweenable();
+    // tweenable.tween({
+    //   from: light.position,
+    //   to:   dest,
+    //   duration: 1000,
+    //   easing: 'easeOutCubic',
+    //   start: function () {
+    //     moving = true;
+    //   },
+    //   finish: function () {
+    //     moving = false;
+    //   }
+    // });
   }
 
 	this.update = function(game)
 	{
+    if(pressed)
+      return;
+
 		//console.log(game.player.doCollide(itemData.x,itemData.y, itemData.width,itemData.height),game.input.Key.isDown(38));
 		if(game.player.doCollide(itemData.x,itemData.y, itemData.width,itemData.height) && game.input.Key.isDown(38) && !moving)
 		{
 			moving = true;
+      game.level.numSwitches --;
 			self.trigger();
 		}
 	}

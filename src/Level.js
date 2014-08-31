@@ -6,7 +6,8 @@ var LightBehavior = require('./behaviors/LightBehavior.js');
 
 module.exports = function Level(game, index) {
   var self = this;
-
+  var numSwitches = 0;
+  self.numSwitches = numSwitches;
   this.index = index;
   this.segments = [];
   this.levelobjects = [];
@@ -54,6 +55,9 @@ module.exports = function Level(game, index) {
         continue;
       }
 
+      if(data.layers[0].objects[index].type == "SwitchBehavior")
+        self.numSwitches ++;
+
       ////setup behavior
       var BehaviourClass = require("./behaviors/" + data.layers[0].objects[index].type + ".js");
 
@@ -88,6 +92,8 @@ module.exports = function Level(game, index) {
       this.segments.push(segmentC);
       this.segments.push(segmentD);
     }
+
+    console.log("total switches in level: " + self.numSwitches);
   }
 
 
