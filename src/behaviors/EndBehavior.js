@@ -34,8 +34,19 @@ module.exports = function EndBehavior(container, data) {
   var fadeOutShape = new PIXI.Graphics();
   fadeOutShape.alpha = 0;
 
-  emitter.on('switch.pressed', function() {
+  var halo = PIXI.Sprite.fromFrame("halo.png");
+  halo.anchor.x = 0.5;
+  halo.anchor.y = 0.5;
+  halo.scale.x = 5;
+  halo.scale.y = 5;
+  halo.position.x = 33;
+  halo.position.y = 33;
+  halo.alpha = 0.2;
+  this.view.addChild(halo);
+  halo.visible = false;
 
+  emitter.on('switch.pressed', function() {
+    
     if(game.level.numSwitches == 0) {
 
       particles = new ParticleSystem({
@@ -46,17 +57,17 @@ module.exports = function EndBehavior(container, data) {
         "alpha":1,
         "properties": {
           "randomSpawnX":1,
-          "randomSpawnY":1,
+          "randomSpawnY":30,
           "life":30,
           "randomLife":100,
           "forceX":0,
-          "forceY":0,
-          "randomForceX":0.001,
+          "forceY":0.01,
+          "randomForceX":0.007,
           "randomForceY":0.01,
-          "velocityX":0,
-          "velocityY":-0.02,
+          "velocityX":-1,
+          "velocityY":0,
           "randomVelocityX":0.2,
-          "randomVelocityY":0.4,
+          "randomVelocityY":0.2,
           "scale":0.25,
           "growth":0.001,
           "randomScale":0.04,
@@ -68,9 +79,12 @@ module.exports = function EndBehavior(container, data) {
         }
       });
 
-      particles.view.alpha = 0.5;
-      particles.properties.centerX += self.view.width / 2;
-      particles.properties.centerY += self.view.height / 2;
+      halo.visible = true;
+      halo.alpha = 0;
+
+      particles.view.alpha = 0.25;
+      particles.properties.centerX = 18;
+      particles.properties.centerY = 33;
 
       self.view.addChild(particles.view);
 
@@ -105,6 +119,12 @@ module.exports = function EndBehavior(container, data) {
 	{
     if (particles) {
       particles.update();
+    }
+
+    if (halo.visible)
+    {
+      halo.alpha += 0.01;
+      if (halo.alpha > 0.2) halo.alpha = 0.2;
     }
 
     if (triggered) {

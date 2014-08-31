@@ -26,7 +26,7 @@ module.exports = function Player(container, xPos, yPos) {
 	var particles = new ParticleSystem(
 	  {
 	      "images":["pixelShine.png"],
-	      "numParticles":200,
+	      "numParticles":100,
 	      "emissionsPerUpdate":0,
 	      "emissionsInterval":0,
 	      "alpha":1,
@@ -38,15 +38,15 @@ module.exports = function Player(container, xPos, yPos) {
 	        "randomLife":100,
 	        "forceX":0,
 	        "forceY":0,
-	        "randomForceX":0.05,
-	        "randomForceY":0.05,
-	        "velocityX":0,
+	        "randomForceX":0.1,
+	        "randomForceY":0.1,
+	        "velocityX":3,
 	        "velocityY":0,
-	        "randomVelocityX":1,
-	        "randomVelocityY":1,
-	        "scale":1,
-	        "growth":0.001,
-	        "randomScale":0.4,
+	        "randomVelocityX":2,
+	        "randomVelocityY":2,
+	        "scale":5,
+	        "growth":0.01,
+	        "randomScale":4.5,
 	        "alphaStart":0,
 	        "alphaFinish":0,
 	        "alphaRatio":0.2,
@@ -88,7 +88,7 @@ module.exports = function Player(container, xPos, yPos) {
 
 	this.fadeOut = function()
 	{
-		particles.emit(200);
+		particles.emit(100);
 		self.view.alpha = 0.5;
 		fading = true;
 	}

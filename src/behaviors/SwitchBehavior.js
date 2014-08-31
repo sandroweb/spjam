@@ -34,7 +34,7 @@ module.exports = function SwitchBehavior(container, data) {
       "alpha":1,
       "properties":
       {
-        "randomSpawnX":3,
+        "randomSpawnX":2,
         "randomSpawnY":1,
         "life":40,
         "randomLife":5,
@@ -46,7 +46,7 @@ module.exports = function SwitchBehavior(container, data) {
         "velocityY":-0.1,
         "randomVelocityX":0.0,
         "randomVelocityY":0.0,
-        "scale":2,
+        "scale":1,
         "growth":-0.001,
         "randomScale":0.5,
         "alphaStart":1,
@@ -59,6 +59,7 @@ module.exports = function SwitchBehavior(container, data) {
 
   container.addChild(this.view);
   container.addChild(particles.view);
+  particles.properties.centerY = self.view.position.y + 25;
 
   this.trigger = function() {
     // when pressing for the first time, the orinal light position is stored to revert.
@@ -72,6 +73,8 @@ module.exports = function SwitchBehavior(container, data) {
     if (!pressed)
     {
       self.view.texture = textureOn;
+      self.view.position.y = originY + 12;
+      particles.properties.centerY = self.view.position.y + 9;
       pressed = true;
       game.resources.swicherSound.play();
       container.addChild(particles.view);
@@ -100,8 +103,7 @@ module.exports = function SwitchBehavior(container, data) {
 	{
     if (pressed)
     {
-        particles.properties.centerX = self.view.position.x + 17;
-        particles.properties.centerY = self.view.position.y + 25;
+        particles.properties.centerX = self.view.position.x + 15;
         particles.update(); 
     }
       
