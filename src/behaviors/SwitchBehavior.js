@@ -16,9 +16,12 @@ module.exports = function SwitchBehavior(container, data) {
   var originY = data.y;
 
   /////create visual
-  self.view = new PIXI.Sprite(PIXI.Texture.fromImage("img/" + data.properties.img));
+  var textureOff = PIXI.Texture.fromImage("switchOff.png");
+  var textureOn = PIXI.Texture.fromImage("switchOn.png");
+
+  self.view = new PIXI.Sprite(textureOff);
   self.view.position.x = originX;
-  self.view.position.y = originY;
+  self.view.position.y = originY - 2;
   container.addChild(self.view);
 
   this.trigger = function() {
@@ -29,6 +32,15 @@ module.exports = function SwitchBehavior(container, data) {
 
     var dest = (!pressed) ? lightDest : lightOrig;
     pressed = !pressed;
+
+    if (pressed)
+    {
+      self.view.texture = textureOn;
+    }
+    else
+    {
+      self.view.texture = textureOff;
+    }
 
     var tweenable = new Tweenable();
     tweenable.tween({
