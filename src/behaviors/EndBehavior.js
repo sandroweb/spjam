@@ -31,6 +31,7 @@ module.exports = function EndBehavior(container, data) {
       fadeOutShape.drawRect(0, 0, game.renderer.width, game.renderer.height);
       game.stage.addChild(fadeOutShape);
       game.player.fadeOut();
+      game.resources.portalSound.play();
     }
     triggered = true;
   }
