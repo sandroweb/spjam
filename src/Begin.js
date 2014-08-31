@@ -184,6 +184,6 @@ module.exports = function Begin(game) {
   {
     game.resources.buttonClick.play()
     hide();
-    game.loadLevel(6);
+    game.loadLevel(1);
   }
 };
