@@ -78,6 +78,13 @@ module.exports = function Game() {
       }
     }
 
+    if (self.btnRestart.visible === true) {
+      if (e.offsetX >= self.btnRestart.x && e.offsetX < self.btnRestart.x + self.btnRestart.width
+        && e.offsetY >= self.btnRestart.y && e.offsetY < self.btnRestart.y + self.btnRestart.height) {
+        return;
+      }
+    }
+
     if (self.level !== null) {
       game.resources.motherSound.play();
     }
@@ -229,6 +236,14 @@ module.exports = function Game() {
 
   this.update = function() {
 
+    if (self.btnRestart !== undefined) {
+      if (self.level === null) {
+        self.btnRestart.visible = false;
+      } else {
+        self.btnRestart.visible = true;
+      }
+    }
+
     if (self.begin) self.begin.update();
     if (self.gameover) self.gameover.update();
 
@@ -274,7 +289,7 @@ module.exports = function Game() {
     function animate() {
       self.update(); // logic
       self.renderer.render(self.stage);
-      requestAnimFrame( animate );
+      requestAnimFrame(animate);
     }
   };
 
@@ -358,6 +373,18 @@ module.exports = function Game() {
       self.btnSoundOn.visible = false;
       self.btnSoundOff.visible = true;
       Howler.unmute();
+    }
+
+    self.btnRestart = PIXI.Sprite.fromFrame('restart.png');
+    self.btnRestart.setInteractive(true);
+    self.btnRestart.buttonMode = true;
+    self.stage.addChild(game.btnRestart);
+    self.btnRestart.position.x = self.renderer.width - 10 - self.btnRestart.width;
+    self.btnRestart.position.y = 10;
+    self.btnRestart.visible = false;
+
+    self.btnRestart.click = function(data) {
+      self.restart();
     }
   }
 
