@@ -1,3 +1,5 @@
+var Tools = require('../Tools.js');
+
 module.exports = function LightBehavior(data) {
 
   /////retrive position and size specs
@@ -8,23 +10,24 @@ module.exports = function LightBehavior(data) {
   light.x = originX;
   light.y = originY;
 
-  var movieClipTextures = [];
-  for (var i=1; i <= 10; i++)
-  {
-    var texture = PIXI.Texture.fromFrame("player-" + ("00" + i).substr(-2,2) + ".png");
-    movieClipTextures.push(texture);
-  };
+  var movie = null;
 
-  this.view = new PIXI.MovieClip(movieClipTextures);
+  movie = new PIXI.MovieClip(Tools.getTextures("mother", 12, ".png"));
+  movie.pivot = new PIXI.Point(movie.width/2, movie.height/2 + 25);
+  movie.animationSpeed = 0.1;
+
+  this.view = new PIXI.DisplayObjectContainer();
   this.view.position.x = originX;
   this.view.position.y = originY;
-  this.view.animationSpeed = 0.1;
-  this.view.loop = true;
-  this.view.play();
+
+  this.view.addChild(movie);
+  
+  movie.play();
   game.stage.addChild(this.view);
 
   this.update = function()
   {
+    
   }
 
 }

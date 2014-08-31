@@ -16,7 +16,8 @@ module.exports = function Physics()
 
 		// var vertices = polygons[0];
 		var walking = axis.x != 0;
-		var offset = 5;
+		var offsetX = 10;
+		var offsetY = 10;
 		var velX = walking ? 3 : 0;
 		var velY = 3;
 
@@ -29,25 +30,25 @@ module.exports = function Physics()
 		var nearest = getNearestFaces(playerPosition, resultH.concat(resultV));
 		var isInside = pointInPolygon(playerPosition, vertices);
 
-		if (axis.x < 0 && nearest.ld - offset < velX)
-		{
-			velX = nearest.ld - offset;
-		}
+		// if (axis.x < 0 && nearest.ld - offsetX < velX)
+		// {
+		// 	velX = nearest.ld - offsetX;
+		// }
 
-		if (axis.x > 0 && nearest.rd - offset < velX)
-		{
-			velX = nearest.rd - offset;
-		}
+		// if (axis.x > 0 && nearest.rd - offsetX < velX)
+		// {
+		// 	velX = nearest.rd - offsetX;
+		// }
 
-		if (axis.y < 0 && nearest.td - offset < velY)
-		{
-			velY = nearest.td - offset;
-		}
+		// if (axis.y < 0 && nearest.td - offsetY < velY)
+		// {
+		// 	velY = nearest.td - offsetY;
+		// }
 
-		if (axis.y > 0 && nearest.bd - offset < velY)
-		{
-			velY = nearest.bd - offset;
-		}
+		// if (axis.y > 0 && nearest.bd - offsetY < velY)
+		// {
+		// 	velY = nearest.bd - offsetY;
+		// }
 
 
 		var prevX = playerPosition.x;
@@ -63,7 +64,7 @@ module.exports = function Physics()
 		{
 			if (nearest.l)
 			{
-				if (playerPosition.x < nearest.l.point.x + offset) playerPosition.x = nearest.l.point.x + offset;
+				if (playerPosition.x < nearest.l.point.x + offsetX) playerPosition.x = nearest.l.point.x + offsetX;
 
 				// ctx.beginPath();
 				// ctx.moveTo(playerPosition.x, playerPosition.y);
@@ -74,7 +75,7 @@ module.exports = function Physics()
 
 			if (nearest.r)
 			{
-				if (playerPosition.x > nearest.r.point.x - offset) playerPosition.x = nearest.r.point.x - offset;
+				if (playerPosition.x > nearest.r.point.x - offsetX) playerPosition.x = nearest.r.point.x - offsetX;
 
 				// ctx.beginPath();
 				// ctx.moveTo(playerPosition.x, playerPosition.y);
@@ -103,7 +104,7 @@ module.exports = function Physics()
 		{
 			if (nearest.t)
 			{
-				if (playerPosition.y < nearest.t.point.y + offset) playerPosition.y = nearest.t.point.y + offset;
+				if (playerPosition.y < nearest.t.point.y + offsetY) playerPosition.y = nearest.t.point.y + offsetY;
 
 				// ctx.beginPath();
 				// ctx.moveTo(playerPosition.x, playerPosition.y);
@@ -114,7 +115,7 @@ module.exports = function Physics()
 
 			if (nearest.b)
 			{
-				if (playerPosition.y > nearest.b.point.y - offset) playerPosition.y = nearest.b.point.y - offset;
+				if (playerPosition.y > nearest.b.point.y - offsetY) playerPosition.y = nearest.b.point.y - offsetY;
 
 				// ctx.beginPath();
 				// ctx.moveTo(playerPosition.x, playerPosition.y);

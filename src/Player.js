@@ -1,28 +1,31 @@
+var Tools = require('./Tools.js');
+
 module.exports = function Player(game, xPos, yPos) {
 	var self = this;
 	var velocity = 0;
 	var acceleration = 0.25;
 	var maxspeed = 2.0;
 	var dir = 1;
+	var movie = null;
 
-  var movieClipTextures = [];
-  for (var i=1; i <= 10; i++)
-  {
-    var texture = PIXI.Texture.fromFrame("player-" + ("00" + i).substr(-2,2) + ".png");
-    movieClipTextures.push(texture);
-  };
+	movie = new PIXI.MovieClip(Tools.getTextures("boy", 7, ".png"));
+	movie.pivot = new PIXI.Point(movie.width/2, movie.height/2);
+	movie.animationSpeed = 0.1;
 
-  this.view = new PIXI.MovieClip(movieClipTextures);
-  this.view.pivot = new PIXI.Point(this.view.width/2, this.view.height/2);
-  this.view.position.x = xPos;
-  this.view.position.y = yPos;
-  this.view.animationSpeed = 0.1;
-  game.stage.addChild(this.view);
+	this.view = new PIXI.DisplayObjectContainer();
+	this.view.addChild(movie);
+
+	this.view.position.x = xPos;
+	this.view.position.y = yPos;
+	this.view.animationSpeed = 0.1;
+	game.stage.addChild(this.view);
+
+	movie.play();
 
 	this.update = function(input, position)
 	{
-		self.view.position.x = position.x - 15;
-		self.view.position.y = position.y - 37;
+		self.view.position.x = position.x;
+		self.view.position.y = position.y - 50;
 		self.view.position.x += dir * velocity;
 	}
 
