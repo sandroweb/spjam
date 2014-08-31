@@ -9,6 +9,7 @@ var Resources = require('./Resources'),
   Tweenable = require('./vendor/shifty'),
   GameInput = require('./GameInput.js'),
   Player = require('./Player.js');
+  Physics = require('./Physics.js');
 
 window.Tweenable = Tweenable;
 window.tweenable = new Tweenable();
@@ -35,12 +36,18 @@ module.exports = function Game() {
 
   /////Player
   var player = null;
+  var physics = null;
 
   // LevelIndex
   var levelIndex = 0;
   var self = this;
   var level = null;
   window.light = new Light(50, 50);
+
+  this.renderer.view.addEventListener("mousedown", function(e) {
+    light.position.x = e.offsetX;
+    light.position.y = e.offsetY;
+  })
 
   var lightGraphics = new PIXI.Graphics(),
       lightContainer = new PIXI.DisplayObjectContainer();
@@ -50,6 +57,7 @@ module.exports = function Game() {
   self.gameover;
   self.preloader;
   self.loader;
+
 
   this.restart = function() {
     alert('Game.js - this.restart()');
@@ -93,6 +101,17 @@ module.exports = function Game() {
       self.input = input;
     }
 
+    if(!player){
+      player = new Player(self, 100,558);
+      self.player = player;
+    }
+
+    if (!physics){
+      physics = new Physics();
+      physics.playerPosition.x = player.view.position.x;
+      physics.playerPosition.y = player.view.position.y;
+    }
+
     console.log("level/level" + levelIndex + ".json");
     var loader = new PIXI.JsonLoader("level/level" + levelIndex + ".json");
     loader.on('loaded', function(evt) {
@@ -109,6 +128,7 @@ module.exports = function Game() {
 
   this.updateLights = function() {
     // nothing to update, skip
+
     if (light.position.x == lastLightX && light.position.y == lastLightY) {
       return;
     }
@@ -133,6 +153,7 @@ module.exports = function Game() {
       lightContainer.addChild( light.getPolygonGraphics(polygons[i]) );
     }
     lightContainer.addChild( light.getPolygonGraphics(polygons[0]) );
+    window.polygons = polygons[0];
 
     // // Masked Foreground
     // ctx.globalCompositeOperation = "source-in";
@@ -169,14 +190,23 @@ module.exports = function Game() {
     if(!input)
       return;
 
-    if(player)
-      player.update(input);
+    var direction = 0;
+    if (input.Key.isDown(input.Key.LEFT)) direction = -1;
+    if (input.Key.isDown(input.Key.RIGHT)) direction = 1;
+
+    if (self.level)
+    {
+      if(physics)
+        physics.process(direction, window.polygons);
+
+      if(player)
+        player.update(input, physics.playerPosition);  
+    }
+    
 
     if(self.level)
       self.level.update(self);
 
-    if (input.Key.isDown(input.Key.LEFT)) player.moveLeft();
-    if (input.Key.isDown(input.Key.RIGHT)) player.moveRight();
   };
 
   this.loop = function() {
