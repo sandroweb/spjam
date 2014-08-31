@@ -8,6 +8,8 @@ var EndCarBehavior = require('./behaviors/EndCarBehavior.js');
 module.exports = function Level(game, index) {
   var self = this;
   var numSwitches = 0;
+  var tutorial = null;
+  var count = 0;
   self.numSwitches = numSwitches;
   this.index = index;
   this.segments = [];
@@ -44,12 +46,21 @@ module.exports = function Level(game, index) {
     self.bg2 = PIXI.Sprite.fromFrame("backgroundForest.png");
     self.view.addChild(self.bg2);
 
+    if (index == 1)
+    {
+      tutorial = PIXI.Sprite.fromFrame("controls.png");
+      tutorial.anchor.x = 0.5;
+      tutorial.anchor.y = 0.5;
+      self.view.addChild(tutorial);
+      tutorial.position.x = screenWidth/2;
+      tutorial.position.y = screenHeight/2;
+    }
+
     self.scenario = new PIXI.DisplayObjectContainer();
     self.view.addChild(self.scenario);
 
     self.foreground = new PIXI.DisplayObjectContainer();
     self.view.addChild(self.foreground);
-
 
     for (index = 0; index < data.layers[0].objects.length; ++index) {
 
@@ -106,11 +117,18 @@ module.exports = function Level(game, index) {
   {
     // WHY GOD?!?!?!!
     try {
-      if (self.levelobjects) {
-        for (var index = 0; index < self.levelobjects.length; ++index) {
-          self.levelobjects[index].update(game);
+
+      if (tutorial != null)
+        {
+          tutorial.alpha = 0.75 + Math.sin(count)*0.25;
+          count += 0.1;
         }
-      }
+
+        if (self.levelobjects) {
+          for (index = 0; index < self.levelobjects.length; ++index) {
+            self.levelobjects[index].update(game);
+          }
+        }
     } catch (e) {
     }
   }
