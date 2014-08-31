@@ -19,21 +19,11 @@ module.exports = function Player(game, xPos, yPos) {
   this.view.animationSpeed = 0.1;
   game.stage.addChild(this.view);
 
-	this.update = function(input)
+	this.update = function(input, position)
 	{
+		self.view.position.x = position.x - 15;
+		self.view.position.y = position.y - 37;
 		self.view.position.x += dir * velocity;
-
-		///no key pressed
-		if(input.Key.isEmpty()){
-			velocity -= acceleration;
-
-			if(velocity <= 0)
-        self.view.stop();
-				velocity = 0;
-		}
-
-		if(velocity > maxspeed)
-			velocity = maxspeed;
 	}
 
 	this.moveLeft = function()
@@ -58,7 +48,7 @@ module.exports = function Player(game, xPos, yPos) {
 
 	this.doCollide = function(xpos,ypos,width,height)
 	{
-		if(self.view.position.x + self.view.width/2 >= xpos && self.view.position.x < (xpos + width) && self.view.position.y - ypos < 100)
+		if(self.view.position.x >= xpos && self.view.position.x < (xpos + width) && self.view.position.y - ypos < 100)
 			return true;
 
 		return false;

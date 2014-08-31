@@ -24,7 +24,8 @@
                  "properties":
                     {
                      "img":"switch.png",
-                     "move":"23"
+                     "moveX":"23",
+                     "moveY":"2"
                     },
                  "type":"SwitchBehavior",
                  "visible":true,
@@ -57,6 +58,19 @@
                  "width":40,
                  "x":40,
                  "y":560
+                }, 
+                {
+                 "height":40,
+                 "name":"light",
+                 "properties":
+                    {
+
+                    },
+                 "type":"LightBehavior",
+                 "visible":true,
+                 "width":40,
+                 "x":120,
+                 "y":240
                 }],
          "opacity":1,
          "type":"objectgroup",

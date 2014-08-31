@@ -209,8 +209,9 @@ function draw(){
 	drawPolygon(polygons[0],ctx,"#fff");
 
 	var vertices = polygons[0];
+	var walking = axis.x != 0;
 	var offset = 5;
-	var velX = 3;
+	var velX = walking ? 3 : 0;
 	var velY = 3;
 
 	var lineHA = {x:heroPos.x - 1000, y:heroPos.y};
@@ -220,6 +221,7 @@ function draw(){
 	var resultH = raycast(lineHA, lineHB, vertices);
 	var resultV = raycast(lineVA, lineVB, vertices);
 	var nearest = getNearestFaces(heroPos, resultH.concat(resultV));
+	var isInside = pointInPolygon(heroPos, vertices);
 
 	if (axis.x < 0 && nearest.ld - offset < velX)
 	{
