@@ -10,6 +10,7 @@ var Resources = require('./Resources'),
   GameInput = require('./GameInput.js'),
   Player = require('./Player.js');
   Physics = require('./Physics.js');
+  Tools = require('./Tools.js');
 
 window.Tweenable = Tweenable;
 window.tweenable = new Tweenable();
@@ -29,7 +30,7 @@ module.exports = function Game() {
   this.renderer.view.style.display = "block";
   this.renderer.view.style.border = "1px solid";
 
-  this.stage = new PIXI.Stage(0x00fffa, true);;
+  this.stage = new PIXI.Stage(0x00fffa, true);
 
   ////Input
   var input = null;
@@ -37,6 +38,7 @@ module.exports = function Game() {
   /////Player
   var player = null;
   var physics = null;
+  var direction = 0;
 
   // LevelIndex
   var self = this;
@@ -186,9 +188,20 @@ module.exports = function Game() {
     if(!input)
       return;
 
-    var direction = 0;
-    if (input.Key.isDown(input.Key.LEFT)) direction = -1;
-    if (input.Key.isDown(input.Key.RIGHT)) direction = 1;
+    if (input.Key.isDown(input.Key.LEFT)) 
+    {
+      direction -= 0.01;
+    }
+    else if (input.Key.isDown(input.Key.RIGHT)) 
+    {
+      direction += 0.01;
+    }
+    else
+    {
+      direction *= 0.9;
+    }
+
+    direction = Tools.clamp(direction, -1, 1);
 
     if (self.level)
     {
@@ -196,7 +209,7 @@ module.exports = function Game() {
         physics.process(direction, window.polygons);
 
       if(player)
-        player.update(input, physics.playerPosition);
+        player.update(input, physics.playerPosition, physics.playerVelocity);
     }
 
 

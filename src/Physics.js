@@ -5,10 +5,9 @@ module.exports = function Physics()
 	var playerVelocity = {x:0, y:0};
 	var axis = {x:0, y:0};
 
-	function init()
-	{
-
-	}
+	this.process = process;
+	this.playerPosition = playerPosition;
+	this.playerVelocity = playerVelocity;
 
 	function process(direction, vertices)
 	{
@@ -16,19 +15,19 @@ module.exports = function Physics()
 
 		// var vertices = polygons[0];
 		var walking = axis.x != 0;
-		var offsetX = 10;
-		var offsetY = 10;
-		var velX = walking ? 3 : 0;
+		var offsetX = 20;
+		var offsetY = 20;
+		var velX = walking ? 2 : 0;
 		var velY = 3;
 
-		var lineHA = {x:playerPosition.x - 1000, y:playerPosition.y};
-		var lineHB = {x:playerPosition.x + 1000, y:playerPosition.y};
-		var lineVA = {x:playerPosition.x, y:playerPosition.y - 1000};
-		var lineVB = {x:playerPosition.x, y:playerPosition.y + 1000};
-		var resultH = raycast(lineHA, lineHB, vertices);
-		var resultV = raycast(lineVA, lineVB, vertices);
-		var nearest = getNearestFaces(playerPosition, resultH.concat(resultV));
-		var isInside = pointInPolygon(playerPosition, vertices);
+		// var lineHA = {x:playerPosition.x - 1000, y:playerPosition.y};
+		// var lineHB = {x:playerPosition.x + 1000, y:playerPosition.y};
+		// var lineVA = {x:playerPosition.x, y:playerPosition.y - 1000};
+		// var lineVB = {x:playerPosition.x, y:playerPosition.y + 1000};
+		// var resultH = raycast(lineHA, lineHB, vertices);
+		// var resultV = raycast(lineVA, lineVB, vertices);
+		// var nearest = getNearestFaces(playerPosition, resultH.concat(resultV));
+		// var isInside = pointInPolygon(playerPosition, vertices);
 
 		// if (axis.x < 0 && nearest.ld - offsetX < velX)
 		// {
@@ -64,29 +63,45 @@ module.exports = function Physics()
 		{
 			if (nearest.l)
 			{
-				if (playerPosition.x < nearest.l.point.x + offsetX) playerPosition.x = nearest.l.point.x + offsetX;
-
+				if (playerPosition.x < nearest.l.point.x + offsetX) 
+				{
+					playerPosition.x = nearest.l.point.x + offsetX;
+					playerVelocity.x = 0;
+				}
+				else
+				{
+					playerVelocity.x = playerPosition.x - prevX;	
+				}
+				
 				// ctx.beginPath();
 				// ctx.moveTo(playerPosition.x, playerPosition.y);
 				// ctx.lineTo(nearest.l.point.x, playerPosition.y)
 				// ctx.strokeStyle = "#FF0000";
 				// ctx.stroke();	
 			}
-
 			if (nearest.r)
 			{
-				if (playerPosition.x > nearest.r.point.x - offsetX) playerPosition.x = nearest.r.point.x - offsetX;
-
+				if (playerPosition.x > nearest.r.point.x - offsetX) 
+				{
+					playerPosition.x = nearest.r.point.x - offsetX;
+					playerVelocity.x = 0;
+				}
+				else
+				{
+					playerVelocity.x = playerPosition.x - prevX;	
+				}
+				
 				// ctx.beginPath();
 				// ctx.moveTo(playerPosition.x, playerPosition.y);
 				// ctx.lineTo(nearest.r.point.x, playerPosition.y);
 				// ctx.strokeStyle = "#FF0000";
 				// ctx.stroke();	
-			}	
+			}
 		}
 		else
 		{
 			playerPosition.x = prevX;
+			
 		}
 		
 
@@ -128,6 +143,9 @@ module.exports = function Physics()
 		{
 			playerPosition.y = prevY;
 		}
+
+		
+		playerVelocity.y = playerPosition.y - prevY;
 	}
 
 	function getNearestFaces(pos, faces)
@@ -216,9 +234,6 @@ module.exports = function Physics()
 
 		return Math.sqrt(xs + ys);
 	}
-
-	this.process = process;
-	this.playerPosition = playerPosition;
 }
 
 //

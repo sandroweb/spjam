@@ -22,31 +22,25 @@ module.exports = function Player(container, xPos, yPos) {
 
 	movie.play();
 
-	this.update = function(input, position)
+	this.update = function(input, position, velocity)
 	{
 		self.view.position.x = position.x;
-		self.view.position.y = position.y - 20;
-		self.view.position.x += dir * velocity;
+		self.view.position.y = position.y - 10;
+
+		if (velocity.x > -0.01 && velocity.x < 0.01) velocity.x = 0;
+
+		if (velocity.x < 0) movie.scale.x = -1;
+		if (velocity.x > 0) movie.scale.x = 1;
+
+		movie.rotation = velocity.x*0.1;
 	}
 
 	this.moveLeft = function()
 	{
-    // invert sprite x
-    if (dir==1) { self.view.scale.x *= -1; }
-
-    self.view.play();
-		dir = -1;
-		velocity += acceleration;
 	}
 
 	this.moveRight = function()
 	{
-    // invert sprite x
-    if (dir==-1) { self.view.scale.x *= -1; }
-
-    self.view.play();
-		dir = 1;
-		velocity += acceleration;
 	}
 
 	this.doCollide = function(xpos,ypos,width,height)
