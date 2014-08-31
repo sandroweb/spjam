@@ -1,7 +1,7 @@
 module.exports = function Resources() {
 
   Howler.iOSAutoEnable = false;
-  Howler.mute();
+  // Howler.mute();
 
   // images
   this.background = 'img/bg-default.jpg';
