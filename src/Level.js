@@ -2,6 +2,8 @@
 var PlatformBehavior = require('./behaviors/PlatformBehavior.js');
 var SwitchBehavior = require('./behaviors/SwitchBehavior.js');
 var EndBehavior = require('./behaviors/EndBehavior.js');
+var LightBehavior = require('./behaviors/LightBehavior.js');
+
 module.exports = function Level(game) {
   var self = this;
   var playerPos = {};
@@ -26,30 +28,28 @@ this.parse = function(data) {
 
       ////setup behavior
       var BehaviourClass = require("./behaviors/" + data.layers[0].objects[index].type + ".js");
-      var behaviour = new BehaviourClass(data.layers[0].objects[index]);
-      self.levelobjects.push(behaviour);
+      var behavior = new BehaviourClass(data.layers[0].objects[index]);
+      self.levelobjects.push(behavior);
+
+      if(data.layers[0].objects[index].type == "LightBehavior") {
+        light.behavior = behavior;
+        continue;
+      }
+
+      ////create shadow
+      if(!data.layers[0].objects[index].properties.shadow) {
+        continue;
+      }
 
       /////retrive position and size specs
       var size = data.layers[0].objects[index].width;
       var originX = data.layers[0].objects[index].x;
       var originY = data.layers[0].objects[index].y;
 
-      /////create visual
-      var visual = new PIXI.Sprite(PIXI.Texture.fromImage("img/" + data.layers[0].objects[index].properties.img));
-      visual.position.x = originX;
-      visual.position.y = originY;
-      game.stage.addChild(visual);
-
-      console.log(visual + " " + "img/" + data.layers[0].objects[index].properties.img + " " + originX + " " + originY);
-
-      ////create shadow
-      if(!data.layers[0].objects[index].properties.shadow)
-        continue;
-
-      var segmentA = {target:visual,a:{x:originX,y:originY}, b:{x:originX + size,y:originY}};
-      var segmentB = {target:visual,a:{x:originX+size,y:originY}, b:{x:originX + size,y:originY+size}};
-      var segmentC = {target:visual,a:{x:originX+size,y:originY+size}, b:{x:originX,y:originY + size}};
-      var segmentD = {target:visual,a:{x:originX,y:originY + size}, b:{x:originX,y:originY}};
+      var segmentA = {target:behavior.view,a:{x:originX,y:originY}, b:{x:originX + size,y:originY}};
+      var segmentB = {target:behavior.view,a:{x:originX+size,y:originY}, b:{x:originX + size,y:originY+size}};
+      var segmentC = {target:behavior.view,a:{x:originX+size,y:originY+size}, b:{x:originX,y:originY + size}};
+      var segmentD = {target:behavior.view,a:{x:originX,y:originY + size}, b:{x:originX,y:originY}};
 
       this.segments.push(segmentA);
 

@@ -23,7 +23,7 @@ google: {
 
 active: function() {
   // do something
-  game = new Game();
+  game = Game.instance = new Game();
 }
 };
 (function() {

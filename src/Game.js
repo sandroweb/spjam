@@ -14,7 +14,6 @@ window.Tweenable = Tweenable;
 window.tweenable = new Tweenable();
 
 module.exports = function Game() {
-
   this.resources = new Resources();
 
   // stage.click = function(e) {
@@ -155,6 +154,12 @@ module.exports = function Game() {
 
     lastLightX = light.position.x;
     lastLightY = light.position.y;
+
+    // update light movieclip
+    if (light.behavior) {
+      light.behavior.view.x = light.position.x;
+      light.behavior.view.y = light.position.y;
+    }
   };
 
   this.update = function() {
