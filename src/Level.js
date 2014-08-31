@@ -16,6 +16,8 @@ module.exports = function Level(game, index) {
 
   this.view = new PIXI.DisplayObjectContainer();
 
+  game.resources.forestSound.play();
+
   //
   // Level methods
   //

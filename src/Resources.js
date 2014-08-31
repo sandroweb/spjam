@@ -35,6 +35,19 @@ module.exports = function Resources() {
       // game.resources.portalSound.play();
       name: 'portalSound',
       urls: ['sounds/portal.mp3'],
+      volume: .5
+    },
+    {
+      // game.resources.forestSound.play();
+      name: 'forestSound',
+      urls: ['sounds/forest-night2.mp3'],
+      volume: .7,
+      loop: true
+    },
+    {
+      // game.resources.swicherSound.play();
+      name: 'swicherSound',
+      urls: ['sounds/blimblim.mp3'],
       volume: .3
     },
     {

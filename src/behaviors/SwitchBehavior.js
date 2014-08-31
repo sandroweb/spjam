@@ -36,6 +36,7 @@ module.exports = function SwitchBehavior(container, data) {
     if (!pressed)
     {
       self.view.texture = textureOn;
+      game.resources.swicherSound.play();
     }
     // else
     // {

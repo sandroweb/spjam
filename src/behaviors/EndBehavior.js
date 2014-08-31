@@ -32,6 +32,7 @@ module.exports = function EndBehavior(container, data) {
       game.stage.addChild(fadeOutShape);
       game.player.fadeOut();
       game.resources.portalSound.play();
+      game.resources.forestSound.stop();
     }
     triggered = true;
   }
