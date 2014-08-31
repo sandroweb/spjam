@@ -1,14 +1,14 @@
 var Tools = require('../Tools.js');
 
 module.exports = function LightBehavior(data) {
+  var self = this;
 
   /////retrive position and size specs
   var size = data.width;
   var originX = data.x;
   var originY = data.y;
 
-  light.x = originX;
-  light.y = originY;
+  console.log("light: ", originX, originY);
 
   var movie = null;
 
@@ -25,9 +25,13 @@ module.exports = function LightBehavior(data) {
   movie.play();
   game.stage.addChild(this.view);
 
+  light.position.x = originX;
+  light.position.y = originY;
+
   this.update = function()
   {
-    
+      self.view.position.x = light.position.x;
+      self.view.position.y = light.position.y;
   }
 
 }
