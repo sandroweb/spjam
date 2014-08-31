@@ -46,10 +46,10 @@ this.parse = function(data) {
       if(!data.layers[0].objects[index].properties.shadow)
         continue;
 
-      var segmentA = {a:{x:originX,y:originY}, b:{x:originX + size,y:originY}};
-      var segmentB = {a:{x:originX+size,y:originY}, b:{x:originX + size,y:originY+size}};
-      var segmentC = {a:{x:originX+size,y:originY+size}, b:{x:originX,y:originY + size}};
-      var segmentD = {a:{x:originX,y:originY + size}, b:{x:originX,y:originY}};
+      var segmentA = {target:visual,a:{x:originX,y:originY}, b:{x:originX + size,y:originY}};
+      var segmentB = {target:visual,a:{x:originX+size,y:originY}, b:{x:originX + size,y:originY+size}};
+      var segmentC = {target:visual,a:{x:originX+size,y:originY+size}, b:{x:originX,y:originY + size}};
+      var segmentD = {target:visual,a:{x:originX,y:originY + size}, b:{x:originX,y:originY}};
 
       this.segments.push(segmentA);
 
