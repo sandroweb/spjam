@@ -21,7 +21,12 @@ module.exports = function Preloader(game) {
     content = new PIXI.DisplayObjectContainer();
     game.stage.addChild(content);
 
-    bg = new PIXI.Sprite.fromImage(game.resources.background);
+    bg = new PIXI.Graphics();
+    bg.beginFill(0x000000);
+    bg.drawRect(0, 0, screenWidth, screenHeight);
+    bg.endFill();
+
+    
     content.addChild(bg);
 
     self.text = new PIXI.Text('CARREGANDO 0%', {
