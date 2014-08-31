@@ -189,6 +189,15 @@
 	"sourceSize": {"w":188,"h":190},
 	"pivot": {"x":0.5,"y":0.5}
 },
+"pixelShine.png":
+{
+	"frame": {"x":222,"y":794,"w":9,"h":9},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":9},
+	"sourceSize": {"w":9,"h":9},
+	"pivot": {"x":0.5,"y":0.5}
+},
 "portal.png":
 {
 	"frame": {"x":276,"y":712,"w":33,"h":66},
@@ -331,6 +340,6 @@
 	"format": "RGBA8888",
 	"size": {"w":964,"h":832},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:80762dfc9948d55bd7334f896c7ad9af:82e3161c3374abbe2f31999a219f560a:cf827d152df04949dfee256cd0c8efd8$"
+	"smartupdate": "$TexturePacker:SmartUpdate:9fa3f66d060c92f0765d31cd2e021cf6:5370391b1957cf7ccd66edd7313dddcc:cf827d152df04949dfee256cd0c8efd8$"
 }
 }

@@ -30,6 +30,7 @@ module.exports = function EndBehavior(container, data) {
       fadeOutShape.beginFill(0x000);
       fadeOutShape.drawRect(0, 0, game.renderer.width, game.renderer.height);
       game.stage.addChild(fadeOutShape);
+      game.player.fadeOut();
     }
     triggered = true;
   }
@@ -39,7 +40,7 @@ module.exports = function EndBehavior(container, data) {
     if (triggered) {
 
       console.log("Triggered... increasing alpha...");
-      fadeOutShape.alpha += 0.05;
+      fadeOutShape.alpha += 0.005;
       if (fadeOutShape.alpha >= 1) {
         game.level.dispose();
         game.nextLevel();
