@@ -14,7 +14,7 @@
                     },
                  "type":"PlatformBehavior",
                  "visible":true,
-                 "width":80,
+                 "width":320,
                  "x":0,
                  "y":560
                 }, 
@@ -82,134 +82,8 @@
                     },
                  "type":"PlatformBehavior",
                  "visible":true,
-                 "width":80,
-                 "x":80,
-                 "y":560
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
-                 "x":160,
-                 "y":560
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
-                 "x":240,
-                 "y":560
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
+                 "width":560,
                  "x":400,
-                 "y":560
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
-                 "x":480,
-                 "y":560
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
-                 "x":560,
-                 "y":560
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
-                 "x":640,
-                 "y":560
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
-                 "x":720,
-                 "y":560
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
-                 "x":800,
-                 "y":560
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
-                 "x":880,
                  "y":560
                 }, 
                 {
