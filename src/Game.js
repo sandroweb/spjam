@@ -78,6 +78,12 @@ module.exports = function Game() {
 
     light.setSegments(newLevel.segments);
 
+    if(!player){
+      player = new Player(self, newLevel.playerPos.x,newLevel.playerPos.y);
+      console.log(newLevel.playerPos.x + " " + newLevel.playerPos.y);
+      self.player = player;
+    }
+
     self.loop();
   };
 
@@ -86,11 +92,6 @@ module.exports = function Game() {
     {
       input = new GameInput();
       self.input = input;
-    }
-
-    if(!player){
-      player = new Player(self, 100,558);
-      self.player = player;
     }
 
     console.log("level/level" + levelIndex + ".json");

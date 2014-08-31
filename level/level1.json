@@ -44,6 +44,19 @@
                  "width":40,
                  "x":800,
                  "y":600
+                }, 
+                {
+                 "height":40,
+                 "name":"p",
+                 "properties":
+                    {
+
+                    },
+                 "type":"start",
+                 "visible":true,
+                 "width":40,
+                 "x":40,
+                 "y":560
                 }],
          "opacity":1,
          "type":"objectgroup",
