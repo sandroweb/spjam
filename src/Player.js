@@ -5,21 +5,30 @@ module.exports = function Player(game, xPos, yPos) {
 	var maxspeed = 2.0;
 	var dir = 1;
 
-	 var view = new PIXI.Sprite(PIXI.Texture.fromImage("img/player.png"));
-     view.position.x = xPos;
-     view.position.y = yPos;
-     game.stage.addChild(view);
+  var movieClipTextures = [];
+  for (var i=1; i <= 10; i++)
+  {
+    var texture = PIXI.Texture.fromFrame("player-" + ("00" + i).substr(-2,2) + ".png");
+    movieClipTextures.push(texture);
+  };
 
-     self.view = view;
+  this.view = new PIXI.MovieClip(movieClipTextures);
+  this.view.pivot = new PIXI.Point(this.view.width/2, this.view.height/2);
+  this.view.position.x = xPos;
+  this.view.position.y = yPos;
+  this.view.animationSpeed = 0.1;
+  game.stage.addChild(this.view);
 
 	this.update = function(input)
 	{
-		view.position.x += dir * velocity;
+		self.view.position.x += dir * velocity;
 
 		///no key pressed
 		if(input.Key.isEmpty()){
 			velocity -= acceleration;
-			if(velocity < 0)
+
+			if(velocity <= 0)
+        self.view.stop();
 				velocity = 0;
 		}
 
@@ -29,22 +38,31 @@ module.exports = function Player(game, xPos, yPos) {
 
 	this.moveLeft = function()
 	{
+    // invert sprite x
+    if (dir==1) { self.view.scale.x *= -1; }
+
+    self.view.play();
 		dir = -1;
 		velocity += acceleration;
 	}
 
 	this.moveRight = function()
 	{
+    // invert sprite x
+    if (dir==-1) { self.view.scale.x *= -1; }
+
+    self.view.play();
 		dir = 1;
 		velocity += acceleration;
 	}
 
 	this.doCollide = function(xpos,ypos,width,height)
 	{
-		if(view.position.x + view.width/2 >= xpos && view.position.x < (xpos + width) && view.position.y - ypos < 100)
+		if(self.view.position.x + self.view.width/2 >= xpos && self.view.position.x < (xpos + width) && self.view.position.y - ypos < 100)
 			return true;
 
 		return false;
 	}
 
 }
+
