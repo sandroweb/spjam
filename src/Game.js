@@ -182,6 +182,8 @@ module.exports = function Game() {
   };
 
   this.update = function() {
+
+    if (self.begin) self.begin.update();
     this.updateLights();
 
     // console.log(input + " " + input.Key);
@@ -266,6 +268,9 @@ module.exports = function Game() {
   }
 
   this.loaded = function() {
+    self.begin = new Begin(this);
+    self.levelend = new LevelEnd(this);
+    self.gameover = new GameOver(this);
     self.preloader.hide();
     self.begin.show();
     game.resources.soundLoop.fadeIn(.4, 2000);
@@ -278,9 +283,6 @@ module.exports = function Game() {
     // self.stage.addChild(lightGraphics);
 
     // start screens
-    self.begin = new Begin(this);
-    self.levelend = new LevelEnd(this);
-    self.gameover = new GameOver(this);
 
     // start loop
     self.loop();
