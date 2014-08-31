@@ -205,11 +205,11 @@ module.exports = function Game() {
     if(!input)
       return;
 
-    if (input.Key.isDown(input.Key.LEFT)) 
+    if (input.Key.isDown(input.Key.LEFT) || input.Key.isDown(input.Key.A)) 
     {
       direction -= 0.01;
     }
-    else if (input.Key.isDown(input.Key.RIGHT)) 
+    else if (input.Key.isDown(input.Key.RIGHT) || input.Key.isDown(input.Key.D)) 
     {
       direction += 0.01;
     }
