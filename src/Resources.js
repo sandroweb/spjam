@@ -7,6 +7,9 @@ module.exports = function Resources() {
   this.textLevelEnd ='img/text-level-end.png',
   this.textGameOver ='img/text-game-over.png';
 
+  // sprites
+  this.textGameOver ='img/sprites/player.json';
+
   var self = this;
 
   this.getImages = function() {
