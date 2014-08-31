@@ -1,6 +1,6 @@
 var Tweenable = require('../vendor/shifty');
 
-module.exports = function SwitchBehavior(data) {
+module.exports = function SwitchBehavior(container, data) {
 	var self = this,
     gridSize = data.height,
     moveX = data.properties.moveX * gridSize,
@@ -19,7 +19,7 @@ module.exports = function SwitchBehavior(data) {
   self.view = new PIXI.Sprite(PIXI.Texture.fromImage("img/" + data.properties.img));
   self.view.position.x = originX;
   self.view.position.y = originY;
-  game.stage.addChild(self.view);
+  container.addChild(self.view);
 
   this.trigger = function() {
     // when pressing for the first time, the orinal light position is stored to revert.

@@ -17,11 +17,6 @@ window.tweenable = new Tweenable();
 module.exports = function Game() {
   this.resources = new Resources();
 
-  // stage.click = function(e) {
-  //   light.x = e.originalEvent.x;
-  //   light.y = e.originalEvent.y;
-  // }
-
   var screenWidth = (typeof(ejecta)=="undefined") ? 960 : 480;
   var screenHeight = (typeof(ejecta)=="undefined") ? 640 : 320;
 
@@ -39,41 +34,28 @@ module.exports = function Game() {
   var physics = null;
 
   // LevelIndex
-  var levelIndex = 0;
   var self = this;
   var level = null;
   window.light = new Light(50, 50);
 
-  // this.renderer.view.addEventListener("mousedown", function(e) {
-  //   light.position.x = e.offsetX;
-  //   light.position.y = e.offsetY;
-  // })
-
   var lightGraphics = new PIXI.Graphics(),
       lightContainer = new PIXI.DisplayObjectContainer();
 
-  self.begin;
-  self.levelend;
-  self.gameover;
-  self.preloader;
-  self.pixiLoader;
-  self.soundLoader;
-
-
   this.restart = function() {
-    alert('Game.js - this.restart()');
+    console.log('Game.js - this.restart()');
   }
 
   this.nextLevel = function() {
-    alert('Game.js - this.nextLevel()');
+    console.log('Game.js - this.nextLevel()');
+    this.loadLevel(this.level.index + 1);
   }
 
-  this.setLevel = function(levelData) {
+  this.setLevel = function(levelData, levelIndex) {
     var h = self.renderer.height,
         w = self.renderer.width,
         frameBorder = 50;
 
-    var newLevel = new Level(self);
+    var newLevel = new Level(self, levelIndex);
 
     // add stage border to level segments
     newLevel.segments.unshift( {a:{x:-frameBorder,y:-frameBorder}, b:{x:w,y:-frameBorder}} );
@@ -84,14 +66,18 @@ module.exports = function Game() {
     newLevel.parse(levelData);
 
     self.level = newLevel;
-
     light.setSegments(newLevel.segments);
 
-    if(!player){
-      player = new Player(self, newLevel.playerPos.x,newLevel.playerPos.y);
-      console.log(newLevel.playerPos.x + " " + newLevel.playerPos.y);
-      self.player = player;
-    }
+    // add level container to stage.
+    game.stage.addChild(newLevel.container);
+
+    // re-create the player
+    player = new Player(newLevel.container, newLevel.playerPos.x,newLevel.playerPos.y);
+    physics.playerPosition.x = player.view.position.x;
+    physics.playerPosition.y = player.view.position.y;
+
+    console.log(newLevel.playerPos.x + " " + newLevel.playerPos.y);
+    self.player = player;
 
     self.loop();
   };
@@ -103,15 +89,8 @@ module.exports = function Game() {
       self.input = input;
     }
 
-    if(!player){
-      player = new Player(self, 100,558);
-      self.player = player;
-    }
-
     if (!physics){
       physics = new Physics();
-      physics.playerPosition.x = player.view.position.x;
-      physics.playerPosition.y = player.view.position.y;
     }
 
     console.log("level/level" + levelIndex + ".json");
@@ -119,8 +98,7 @@ module.exports = function Game() {
     pixiLoader.on('loaded', function(evt) {
       //data is in evt.content.json
       console.log("json loaded!");
-
-      self.setLevel(evt.content.json);
+      self.setLevel(evt.content.json, levelIndex);
     });
 
     pixiLoader.load();

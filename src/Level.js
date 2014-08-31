@@ -4,19 +4,24 @@ var SwitchBehavior = require('./behaviors/SwitchBehavior.js');
 var EndBehavior = require('./behaviors/EndBehavior.js');
 var LightBehavior = require('./behaviors/LightBehavior.js');
 
-module.exports = function Level(game) {
+module.exports = function Level(game, index) {
   var self = this;
-  var playerPos = {};
 
+  this.index = index;
   this.segments = [];
   this.levelobjects = [];
-  self.playerPos = playerPos;
+  this.playerPos = {};
+  this.container = new PIXI.DisplayObjectContainer();
 
   //
   // Level methods
   //
 
-this.parse = function(data) {
+  this.dispose = function() {
+    this.levelobjects = null;
+  }
+
+  this.parse = function(data) {
     for (index = 0; index < data.layers[0].objects.length; ++index) {
 
       ////search for player start point
@@ -28,7 +33,7 @@ this.parse = function(data) {
 
       ////setup behavior
       var BehaviourClass = require("./behaviors/" + data.layers[0].objects[index].type + ".js");
-      var behavior = new BehaviourClass(data.layers[0].objects[index]);
+      var behavior = new BehaviourClass(self.container, data.layers[0].objects[index]);
       self.levelobjects.push(behavior);
 
       if(data.layers[0].objects[index].type == "LightBehavior") {
@@ -52,7 +57,6 @@ this.parse = function(data) {
       var segmentD = {target:behavior.view,a:{x:originX,y:originY + size}, b:{x:originX,y:originY}};
 
       this.segments.push(segmentA);
-
       this.segments.push(segmentB);
       this.segments.push(segmentC);
       this.segments.push(segmentD);
@@ -61,8 +65,10 @@ this.parse = function(data) {
 
   this.update = function(game)
   {
-    for (index = 0; index < self.levelobjects.length; ++index) {
-      self.levelobjects[index].update(game);
+    if (self.levelobjects) {
+      for (index = 0; index < self.levelobjects.length; ++index) {
+        self.levelobjects[index].update(game);
+      }
     }
   }
 };

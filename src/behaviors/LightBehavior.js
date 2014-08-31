@@ -1,4 +1,4 @@
-module.exports = function LightBehavior(data) {
+module.exports = function LightBehavior(container, data) {
   var self = this;
 
   /////retrive position and size specs
@@ -21,7 +21,7 @@ module.exports = function LightBehavior(data) {
   this.view.animationSpeed = 0.1;
   this.view.loop = true;
   this.view.play();
-  game.stage.addChild(this.view);
+  container.addChild(this.view);
 
   light.position.x = originX;
   light.position.y = originY;

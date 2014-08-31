@@ -1,4 +1,4 @@
-module.exports = function PlatformBehavior(properties) {
+module.exports = function PlatformBehavior(container, properties) {
 	this.update = function()
 	{
 

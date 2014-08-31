@@ -1,14 +1,15 @@
-var Tweenable = require('../vendor/shifty');
+var Tweenable = require('../vendor/shifty'),
+    Game = require('../game');
 
-module.exports = function EndBehavior(data) {
+module.exports = function EndBehavior(container, data) {
 	var self = this,
-    itemData = data;
+      itemData = data,
+      triggered = false;
 
   /////retrive position and size specs
   var size = data.width;
   var originX = data.x;
   var originY = data.y;
-
 
   /////retrive position and size specs
   var size = data.width;
@@ -19,18 +20,39 @@ module.exports = function EndBehavior(data) {
   self.view = new PIXI.Sprite(PIXI.Texture.fromImage("img/" + data.properties.img));
   self.view.position.x = originX;
   self.view.position.y = originY;
-  game.stage.addChild(self.view);
+  container.addChild(self.view);
+
+  var fadeOutShape = new PIXI.Graphics();
+  fadeOutShape.alpha = 0;
 
 	this.trigger = function() {
-		console.log("END LEVEL");
-	}
+    if (!triggered) {
+      fadeOutShape.beginFill(0x000);
+      fadeOutShape.drawRect(0, 0, game.renderer.width, game.renderer.height);
+      game.stage.addChild(fadeOutShape);
+    }
+    triggered = true;
+  }
 
 	this.update = function(game)
 	{
-		//console.log(game.player.doCollide(itemData.x,itemData.y, itemData.width,itemData.height),game.input.Key.isDown(38));
-		if(game.player.doCollide(itemData.x,itemData.y, itemData.width,itemData.height))
-		{
-			self.trigger();
-		}
-	}
+    if (triggered) {
+
+      console.log("Triggered... increasing alpha...");
+      fadeOutShape.alpha += 0.05;
+      if (fadeOutShape.alpha >= 1) {
+        game.level.dispose();
+        game.nextLevel();
+        game.stage.removeChild(fadeOutShape);
+        game.stage.removeChild(game.level.container);
+      }
+
+    } else {
+      //console.log(game.player.doCollide(itemData.x,itemData.y, itemData.width,itemData.height),game.input.Key.isDown(38));
+      if(game.player.doCollide(itemData.x,itemData.y, itemData.width,itemData.height))
+        {
+          self.trigger();
+        }
+    }
+  }
 }
