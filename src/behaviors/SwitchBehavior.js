@@ -63,7 +63,7 @@ module.exports = function SwitchBehavior(container, data) {
       return;
 
 		//console.log(game.player.doCollide(itemData.x,itemData.y, itemData.width,itemData.height),game.input.Key.isDown(38));
-		if(game.player.doCollide(itemData.x,itemData.y, itemData.width,itemData.height) && game.input.Key.isDown(38) && !moving)
+		if(game.player.doCollide(itemData.x,itemData.y, itemData.width,itemData.height) && !moving)
 		{
 			moving = true;
       game.level.numSwitches --;

@@ -20,7 +20,7 @@
    </properties>
   </object>
   <object name="p" type="start" x="40" y="440" width="40" height="40"/>
-  <object name="light" type="LightBehavior" x="920" y="40" width="40" height="40"/>
+  <object name="light" type="LightBehavior" x="40" y="40" width="40" height="40"/>
   <object name="a" type="PlatformBehavior" x="520" y="560" width="440" height="80">
    <properties>
     <property name="img" value="platform_3x3.png"/>
