@@ -149,6 +149,11 @@ module.exports = function Physics()
 
 		playerVelocity.y = playerPosition.y - prevY;
 
+		if (playerPosition.y < 20) {
+			playerPosition.y = 20;
+			playerVelocity.y = 0;
+		}
+
 		if (playerPosition.x < 20) {
 			playerPosition.x = 20;
 			playerVelocity.x = 0;

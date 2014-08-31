@@ -78,6 +78,13 @@ module.exports = function Game() {
       }
     }
 
+    if (self.btnRestart.visible === true) {
+      if (e.offsetX >= self.btnRestart.x && e.offsetX < self.btnRestart.x + self.btnRestart.width
+        && e.offsetY >= self.btnRestart.y && e.offsetY < self.btnRestart.y + self.btnRestart.height) {
+        return;
+      }
+    }
+
     if (self.level !== null) {
       game.resources.motherSound.play();
     }
@@ -229,6 +236,14 @@ module.exports = function Game() {
 
   this.update = function() {
 
+    if (self.btnRestart !== undefined) {
+      if (self.level === null) {
+        self.btnRestart.visible = false;
+      } else {
+        self.btnRestart.visible = true;
+      }
+    }
+
     if (self.begin) self.begin.update();
     if (self.gameover) self.gameover.update();
 
@@ -274,7 +289,7 @@ module.exports = function Game() {
     function animate() {
       self.update(); // logic
       self.renderer.render(self.stage);
-      requestAnimFrame( animate );
+      requestAnimFrame(animate);
     }
   };
 
@@ -359,6 +374,18 @@ module.exports = function Game() {
       self.btnSoundOff.visible = true;
       Howler.unmute();
     }
+
+    self.btnRestart = PIXI.Sprite.fromFrame('restart.png');
+    self.btnRestart.setInteractive(true);
+    self.btnRestart.buttonMode = true;
+    self.stage.addChild(game.btnRestart);
+    self.btnRestart.position.x = self.renderer.width - 10 - self.btnRestart.width;
+    self.btnRestart.position.y = 10;
+    self.btnRestart.visible = false;
+
+    self.btnRestart.click = function(data) {
+      self.restart();
+    }
   }
 
   this.start = function() {
@@ -394,10 +421,92 @@ module.exports = function Game() {
 
   this.showEndStory = function()
   {
-    if(!self.gameRunning)
+    console.log("show end story", gameRunning);
+
+    if(!gameRunning)
       return;
     
-    self.gameRunning = false;
+    gameRunning = false;
+
+    var phrase1 = new PIXI.Text('HMMM...MY HEAD...WHAT HAPPENED?', {
+      font: '22px Rokkitt',
+      fill: '#FFFFFF',
+      align: 'center'
+    });
+
+    var phrase2 = new PIXI.Text('MOM?...MOM?! NO!!!', {
+      font: '22px Rokkitt',
+      fill: '#FFFFFF',
+      align: 'center'
+    });
+
+    var phrase3 = new PIXI.Text('BUT...WAIT...THAT LIGHT, IT WAS YOU?', {
+      font: '22px Rokkitt',
+      fill: '#FFFFFF',
+      align: 'center'
+    });
+
+    phrase1.alpha = 0;
+    phrase2.alpha = 0;
+    phrase3.alpha = 0;
+
+    phrase1.position.x = (self.renderer.width / 2) - (phrase1.width / 2);
+    phrase1.position.y = self.renderer.height / 2 - 60;
+    self.stage.addChild(phrase1);
+
+    phrase2.position.x = (self.renderer.width / 2) - (phrase2.width / 2);
+    phrase2.position.y = self.renderer.height / 2 - 10;
+    self.stage.addChild(phrase2);
+
+    phrase3.position.x = (self.renderer.width / 2) - (phrase3.width / 2);
+    phrase3.position.y = self.renderer.height / 2 + 40;
+    self.stage.addChild(phrase3);
+
+
+    var tweenable = new Tweenable();
+    tweenable.tween({
+      from: {alpha:0},
+      to:   {alpha:1},
+      duration: 500,
+      easing: 'easeOutCubic',
+      start: function () {
+      },
+      step: function(state){
+        phrase1.alpha = state.alpha;
+      },
+      finish: function () {
+      }
+    });
+
+    var tweenable = new Tweenable();
+    tweenable.tween({
+      from: {alpha:0},
+      to:   {alpha:1},
+      duration: 500,
+      easing: 'easeOutCubic',
+      start: function () {
+      },
+      step: function(state){
+        phrase2.alpha = state.alpha;
+      },
+      finish: function () {
+      }
+    });
+
+    var tweenable = new Tweenable();
+    tweenable.tween({
+      from: {alpha:0},
+      to:   {alpha:1},
+      duration: 500,
+      easing: 'easeOutCubic',
+      start: function () {
+      },
+      step: function(state){
+        phrase3.alpha = state.alpha;
+      },
+      finish: function () {
+      }
+    });
   }
 
   this.start();

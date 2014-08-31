@@ -3,6 +3,7 @@ var PlatformBehavior = require('./behaviors/PlatformBehavior.js');
 var SwitchBehavior = require('./behaviors/SwitchBehavior.js');
 var EndBehavior = require('./behaviors/EndBehavior.js');
 var LightBehavior = require('./behaviors/LightBehavior.js');
+var EndCarBehavior = require('./behaviors/EndCarBehavior.js');
 
 module.exports = function Level(game, index) {
   var self = this;
