@@ -73,14 +73,15 @@ module.exports = function Level(game, index) {
       }
 
       /////retrive position and size specs
-      var size = data.layers[0].objects[index].width;
+      var sizeX = data.layers[0].objects[index].width;
+      var sizeY = data.layers[0].objects[index].height;
       var originX = data.layers[0].objects[index].x;
       var originY = data.layers[0].objects[index].y;
 
-      var segmentA = {target:behavior.view,a:{x:originX,y:originY}, b:{x:originX + size,y:originY}};
-      var segmentB = {target:behavior.view,a:{x:originX+size,y:originY}, b:{x:originX + size,y:originY+size}};
-      var segmentC = {target:behavior.view,a:{x:originX+size,y:originY+size}, b:{x:originX,y:originY + size}};
-      var segmentD = {target:behavior.view,a:{x:originX,y:originY + size}, b:{x:originX,y:originY}};
+      var segmentA = {target:behavior.view,a:{x:originX,y:originY}, b:{x:originX + sizeX,y:originY}};
+      var segmentB = {target:behavior.view,a:{x:originX+sizeX,y:originY}, b:{x:originX + sizeX,y:originY+sizeY}};
+      var segmentC = {target:behavior.view,a:{x:originX+sizeX,y:originY+sizeY}, b:{x:originX,y:originY + sizeY}};
+      var segmentD = {target:behavior.view,a:{x:originX,y:originY + sizeY}, b:{x:originX,y:originY}};
 
       this.segments.push(segmentA);
       this.segments.push(segmentB);
