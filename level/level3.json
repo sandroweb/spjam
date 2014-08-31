@@ -86,7 +86,7 @@
                  "visible":true,
                  "width":40,
                  "x":880,
-                 "y":20
+                 "y":60
                 }, 
                 {
                  "height":40,
@@ -157,7 +157,7 @@
                  "visible":true,
                  "width":160,
                  "x":800,
-                 "y":60
+                 "y":100
                 }, 
                 {
                  "height":40,
