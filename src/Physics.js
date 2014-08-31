@@ -63,50 +63,52 @@ module.exports = function Physics()
 		{
 			if (nearest.l)
 			{
-				if (playerPosition.x < nearest.l.point.x + offsetX) 
+				if (playerPosition.x < nearest.l.point.x + offsetX)
 				{
 					playerPosition.x = nearest.l.point.x + offsetX;
 					playerVelocity.x = 0;
 				}
 				else
 				{
-					playerVelocity.x = playerPosition.x - prevX;	
+					playerVelocity.x = playerPosition.x - prevX;
 				}
-				
+
 				// ctx.beginPath();
 				// ctx.moveTo(playerPosition.x, playerPosition.y);
 				// ctx.lineTo(nearest.l.point.x, playerPosition.y)
 				// ctx.strokeStyle = "#FF0000";
-				// ctx.stroke();	
+				// ctx.stroke();
 			}
 			if (nearest.r)
 			{
-				if (playerPosition.x > nearest.r.point.x - offsetX) 
+				if (playerPosition.x > nearest.r.point.x - offsetX)
 				{
 					playerPosition.x = nearest.r.point.x - offsetX;
 					playerVelocity.x = 0;
 				}
 				else
 				{
-					playerVelocity.x = playerPosition.x - prevX;	
+					playerVelocity.x = playerPosition.x - prevX;
 				}
-				
+
 				// ctx.beginPath();
 				// ctx.moveTo(playerPosition.x, playerPosition.y);
 				// ctx.lineTo(nearest.r.point.x, playerPosition.y);
 				// ctx.strokeStyle = "#FF0000";
-				// ctx.stroke();	
+				// ctx.stroke();
 			}
 		}
 		else
 		{
 			playerPosition.x = prevX;
-			
+
 		}
-		
+
 
 		var prevY = playerPosition.y;
-		playerPosition.y += 1;
+
+    // gravity
+		playerPosition.y += 2;
 
 		var lineVA = {x:playerPosition.x, y:playerPosition.y - 1000};
 		var lineVB = {x:playerPosition.x, y:playerPosition.y + 1000};
@@ -125,7 +127,7 @@ module.exports = function Physics()
 				// ctx.moveTo(playerPosition.x, playerPosition.y);
 				// ctx.lineTo(playerPosition.x, nearest.t.point.y);
 				// ctx.strokeStyle = "#FF0000";
-				// ctx.stroke();	
+				// ctx.stroke();
 			}
 
 			if (nearest.b)
@@ -136,15 +138,15 @@ module.exports = function Physics()
 				// ctx.moveTo(playerPosition.x, playerPosition.y);
 				// ctx.lineTo(playerPosition.x, nearest.b.point.y);
 				// ctx.strokeStyle = "#FF0000";
-				// ctx.stroke();	
-			}	
+				// ctx.stroke();
+			}
 		}
 		else
 		{
 			playerPosition.y = prevY;
 		}
 
-		
+
 		playerVelocity.y = playerPosition.y - prevY;
 	}
 
@@ -159,10 +161,10 @@ module.exports = function Physics()
 			if (r.point.onLine1 && r.point.onLine2)
 			{
 				var d = lineDistance(pos, r.point);
-				
+
 				if (r.point.x < pos.x)
 				{
-					if (d < result.dl) 
+					if (d < result.dl)
 					{
 						result.dl = d;
 						result.l = r;
@@ -171,7 +173,7 @@ module.exports = function Physics()
 
 				if (r.point.x > pos.x)
 				{
-					if (d < result.dr) 
+					if (d < result.dr)
 					{
 						result.dr = d;
 						result.r = r;
@@ -180,21 +182,21 @@ module.exports = function Physics()
 
 				if (r.point.y < pos.y)
 				{
-					if (d < result.dt) 
+					if (d < result.dt)
 					{
 						result.dt = d;
 						result.t = r;
 					}
-				}	
+				}
 
 				if (r.point.y > pos.y)
 				{
-					if (d < result.db) 
+					if (d < result.db)
 					{
 						result.db = d;
 						result.b = r;
 					}
-				}	
+				}
 			}
 		}
 
@@ -237,7 +239,7 @@ module.exports = function Physics()
 }
 
 //
-function pointInPolygon(point, polygon) 
+function pointInPolygon(point, polygon)
 {
 	var points = polygon;
 	var i, j, nvert = polygon.length;
