@@ -45,12 +45,15 @@ module.exports = function Game() {
   var level = null;
   window.light = new Light(50, 50);
 
+  self.level = level;
+
   this.renderer.view.addEventListener("mousedown", function(e) {
     // light.position.x = e.offsetX;
     // light.position.y = e.offsetY;
-
-    game.resources.motherSound.play();
-
+    if (self.level !== null) {
+      game.resources.motherSound.play();
+    }
+    
     var dest = {x:e.offsetX, y:e.offsetY};
     var tweenable = new Tweenable();
     tweenable.tween({
