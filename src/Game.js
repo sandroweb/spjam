@@ -50,7 +50,8 @@ module.exports = function Game() {
   self.levelend;
   self.gameover;
   self.preloader;
-  self.loader;
+  self.pixiLoader;
+  self.soundLoader;
 
   this.restart = function() {
     alert('Game.js - this.restart()');
@@ -95,15 +96,15 @@ module.exports = function Game() {
     }
 
     console.log("level/level" + levelIndex + ".json");
-    var loader = new PIXI.JsonLoader("level/level" + levelIndex + ".json");
-    loader.on('loaded', function(evt) {
+    var pixiLoader = new PIXI.JsonLoader("level/level" + levelIndex + ".json");
+    pixiLoader.on('loaded', function(evt) {
       //data is in evt.content.json
       console.log("json loaded!");
 
       self.setLevel(evt.content.json);
     });
 
-    loader.load();
+    pixiLoader.load();
   }
 
   var lastLightX, lastLightY;
@@ -184,18 +185,45 @@ module.exports = function Game() {
     }
   };
 
-  this.load = function() {
+  this.loadPixi = function() {
+    self.itemsLoaded = 0,
+    self.pixiFiles = self.resources.getPIXIFiles(),
+    self.soundFiles = self.resources.sounds,
+    self.totalItems = self.pixiFiles.length + self.soundFiles.length;
     // loader
-    loader = new PIXI.AssetLoader(self.resources.getImages());
+    loader = new PIXI.AssetLoader(self.pixiFiles);
     loader.addEventListener('onComplete', function() {
-      self.preloader.hide();
-      self.begin.show();
+      self.loadSound();
     });
     loader.addEventListener('onProgress', function(e) {
-      self.preloader.progress((e.content.assetURLs.length - e.content.loadCount), e.content.assetURLs.length);
+      self.itemsLoaded += 1;
+      self.preloader.progress(self.itemsLoaded, self.totalItems);
       if (typeof(ejecta)!=="undefined") { return; };
     });
+
     loader.load();
+  }
+
+  this.loadSound = function() {
+    var i,
+      total = self.soundFiles.length,
+      obj;
+    for (i = 0; i < total; ++i) {
+      obj = self.soundFiles[i];
+        self.resources[obj.name] = new Howl({
+          urls: obj.urls,
+          autoplay: obj.autoPlay || false,
+          loop: obj.loop || false,
+          volume: obj.volume || 1,
+          onload: function() {
+            self.itemsLoaded++;
+            if (self.itemsLoaded == self.totalItems) {
+              self.preloader.hide();
+              self.begin.show();
+            }
+          }
+        });
+    }
   }
 
   this.start = function() {
@@ -217,7 +245,7 @@ module.exports = function Game() {
     self.preloader = new Preloader(this);
 
     // FIXME
-    self.load();
+    self.loadPixi();
   };
 
   this.start();
