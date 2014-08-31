@@ -16,9 +16,9 @@ module.exports = function EndBehavior(data) {
   var originY = data.y;
 
   /////create visual
-  self.view = new PIXI.Sprite(PIXI.Texture.fromImage("img/" + data.properties.img));
+  self.view = new PIXI.Sprite(PIXI.Texture.fromImage("portal.png"));
   self.view.position.x = originX;
-  self.view.position.y = originY;
+  self.view.position.y = originY - 27;
   game.stage.addChild(self.view);
 
 	this.trigger = function() {
