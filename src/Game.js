@@ -45,9 +45,24 @@ module.exports = function Game() {
   var level = null;
   window.light = new Light(50, 50);
 
-  this.renderer.view.addEventListener("mousemove", function(e) {
-    light.position.x = e.offsetX;
-    light.position.y = e.offsetY;
+  this.renderer.view.addEventListener("mousedown", function(e) {
+    // light.position.x = e.offsetX;
+    // light.position.y = e.offsetY;
+
+    var dest = {x:e.offsetX, y:e.offsetY};
+    var tweenable = new Tweenable();
+    tweenable.tween({
+      from: light.position,
+      to:   dest,
+      duration: 1000,
+      easing: 'easeOutCubic',
+      start: function () {
+        moving = true;
+      },
+      finish: function () {
+        moving = false;
+      }
+    });
   })
 
   var lightGraphics = new PIXI.Graphics(),

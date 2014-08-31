@@ -1,3 +1,5 @@
+var ParticleSystem = require('./components/ParticleSystem.js');
+
 module.exports = function Begin(game) {
   window.game = game;
   
@@ -7,7 +9,8 @@ module.exports = function Begin(game) {
   var car = null;
   var logo = null;
   var logoDark = null;
-  var btnSTart = null;
+  var btnStart = null;
+  var particles = null;
   var count = 0;
 
   this.view = view;
@@ -75,6 +78,40 @@ module.exports = function Begin(game) {
     car = PIXI.Sprite.fromFrame("Car.png");
     view.addChild(car);
     car.position.y = 450;
+
+    particles = new ParticleSystem(
+    {
+        "images":["smoke.png"],
+        "numParticles":500,
+        "emissionsPerUpdate":3,
+        "emissionsInterval":1,
+        "alpha":1,
+        "properties":
+        {
+          "randomSpawnX":20,
+          "randomSpawnY":3,
+          "life":20,
+          "randomLife":100,
+          "forceX":0,
+          "forceY":-0.01,
+          "randomForceX":0.01,
+          "randomForceY":0.01,
+          "velocityX":0,
+          "velocityY":0,
+          "randomVelocityX":0.1,
+          "randomVelocityY":0.1,
+          "scale":1,
+          "growth":0.1,
+          "randomScale":0.5,
+          "alphaStart":0,
+          "alphaFinish":0,
+          "alphaRatio":0.2,
+          "torque":0,
+          "randomTorque":0
+        }
+    });
+    view.addChild(particles.view);
+    particles.view.alpha = 0.25;
   }
 
   function createOverlap()
@@ -114,9 +151,13 @@ module.exports = function Begin(game) {
   {
     if (!view.visible) return;
     overlap.rotation += 0.001;
-    car.position.x += 30;
+    car.position.x += 20;
     car.scale.x = 1;
     if (car.position.x > 7000) car.position.x = -300;
+
+    particles.properties.centerX = car.position.x;
+    particles.properties.centerY = car.position.y + 100;
+    particles.update();
 
     logo.scale.x = 0.98 + Math.sin(count)*0.04;
     logo.scale.y = 0.98 + Math.cos(count*0.3)*0.04;
