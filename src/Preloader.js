@@ -30,8 +30,8 @@ module.exports = function Preloader(game) {
     content.addChild(bg);
 
     self.text = new PIXI.Text('CARREGANDO 0%', {
-      font: '38px Rokkitt',
-      fill: '#FF0000',
+      font: '18px Rokkitt',
+      fill: '#666666',
       align: 'center'
     });
     self.text.position.x = (game.renderer.width / 2) - (self.text.width / 2);
