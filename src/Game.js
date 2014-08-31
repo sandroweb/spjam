@@ -4,7 +4,6 @@ var Resources = require('./Resources'),
   Begin = require('./Begin'),
   LevelEnd = require('./LevelEnd'),
   GameOver = require('./GameOver'),
-  Gameplay = require('./Gameplay'),
   Light = require('./Light'),
   Tweenable = require('./vendor/shifty'),
   GameInput = require('./GameInput.js'),
@@ -48,7 +47,19 @@ module.exports = function Game() {
 
   self.level = level;
 
+  var lastMouseClick = 0,
+      mouseClickInterval = 2000; // 3 seconds to click again
+
   this.renderer.view.addEventListener("mousedown", function(e) {
+    var clickTime = (new Date()).getTime();
+
+    if (lastMouseClick + mouseClickInterval >= clickTime) {
+      // dissallowed
+      return;
+    }
+
+    lastMouseClick = clickTime;
+
     // light.position.x = e.offsetX;
     // light.position.y = e.offsetY;
     if (self.level !== null) {
@@ -60,7 +71,7 @@ module.exports = function Game() {
     tweenable.tween({
       from: light.position,
       to:   dest,
-      duration: 1000,
+      duration: mouseClickInterval,
       easing: 'easeOutCubic',
       start: function () {
         moving = true;
@@ -152,7 +163,7 @@ module.exports = function Game() {
     }
 
     // FIXME
-    if (light.segments.lenght == 0 || !this.level || this.level.segments.length == 0) {
+    if (light.segments.length == 0 || !this.level || this.level.segments.length == 0) {
       return;
     }
 
@@ -194,12 +205,6 @@ module.exports = function Game() {
 
     self.level.bg2.mask = lightGraphics;
     // overlay.mask = lightGraphics;
-
-    // for(var i=1;i<polygons.length;i++){
-    //   lightContainer.addChild( light.getPolygonGraphics(polygons[i]) );
-    // }
-    // lightContainer.addChild( light.getPolygonGraphics(polygons[0]) );
-    // window.polygons = polygons[0];
 
     lastLightX = light.position.x;
     lastLightY = light.position.y;

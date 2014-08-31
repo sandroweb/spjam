@@ -58,7 +58,7 @@ module.exports = function GameOver(game) {
       if (count >= 150) hide();
     }
 
-    
+
   }
 
   function hide() {
