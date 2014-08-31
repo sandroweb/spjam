@@ -38,7 +38,7 @@ module.exports = function Begin(game) {
 
     var guardrailDark = PIXI.Sprite.fromFrame("GuardRail.png");
     view.addChild(guardrailDark);
-    guardrailDark.position.y = 500;
+    guardrailDark.position.y = 550;
     guardrailDark.alpha = 0.5;
 
     var front = new PIXI.DisplayObjectContainer();
@@ -77,7 +77,9 @@ module.exports = function Begin(game) {
 
     car = PIXI.Sprite.fromFrame("Car.png");
     view.addChild(car);
-    car.position.y = 450;
+    car.position.x = -3000;
+    car.position.y = guardrailDark.position.y - 75;
+    car.passed = false;
 
     particles = new ParticleSystem(
     {
@@ -153,7 +155,15 @@ module.exports = function Begin(game) {
     overlap.rotation += 0.001;
     car.position.x += 20;
     car.scale.x = 1;
-    if (car.position.x > 7000) car.position.x = -3000;
+    if (car.position.x > 7000) {
+      car.position.x = -3000;
+      car.passed = false;
+    }
+
+    if (car.passed === false && car.position.x > -1400) {
+      car.passed = true;
+      game.resources.carPass.play();
+    }
 
     particles.properties.centerX = car.position.x;
     particles.properties.centerY = car.position.y + 100;

@@ -57,14 +57,15 @@ module.exports = function Resources() {
       volume: .3
     },
     {
-      // game.resources.soundCarCrash1.play();
-      name: 'soundCarCrash1',
-      urls: ['sounds/237375__squareal__car-crash_01.mp3']
+      // game.resources.carCrash.play();
+      name: 'carCrash',
+      urls: ['sounds/carCrash.mp3']
     },
     {
-      // game.resources.soundCarCrash2.play();
-      name: 'soundCarCrash2',
-      urls: ['sounds/92019__fatlane__1004-crash_01.mp3']
+      // game.resources.carPass.play();
+      name: 'carPass',
+      urls: ['sounds/carPass2.mp3'],
+      volume: .15
     }
   ];
 

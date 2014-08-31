@@ -21,12 +21,17 @@ module.exports = function Preloader(game) {
     content = new PIXI.DisplayObjectContainer();
     game.stage.addChild(content);
 
-    bg = new PIXI.Sprite.fromImage(game.resources.background);
+    bg = new PIXI.Graphics();
+    bg.beginFill(0x000000);
+    bg.drawRect(0, 0, screenWidth, screenHeight);
+    bg.endFill();
+
+    
     content.addChild(bg);
 
     self.text = new PIXI.Text('CARREGANDO 0%', {
-      font: '38px Rokkitt',
-      fill: '#FF0000',
+      font: '18px Rokkitt',
+      fill: '#666666',
       align: 'center'
     });
     self.text.position.x = (game.renderer.width / 2) - (self.text.width / 2);

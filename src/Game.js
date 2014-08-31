@@ -37,6 +37,7 @@ module.exports = function Game() {
   var player = null;
   var physics = null;
   var direction = 0;
+  var glow = null;
 
   // LevelIndex
   var self = this;
@@ -126,6 +127,7 @@ module.exports = function Game() {
     self.player = player;
 
     self.loop();
+    self.stage.addChild(glow);
   };
 
   this.loadLevel = function(levelIndex) {
@@ -308,6 +310,12 @@ module.exports = function Game() {
     self.preloader.hide();
     self.begin.show();
     game.resources.soundLoop.fadeIn(.4, 2000);
+
+    glow = PIXI.Sprite.fromFrame("glow.png");
+    glow.scale.x = 2;
+    glow.scale.y = 2;
+    self.stage.addChild(glow);
+    glow.alpha = 0.65;
   }
 
   this.start = function() {
@@ -339,6 +347,14 @@ module.exports = function Game() {
   this.goToBeginning = function()
   {
     self.begin.show();
+  }
+
+  this.showEndStory = function()
+  {
+    if(!self.gameRunning)
+      return;
+    
+    self.gameRunning = false;
   }
 
   this.start();
