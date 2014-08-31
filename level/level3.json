@@ -15,7 +15,7 @@
                  "type":"PlatformBehavior",
                  "visible":true,
                  "width":80,
-                 "x":400,
+                 "x":0,
                  "y":560
                 }, 
                 {
@@ -25,12 +25,12 @@
                     {
                      "img":"switch.png",
                      "moveX":"23",
-                     "moveY":"4"
+                     "moveY":"2"
                     },
                  "type":"SwitchBehavior",
                  "visible":true,
                  "width":40,
-                 "x":200,
+                 "x":120,
                  "y":520
                 }, 
                 {
@@ -43,7 +43,7 @@
                  "type":"EndBehavior",
                  "visible":true,
                  "width":40,
-                 "x":760,
+                 "x":880,
                  "y":520
                 }, 
                 {
@@ -71,34 +71,6 @@
                  "width":40,
                  "x":0,
                  "y":40
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
-                 "x":440,
-                 "y":480
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
-                 "x":0,
-                 "y":560
                 }, 
                 {
                  "height":80,
@@ -153,22 +125,8 @@
                  "type":"PlatformBehavior",
                  "visible":true,
                  "width":80,
-                 "x":320,
-                 "y":560
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
                  "x":480,
-                 "y":560
+                 "y":400
                 }, 
                 {
                  "height":80,
@@ -182,21 +140,7 @@
                  "visible":true,
                  "width":80,
                  "x":560,
-                 "y":560
-                }, 
-                {
-                 "height":80,
-                 "name":"a",
-                 "properties":
-                    {
-                     "img":"platform_3x3.png",
-                     "shadow":"true"
-                    },
-                 "type":"PlatformBehavior",
-                 "visible":true,
-                 "width":80,
-                 "x":640,
-                 "y":560
+                 "y":400
                 }, 
                 {
                  "height":80,
@@ -239,6 +183,49 @@
                  "width":80,
                  "x":880,
                  "y":560
+                }, 
+                {
+                 "height":80,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":80,
+                 "x":240,
+                 "y":480
+                }, 
+                {
+                 "height":80,
+                 "name":"a",
+                 "properties":
+                    {
+                     "img":"platform_3x3.png",
+                     "shadow":"true"
+                    },
+                 "type":"PlatformBehavior",
+                 "visible":true,
+                 "width":80,
+                 "x":400,
+                 "y":400
+                }, 
+                {
+                 "height":40,
+                 "name":"s",
+                 "properties":
+                    {
+                     "img":"switch.png",
+                     "moveX":"0",
+                     "moveY":"2"
+                    },
+                 "type":"SwitchBehavior",
+                 "visible":true,
+                 "width":40,
+                 "x":520,
+                 "y":360
                 }],
          "opacity":1,
          "type":"objectgroup",
