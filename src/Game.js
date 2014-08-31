@@ -46,11 +46,11 @@ module.exports = function Game() {
   var lightGraphics = new PIXI.Graphics(),
       lightContainer = new PIXI.DisplayObjectContainer();
 
-  var begin,
-    levelend,
-    gameover,
-    preloader,
-    loader;
+  self.begin;
+  self.levelend;
+  self.gameover;
+  self.preloader;
+  self.loader;
 
   this.restart = function() {
     alert('Game.js - this.restart()');
@@ -183,6 +183,22 @@ module.exports = function Game() {
     }
   };
 
+  this.load = function() {
+    // loader
+    loader = new PIXI.AssetLoader(self.resources.getImages());
+    loader.addEventListener('onComplete', function() {
+      // self.preloader.hide();
+      self.begin.show();
+    });
+    loader.addEventListener('onProgress', function(e) {
+      // var percent = (e.content.assetURLs.length - e.content.loadCount) * 100 / e.content.assetURLs.length;
+      // console.log(self.resources.getImages());
+      // self.preloader.progress(percent);
+      // if (typeof(ejecta)!=="undefined") { return; };
+    });
+    loader.load();
+  }
+
   this.start = function() {
     var imgsArr = [], i;
 
@@ -191,31 +207,19 @@ module.exports = function Game() {
     self.stage.addChild(lightContainer);
 
     // start screens
-    begin = new Begin(this);
-    levelend = new LevelEnd(this);
-    gameover = new GameOver(this);
-    preloader = new Preloader(this);
+    self.begin = new Begin(this);
+    self.levelend = new LevelEnd(this);
+    self.gameover = new GameOver(this);
 
     // start loop
     self.loop();
 
-    // FIXME
-    // self.load();
-  };
+    //
+    // self.preloader = new Preloader(this);
 
-  this.load = function() {
-    // loader
-    loader = new PIXI.AssetLoader(self.resources.getImages());
-    loader.addEventListener('onComplete', function() {
-      preloader.hide();
-      begin.show();
-    });
-    loader.addEventListener('onProgress', function(e) {
-      preloader.progress((e.content.assetURLs.length - e.content.loadCount) * 100 / e.content.assetURLs.length);
-      if (typeof(ejecta)!=="undefined") { return; };
-    });
-    loader.load();
-  }
+    // FIXME
+    self.load();
+  };
 
   this.start();
 }

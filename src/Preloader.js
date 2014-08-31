@@ -7,10 +7,11 @@ module.exports = function Preloader(game) {
     images = ['img/bg-default.jpg'],
     loader = new PIXI.AssetLoader(images);
 
-  loader.addEventListener('onComplete', function() {
-    init();
-    game.load();
-  });
+  this.progress = function(percent) {
+    console.log('Carregando ' + percent + '%');
+    text.setText('Carregando ' + percent + '%');
+    text.position.x = (game.renderer.width / 2) - (text.width / 2);
+  }
 
   function init() {
     content = new PIXI.DisplayObjectContainer();
@@ -27,16 +28,17 @@ module.exports = function Preloader(game) {
     text.position.x = (game.renderer.width / 2) - (text.width / 2);
     text.position.y = game.renderer.height / 2;
     content.addChild(text);
-  }
-
-  this.progress = function(percent) {
-    text.setText('Carregando ' + percent + '%');
-    text.position.x = (game.renderer.width / 2) - (text.width / 2);
+    
+    game.load();
   }
 
   this.hide = function() {
     content.visible = false;
   }
+
+  loader.addEventListener('onComplete', function() {
+    init();
+  });
 
   loader.load();
 
