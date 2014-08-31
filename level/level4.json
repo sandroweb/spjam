@@ -29,8 +29,8 @@
                  "type":"PlatformBehavior",
                  "visible":true,
                  "width":160,
-                 "x":400,
-                 "y":400
+                 "x":420,
+                 "y":600
                 }, 
                 {
                  "height":40,
@@ -43,8 +43,8 @@
                  "type":"PlatformBehavior",
                  "visible":true,
                  "width":120,
-                 "x":0,
-                 "y":100
+                 "x":420,
+                 "y":60
                 }, 
                 {
                  "height":20,
@@ -56,8 +56,8 @@
                  "type":"start",
                  "visible":true,
                  "width":20,
-                 "x":20,
-                 "y":60
+                 "x":460,
+                 "y":40
                 }, 
                 {
                  "height":20,
@@ -69,8 +69,8 @@
                  "type":"LightBehavior",
                  "visible":true,
                  "width":20,
-                 "x":20,
-                 "y":60
+                 "x":880,
+                 "y":200
                 }, 
                 {
                  "height":40,
@@ -85,8 +85,8 @@
                  "type":"SwitchBehavior",
                  "visible":true,
                  "width":40,
-                 "x":880,
-                 "y":20
+                 "x":60,
+                 "y":320
                 }, 
                 {
                  "height":40,
@@ -99,8 +99,8 @@
                  "type":"PlatformBehavior",
                  "visible":true,
                  "width":160,
-                 "x":400,
-                 "y":280
+                 "x":0,
+                 "y":360
                 }, 
                 {
                  "height":40,
@@ -112,8 +112,8 @@
                  "type":"EndBehavior",
                  "visible":true,
                  "width":20,
-                 "x":480,
-                 "y":360
+                 "x":500,
+                 "y":560
                 }, 
                 {
                  "height":40,
@@ -142,8 +142,8 @@
                  "type":"PlatformBehavior",
                  "visible":true,
                  "width":40,
-                 "x":360,
-                 "y":280
+                 "x":160,
+                 "y":240
                 }, 
                 {
                  "height":40,
@@ -156,8 +156,8 @@
                  "type":"PlatformBehavior",
                  "visible":true,
                  "width":160,
-                 "x":800,
-                 "y":60
+                 "x":340,
+                 "y":340
                 }, 
                 {
                  "height":40,
@@ -169,9 +169,9 @@
                     },
                  "type":"PlatformBehavior",
                  "visible":true,
-                 "width":120,
-                 "x":160,
-                 "y":320
+                 "width":720,
+                 "x":0,
+                 "y":500
                 }, 
                 {
                  "height":40,
@@ -199,7 +199,7 @@
                  "visible":true,
                  "width":80,
                  "x":880,
-                 "y":460
+                 "y":560
                 }],
          "opacity":1,
          "type":"objectgroup",

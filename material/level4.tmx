@@ -7,21 +7,21 @@
     <property name="shadow" value="true"/>
    </properties>
   </object>
-  <object name="a" type="PlatformBehavior" x="400" y="400" width="160" height="40">
+  <object name="a" type="PlatformBehavior" x="420" y="600" width="160" height="40">
    <properties>
     <property name="img" value="platform_3x3.png"/>
     <property name="shadow" value="true"/>
    </properties>
   </object>
-  <object name="a" type="PlatformBehavior" x="0" y="100" width="120" height="40">
+  <object name="a" type="PlatformBehavior" x="420" y="60" width="120" height="40">
    <properties>
     <property name="img" value="platform_3x3.png"/>
     <property name="shadow" value="true"/>
    </properties>
   </object>
-  <object name="p" type="start" x="20" y="60" width="20" height="20"/>
-  <object name="light" type="LightBehavior" x="20" y="60" width="20" height="20"/>
-  <object name="s" type="SwitchBehavior" x="880" y="20" width="40" height="40">
+  <object name="p" type="start" x="460" y="40" width="20" height="20"/>
+  <object name="light" type="LightBehavior" x="880" y="200" width="20" height="20"/>
+  <object name="s" type="SwitchBehavior" x="60" y="320" width="40" height="40">
    <properties>
     <property name="img" value="switch.png"/>
     <property name="moveX" value="12"/>
@@ -29,13 +29,13 @@
     <property name="size" value="20"/>
    </properties>
   </object>
-  <object name="a" type="PlatformBehavior" x="400" y="280" width="160" height="40">
+  <object name="a" type="PlatformBehavior" x="0" y="360" width="160" height="40">
    <properties>
     <property name="img" value="platform_3x3.png"/>
     <property name="shadow" value="true"/>
    </properties>
   </object>
-  <object name="e" type="EndBehavior" x="480" y="360" width="20" height="40">
+  <object name="e" type="EndBehavior" x="500" y="560" width="20" height="40">
    <properties>
     <property name="img" value="goal.png"/>
    </properties>
@@ -48,19 +48,19 @@
     <property name="size" value="20"/>
    </properties>
   </object>
-  <object name="a" type="PlatformBehavior" x="360" y="280" width="40" height="160">
+  <object name="a" type="PlatformBehavior" x="160" y="240" width="40" height="160">
    <properties>
     <property name="img" value="platform_3x3.png"/>
     <property name="shadow" value="true"/>
    </properties>
   </object>
-  <object name="a" type="PlatformBehavior" x="800" y="60" width="160" height="40">
+  <object name="a" type="PlatformBehavior" x="340" y="340" width="160" height="40">
    <properties>
     <property name="img" value="platform_3x3.png"/>
     <property name="shadow" value="true"/>
    </properties>
   </object>
-  <object name="a" type="PlatformBehavior" x="160" y="320" width="120" height="40">
+  <object name="a" type="PlatformBehavior" x="0" y="500" width="720" height="40">
    <properties>
     <property name="img" value="platform_3x3.png"/>
     <property name="shadow" value="true"/>
@@ -72,7 +72,7 @@
     <property name="shadow" value="true"/>
    </properties>
   </object>
-  <object name="a" type="PlatformBehavior" x="880" y="460" width="80" height="40">
+  <object name="a" type="PlatformBehavior" x="880" y="560" width="80" height="40">
    <properties>
     <property name="img" value="platform_3x3.png"/>
     <property name="shadow" value="true"/>
