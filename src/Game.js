@@ -43,6 +43,8 @@ module.exports = function Game() {
   // LevelIndex
   var self = this;
   var level = null;
+  var lost = false;
+  var gameRunning = false;
   window.light = new Light(50, 50);
 
   this.renderer.view.addEventListener("mousedown", function(e) {
@@ -78,7 +80,7 @@ module.exports = function Game() {
   }
 
   this.setLevel = function(levelData, levelIndex) {
-    var h = self.renderer.height,
+    var h = self.renderer.height + 80,
         w = self.renderer.width,
         frameBorder = 50;
 
@@ -122,12 +124,15 @@ module.exports = function Game() {
       physics = new Physics();
     }
 
+    levelIndex = 2;
     console.log("level/level" + levelIndex + ".json");
     var pixiLoader = new PIXI.JsonLoader("level/level" + levelIndex + ".json");
     pixiLoader.on('loaded', function(evt) {
       //data is in evt.content.json
       console.log("json loaded!");
       self.setLevel(evt.content.json, levelIndex);
+      gameRunning = true;
+      lost = false;
     });
 
     pixiLoader.load();
@@ -199,6 +204,9 @@ module.exports = function Game() {
   this.update = function() {
 
     if (self.begin) self.begin.update();
+    if (self.gameover) self.gameover.update();
+
+    if (!gameRunning) return;
     this.updateLights();
 
     // console.log(input + " " + input.Key);
@@ -229,6 +237,8 @@ module.exports = function Game() {
         player.update(input, physics.playerPosition, physics.playerVelocity);
 
        self.level.update(self);
+
+       if (!lost && physics.playerPosition.y > screenHeight + 40) this.loseGame();
     }
   };
 
@@ -293,7 +303,7 @@ module.exports = function Game() {
 
   this.start = function() {
     var imgsArr = [], i;
-
+    lost = false;
     // start scenes
     // self.stage.addChild(lightGraphics);
 
@@ -308,6 +318,19 @@ module.exports = function Game() {
     // FIXME
     self.loadPixi();
   };
+
+  this.loseGame = function()
+  {
+    if (lost) return;
+    lost = true;
+    gameRunning = false;
+    self.gameover.show();
+  }
+
+  this.goToBeginning = function()
+  {
+    self.begin.show();
+  }
 
   this.start();
 }
