@@ -1,7 +1,6 @@
 var axis = {x:0, y:0};
-var heroPos = {x:290, y:100};
+var heroPos = {x:20, y:0};
 var floor = 0;
-var maxMovement = {x:3, y:3};
 
 window.addEventListener("keydown", onKeyDown);
 window.addEventListener("keyup", onKeyUp);
@@ -211,141 +210,116 @@ function draw(){
 
 	var vertices = polygons[0];
 	var offset = 5;
+	var velX = 3;
+	var velY = 3;
 
+	var lineHA = {x:heroPos.x - 1000, y:heroPos.y};
+	var lineHB = {x:heroPos.x + 1000, y:heroPos.y};
+	var lineVA = {x:heroPos.x, y:heroPos.y - 1000};
+	var lineVB = {x:heroPos.x, y:heroPos.y + 1000};
+	var resultH = raycast(lineHA, lineHB, vertices);
+	var resultV = raycast(lineVA, lineVB, vertices);
+	var nearest = getNearestFaces(heroPos, resultH.concat(resultV));
 
-	//MOVE X
+	if (axis.x < 0 && nearest.ld - offset < velX)
+	{
+		velX = nearest.ld - offset;
+	}
+
+	if (axis.x > 0 && nearest.rd - offset < velX)
+	{
+		velX = nearest.rd - offset;
+	}
+
+	if (axis.y < 0 && nearest.td - offset < velY)
+	{
+		velY = nearest.td - offset;
+	}
+
+	if (axis.y > 0 && nearest.bd - offset < velY)
+	{
+		velY = nearest.bd - offset;
+	}
+
 
 	var prevX = heroPos.x;
-	heroPos.x += axis.x*3;
+	heroPos.x += axis.x*velX;
 
 	var lineHA = {x:heroPos.x - 1000, y:heroPos.y};
 	var lineHB = {x:heroPos.x + 1000, y:heroPos.y};
 	var resultH = raycast(lineHA, lineHB, vertices);
+	var nearest = getNearestFaces(heroPos, resultH);
+	var isInside = pointInPolygon(heroPos, vertices);
 
-	var nearestLeft = null;
-	var nearestLeftDist = 1000000;
-	var nearestRight = null;
-	var nearestRightDist = 1000000;
-
-	for (var i = 0; i < resultH.length; i++)
+	if (isInside)
 	{
-		var r = resultH[i];
-
-		if (r.point.onLine1 && r.point.onLine2)
+		if (nearest.l)
 		{
-			var d = lineDistance(heroPos, r.point);
-			
-			if (r.point.x < heroPos.x)
-			{
-				if (d < nearestLeftDist) 
-				{
-					nearestLeftDist = d;
-					nearestLeft = r;
-				}
-			}	
+			if (heroPos.x < nearest.l.point.x + offset) heroPos.x = nearest.l.point.x + offset;
 
-			if (r.point.x > heroPos.x)
-			{
-				if (d < nearestRightDist) 
-				{
-					nearestRightDist = d;
-					nearestRight = r;
-				}
-			}	
+			ctx.beginPath();
+			ctx.moveTo(heroPos.x, heroPos.y);
+			ctx.lineTo(nearest.l.point.x, heroPos.y)
+			ctx.strokeStyle = "#FF0000";
+			ctx.stroke();	
 		}
-	}
 
-	if (nearestLeft)
+		if (nearest.r)
+		{
+			if (heroPos.x > nearest.r.point.x - offset) heroPos.x = nearest.r.point.x - offset;
+
+			ctx.beginPath();
+			ctx.moveTo(heroPos.x, heroPos.y);
+			ctx.lineTo(nearest.r.point.x, heroPos.y);
+			ctx.strokeStyle = "#FF0000";
+			ctx.stroke();	
+		}	
+	}
+	else
 	{
-		if (heroPos.x < nearestLeft.point.x + offset) heroPos.x = nearestLeft.point.x + offset;
-
-		ctx.beginPath();
-		ctx.moveTo(heroPos.x, heroPos.y);
-		ctx.lineTo(nearestLeft.point.x, heroPos.y)
-		ctx.strokeStyle = "#FF0000";
-		ctx.stroke();	
+		heroPos.x = prevX;
 	}
+	
 
-	if (nearestRight)
-	{
-		if (heroPos.x > nearestRight.point.x - offset) heroPos.x = nearestRight.point.x - offset;
-
-		ctx.beginPath();
-		ctx.moveTo(heroPos.x, heroPos.y);
-		ctx.lineTo(nearestRight.point.x, heroPos.y);
-		ctx.strokeStyle = "#FF0000";
-		ctx.stroke();	
-	}
-
-
-	//MOVE Y
+	var prevY = heroPos.y;
+	heroPos.y += 1;
 
 	var lineVA = {x:heroPos.x, y:heroPos.y - 1000};
 	var lineVB = {x:heroPos.x, y:heroPos.y + 1000};
-
 	var resultV = raycast(lineVA, lineVB, vertices);
+	var nearest = getNearestFaces(heroPos, resultV);
+	var isInside = pointInPolygon(heroPos, vertices);
 
-	var prevY = heroPos.y;
-	heroPos.y += axis.y*3;
 
-	
-	var resultV = raycast(lineVA, lineVB, vertices);
-
-	var nearestTop = null;
-	var nearestTopDist = 1000000;
-	var nearestBottom = null;
-	var nearestBottomDist = 1000000;
-
-	for (var i = 0; i < resultV.length; i++)
+	if (isInside)
 	{
-		var r = resultV[i];
-
-		if (r.point.onLine1 && r.point.onLine2)
+		if (nearest.t)
 		{
-			var d = lineDistance(heroPos, r.point);
-			
-			if (r.point.y < heroPos.y)
-			{
-				if (d < nearestTopDist) 
-				{
-					nearestTopDist = d;
-					nearestTop = r;
-				}
-			}	
+			if (heroPos.y < nearest.t.point.y + offset) heroPos.y = nearest.t.point.y + offset;
 
-			if (r.point.y > heroPos.y)
-			{
-				if (d < nearestBottomDist) 
-				{
-					nearestBottomDist = d;
-					nearestBottom = r;
-				}
-			}	
+			ctx.beginPath();
+			ctx.moveTo(heroPos.x, heroPos.y);
+			ctx.lineTo(heroPos.x, nearest.t.point.y);
+			ctx.strokeStyle = "#FF0000";
+			ctx.stroke();	
 		}
+
+		if (nearest.b)
+		{
+			if (heroPos.y > nearest.b.point.y - offset) heroPos.y = nearest.b.point.y - offset;
+
+			ctx.beginPath();
+			ctx.moveTo(heroPos.x, heroPos.y);
+			ctx.lineTo(heroPos.x, nearest.b.point.y);
+			ctx.strokeStyle = "#FF0000";
+			ctx.stroke();	
+		}	
 	}
-
-
-	if (nearestTop)
+	else
 	{
-		if (heroPos.y < nearestTop.point.y + offset) heroPos.y = nearestTop.point.y + offset;
-
-		ctx.beginPath();
-		ctx.moveTo(heroPos.x, heroPos.y);
-		ctx.lineTo(heroPos.x, nearestTop.point.y);
-		ctx.strokeStyle = "#FF0000";
-		ctx.stroke();	
+		heroPos.y = prevY;
 	}
-
-	if (nearestBottom)
-	{
-		if (heroPos.y > nearestBottom.point.y - offset) heroPos.y = nearestBottom.point.y - offset;
-
-		ctx.beginPath();
-		ctx.moveTo(heroPos.x, heroPos.y);
-		ctx.lineTo(heroPos.x, nearestBottom.point.y);
-		ctx.strokeStyle = "#FF0000";
-		ctx.stroke();	
-	}
+	
 	
 
 
@@ -364,9 +338,9 @@ function draw(){
     ctx.fill();
 }
 
-function getNearestFaces(faces)
+function getNearestFaces(pos, faces)
 {
-	var result = {l:null, r:null, t:null, b:null};
+	var result = {l:null, r:null, t:null, b:null, dl:100000, dr:100000, dt:100000, db:100000};
 
 	for (var i = 0; i < faces.length; i++)
 	{
@@ -374,27 +348,47 @@ function getNearestFaces(faces)
 
 		if (r.point.onLine1 && r.point.onLine2)
 		{
-			var d = lineDistance(heroPos, r.point);
+			var d = lineDistance(pos, r.point);
 			
-			if (r.point.y < heroPos.y)
+			if (r.point.x < pos.x)
 			{
-				if (d < nearestTopDist) 
+				if (d < result.dl) 
 				{
-					nearestTopDist = d;
-					nearestTop = r;
+					result.dl = d;
+					result.l = r;
+				}
+			}
+
+			if (r.point.x > pos.x)
+			{
+				if (d < result.dr) 
+				{
+					result.dr = d;
+					result.r = r;
+				}
+			}
+
+			if (r.point.y < pos.y)
+			{
+				if (d < result.dt) 
+				{
+					result.dt = d;
+					result.t = r;
 				}
 			}	
 
-			if (r.point.y > heroPos.y)
+			if (r.point.y > pos.y)
 			{
-				if (d < nearestBottomDist) 
+				if (d < result.db) 
 				{
-					nearestBottomDist = d;
-					nearestBottom = r;
+					result.db = d;
+					result.b = r;
 				}
 			}	
 		}
 	}
+
+	return result;
 }
 
 function drawPolygon(polygon,ctx){
@@ -501,10 +495,11 @@ window.onload = function(){
 
 // MOUSE	
 var Mouse = {
-	x: heroPos.x,
-	y: heroPos.y
+	x: 290,
+	y: 100
 };
 canvas.onmousemove = function(event){	
+	var vx =  
 	Mouse.x = event.clientX;
 	Mouse.y = event.clientY;
 	updateCanvas = true;
