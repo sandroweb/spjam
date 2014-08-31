@@ -188,14 +188,12 @@ module.exports = function Game() {
     // loader
     loader = new PIXI.AssetLoader(self.resources.getImages());
     loader.addEventListener('onComplete', function() {
-      // self.preloader.hide();
+      self.preloader.hide();
       self.begin.show();
     });
     loader.addEventListener('onProgress', function(e) {
-      // var percent = (e.content.assetURLs.length - e.content.loadCount) * 100 / e.content.assetURLs.length;
-      // console.log(self.resources.getImages());
-      // self.preloader.progress(percent);
-      // if (typeof(ejecta)!=="undefined") { return; };
+      self.preloader.progress((e.content.assetURLs.length - e.content.loadCount), e.content.assetURLs.length);
+      if (typeof(ejecta)!=="undefined") { return; };
     });
     loader.load();
   }
@@ -216,7 +214,7 @@ module.exports = function Game() {
     self.loop();
 
     //
-    // self.preloader = new Preloader(this);
+    self.preloader = new Preloader(this);
 
     // FIXME
     self.load();
