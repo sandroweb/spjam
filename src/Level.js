@@ -35,6 +35,11 @@ module.exports = function Level(game, index) {
     self.bg1 = PIXI.Sprite.fromFrame("backgroundForest.png");
     self.view.addChild(self.bg1);
 
+    self.noise = PIXI.Sprite.fromFrame("noise.png");
+    self.noise.scale.x = 2;
+    self.noise.scale.y = 2;
+    self.view.addChild(self.noise);
+
     self.overlay = new PIXI.Graphics();
     self.overlay.beginFill(0x00fffa);
     self.overlay.drawRect(0, 0, screenWidth, screenHeight);
@@ -117,6 +122,9 @@ module.exports = function Level(game, index) {
   {
     // WHY GOD?!?!?!!
     try {
+      self.noise.alpha = 0.1;
+      self.noise.position.x = Math.random()*900 - 900;
+      self.noise.position.y = Math.random()*600 - 600;
 
       if (tutorial != null)
         {
