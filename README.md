@@ -24,3 +24,4 @@ Libraries
 
 - [pixi docs](http://www.goodboydigital.com/pixijs/docs)
 - [tweening docs](http://jeremyckahn.github.io/shifty/dist/doc/src/shifty.core.js.html)
+- [EventEmitter2](https://github.com/asyncly/EventEmitter2)

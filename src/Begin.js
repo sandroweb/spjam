@@ -2,7 +2,7 @@ var ParticleSystem = require('./components/ParticleSystem.js');
 
 module.exports = function Begin(game) {
   window.game = game;
-  
+
   var self = this;
   var view = new PIXI.DisplayObjectContainer();
   var overlap = null;
@@ -20,13 +20,13 @@ module.exports = function Begin(game) {
 
   init();
 
-  function init() 
+  function init()
   {
     view.visible = false;
     game.stage.addChild(view);
 
     var bg = PIXI.Sprite.fromFrame("Scenario.png");
-    view.addChild(bg); 
+    view.addChild(bg);
 
     logoDark = PIXI.Sprite.fromFrame("DarkLightLogo.png");
     view.addChild(logoDark);
@@ -77,7 +77,9 @@ module.exports = function Begin(game) {
 
     car = PIXI.Sprite.fromFrame("Car.png");
     view.addChild(car);
+    car.position.x = -3000;
     car.position.y = guardrailDark.position.y - 75;
+    car.passed = false;
 
     particles = new ParticleSystem(
     {
@@ -137,12 +139,12 @@ module.exports = function Begin(game) {
 
   }
 
-  function show() 
+  function show()
   {
     view.visible = true;
   }
 
-  function hide() 
+  function hide()
   {
     view.visible = false;
   }
@@ -153,7 +155,15 @@ module.exports = function Begin(game) {
     overlap.rotation += 0.001;
     car.position.x += 20;
     car.scale.x = 1;
-    if (car.position.x > 7000) car.position.x = -3000;
+    if (car.position.x > 7000) {
+      car.position.x = -3000;
+      car.passed = false;
+    }
+
+    if (car.passed === false && car.position.x > -1400) {
+      car.passed = true;
+      game.resources.carPass.play();
+    }
 
     particles.properties.centerX = car.position.x;
     particles.properties.centerY = car.position.y + 100;
