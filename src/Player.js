@@ -12,19 +12,10 @@ module.exports = function Player(game, xPos, yPos) {
 
      self.view = view;
 
-	this.update = function(input)
+	this.update = function(input, position)
 	{
-		view.position.x += dir * velocity;
-
-		///no key pressed
-		if(input.Key.isEmpty()){
-			velocity -= acceleration;
-			if(velocity < 0)
-				velocity = 0;
-		}
-
-		if(velocity > maxspeed)
-			velocity = maxspeed;
+		view.position.x = position.x - 15;
+		view.position.y = position.y - 37;
 	}
 
 	this.moveLeft = function()
