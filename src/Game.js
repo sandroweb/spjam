@@ -228,10 +228,10 @@ module.exports = function Game() {
     if (self.level)
     {
       if(physics)
-        physics.process(direction, window.polygons);
+        physics.process(game, direction, window.polygons);
 
       if(player)
-        player.update(input, physics.playerPosition, physics.playerVelocity);
+        player.update(game, physics.playerPosition, physics.playerVelocity);
 
        self.level.update(self);
     }
