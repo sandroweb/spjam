@@ -12,8 +12,11 @@ module.exports = function Preloader(game) {
       if (loadedItems == 1) {
         self.init();
       }
-      self.text.setText('CARREGANDO ' + percent + '%');
-      self.text.position.x = (game.renderer.width / 2) - (self.text.width / 2);
+
+      if (typeof(ejecta)==="undefined") {
+        self.text.setText('CARREGANDO ' + percent + '%');
+        self.text.position.x = (game.renderer.width / 2) - (self.text.width / 2);
+      }
     }
   }
 
@@ -26,17 +29,19 @@ module.exports = function Preloader(game) {
     bg.drawRect(0, 0, screenWidth, screenHeight);
     bg.endFill();
 
-    
     content.addChild(bg);
 
-    self.text = new PIXI.Text('CARREGANDO 0%', {
-      font: '18px Rokkitt',
-      fill: '#666666',
-      align: 'center'
-    });
-    self.text.position.x = (game.renderer.width / 2) - (self.text.width / 2);
-    self.text.position.y = game.renderer.height / 2;
-    content.addChild(self.text);
+    if (typeof(ejecta)==="undefined") {
+      self.text = new PIXI.Text('CARREGANDO 0%', {
+        font: '18px Rokkitt',
+        fill: '#666666',
+        align: 'center'
+      });
+      self.text.position.x = (game.renderer.width / 2) - (self.text.width / 2);
+      self.text.position.y = game.renderer.height / 2;
+      content.addChild(self.text);
+    }
+
   }
 
   this.hide = function() {

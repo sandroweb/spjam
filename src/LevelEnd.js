@@ -21,7 +21,7 @@ module.exports = function LevelEnd(game) {
     btn.buttonMode = true;
     btn.interactive = true;
     content.addChild(btn);
-    btn.click = function(data) {
+    btn.click = btn.tap = function(data) {
       hide();
       game.nextLevel();
     };

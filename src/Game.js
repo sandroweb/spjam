@@ -372,13 +372,13 @@ module.exports = function Game() {
     self.stage.addChild(game.btnSoundOff);
     self.stage.addChild(game.btnSoundOn);
 
-    self.btnSoundOff.click = function(data) {
+    self.btnSoundOff.click = self.btnSoundOff.tap = function(data) {
       self.btnSoundOn.visible = true;
       self.btnSoundOff.visible = false;
       Howler.mute();
     }
 
-    self.btnSoundOn.click = function(data) {
+    self.btnSoundOn.click = self.btnSoundOn.tap = function(data) {
       self.btnSoundOn.visible = false;
       self.btnSoundOff.visible = true;
       Howler.unmute();
@@ -392,7 +392,7 @@ module.exports = function Game() {
     self.btnRestart.position.y = 10;
     self.btnRestart.visible = false;
 
-    self.btnRestart.click = function(data) {
+    self.btnRestart.click = self.btnRestart.tap = function(data) {
       self.restart();
     }
   }

@@ -70,7 +70,7 @@ module.exports = function Begin(game) {
     btnStart.anchor.x = 0.5;
     btnStart.anchor.y = 0.5;
     btnStart.setInteractive(true);
-    btnStart.click = startGame;
+    btnStart.click = btnStart.tap = startGame;
     view.addChild(btnStart);
     btnStart.position.x = screenWidth/2;
     btnStart.position.y = screenHeight/2 + 130;

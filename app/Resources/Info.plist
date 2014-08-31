@@ -46,7 +46,7 @@
 	<key>NSMainNibFile~ipad</key>
 	<string>MainWindow</string>
 	<key>UIInterfaceOrientation</key>
-	<string>UIInterfaceOrientationPortrait</string>
+	<string>UIInterfaceOrientationLandscape</string>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
