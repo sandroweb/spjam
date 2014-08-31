@@ -17,13 +17,21 @@ module.exports = function Resources() {
   // sounds
   this.sounds = [
     {
-      // game.resources.carCrashSound.play();
-      name: 'carCrashSound',
+      // game.resources.soundLoop.play();
+      name: 'soundLoop',
+      urls: ['sounds/soundLoop.mp3'],
+      autoPlay: false,
+      loop: true,
+      volume: 0
+    },
+    {
+      // game.resources.soundCarCrash1.play();
+      name: 'soundCarCrash1',
       urls: ['sounds/237375__squareal__car-crash_01.mp3']
     },
     {
-      // game.resources.carCrash2Sound.play();
-      name: 'carCrash2Sound',
+      // game.resources.soundCarCrash2.play();
+      name: 'soundCarCrash2',
       urls: ['sounds/92019__fatlane__1004-crash_01.mp3']
     }
   ];

@@ -259,12 +259,17 @@ module.exports = function Game() {
           onload: function() {
             self.itemsLoaded++;
             if (self.itemsLoaded == self.totalItems) {
-              self.preloader.hide();
-              self.begin.show();
+              self.loaded();
             }
           }
         });
     }
+  }
+
+  this.loaded = function() {
+    self.preloader.hide();
+    self.begin.show();
+    //game.resources.soundLoop.fadeIn(1, 2000);
   }
 
   this.start = function() {
