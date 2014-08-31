@@ -32,6 +32,12 @@ module.exports = function Resources() {
       volume: .3
     },
     {
+      // game.resources.portalSound.play();
+      name: 'portalSound',
+      urls: ['sounds/portal.mp3'],
+      volume: .3
+    },
+    {
       // game.resources.soundCarCrash1.play();
       name: 'soundCarCrash1',
       urls: ['sounds/237375__squareal__car-crash_01.mp3']
