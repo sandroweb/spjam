@@ -8,7 +8,7 @@ Tweenable.setBezierFunction("customBezier", .92,.34,.6,.8);
 // Init
 WebFontConfig = {
 google: {
-  families: ['Trade Winds']
+  families: ['Rokkitt']
 },
 
 active: function() {

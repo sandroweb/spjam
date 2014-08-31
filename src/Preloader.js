@@ -12,7 +12,7 @@ module.exports = function Preloader(game) {
       if (loadedItems == 1) {
         self.init();
       }
-      self.text.setText('Carregando ' + percent + '%');
+      self.text.setText('CARREGANDO ' + percent + '%');
       self.text.position.x = (game.renderer.width / 2) - (self.text.width / 2);
     }
   }
@@ -24,8 +24,8 @@ module.exports = function Preloader(game) {
     bg = new PIXI.Sprite.fromImage(game.resources.background);
     content.addChild(bg);
 
-    self.text = new PIXI.Text('Carregando 0%', {
-      font: '35px Trade Winds',
+    self.text = new PIXI.Text('CARREGANDO 0%', {
+      font: '38px Rokkitt',
       fill: '#FF0000',
       align: 'center'
     });
