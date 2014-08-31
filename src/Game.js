@@ -49,6 +49,8 @@ module.exports = function Game() {
     // light.position.x = e.offsetX;
     // light.position.y = e.offsetY;
 
+    game.resources.motherSound.play();
+
     var dest = {x:e.offsetX, y:e.offsetY};
     var tweenable = new Tweenable();
     tweenable.tween({

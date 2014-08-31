@@ -45,9 +45,15 @@ module.exports = function Resources() {
       loop: true
     },
     {
+      // game.resources.motherSound.play();
+      name: 'motherSound',
+      urls: ['sounds/blimblim.mp3'],
+      volume: .3
+    },
+    {
       // game.resources.swicherSound.play();
       name: 'swicherSound',
-      urls: ['sounds/blimblim.mp3'],
+      urls: ['sounds/swicher2.mp3'],
       volume: .3
     },
     {
