@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="48" height="32" tilewidth="20" tileheight="20">
+ <objectgroup name="objects" width="48" height="32">
+  <object name="a" type="PlatformBehavior" x="420" y="380" width="160" height="40">
+   <properties>
+    <property name="img" value="platform_3x3.png"/>
+    <property name="shadow" value="true"/>
+   </properties>
+  </object>
+  <object name="a" type="PlatformBehavior" x="440" y="200" width="120" height="40">
+   <properties>
+    <property name="img" value="platform_3x3.png"/>
+    <property name="shadow" value="true"/>
+   </properties>
+  </object>
+  <object name="p" type="start" x="500" y="180" width="20" height="20"/>
+  <object name="light" type="LightBehavior" x="500" y="0" width="20" height="20"/>
+  <object name="car" type="EndCarBehavior" x="500" y="340" width="20" height="40">
+   <properties>
+    <property name="img" value="goal.png"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
