@@ -59,7 +59,7 @@ module.exports = function Player(container, xPos, yPos) {
 	  container.addChild(particles.view);
 	  container.addChild(this.view);
 
-	this.update = function(input, position, velocity)
+	this.update = function(game, position, velocity)
 	{
 		self.view.position.x = position.x;
 		self.view.position.y = position.y - 10;

@@ -9,7 +9,7 @@ module.exports = function Physics()
 	this.playerPosition = playerPosition;
 	this.playerVelocity = playerVelocity;
 
-	function process(direction, vertices)
+	function process(game, direction, vertices)
 	{
 		axis.x = direction;
 
@@ -146,6 +146,14 @@ module.exports = function Physics()
 
 		
 		playerVelocity.y = playerPosition.y - prevY;
+
+		if (playerPosition.x < 20) {
+			playerPosition.x = 20;
+			playerVelocity.x = 0;
+		} else if (playerPosition.x > (game.renderer.width - 20)) {
+			playerPosition.x = (game.renderer.width - 20);
+			playerVelocity.x = 0;
+		}
 	}
 
 	function getNearestFaces(pos, faces)
