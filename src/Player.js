@@ -94,7 +94,8 @@ module.exports = function Player(container, xPos, yPos) {
 
 	this.doCollide = function(xpos,ypos,width,height)
 	{
-		if(self.view.position.x >= xpos && self.view.position.x < (xpos + width) && self.view.position.y - ypos < 100)
+		//console.log("collide: " + self.view.position.x >= xpos + " " + self.view.position.x < (xpos + width) + " " + self.view.position.y - ypos < 100)
+		if(self.view.position.x >= xpos && self.view.position.x < (xpos + width) && Math.abs(self.view.position.y - ypos) < 50)
 			return true;
 
 		return false;

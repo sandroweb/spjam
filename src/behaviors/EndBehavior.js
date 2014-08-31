@@ -53,7 +53,9 @@ module.exports = function EndBehavior(container, data) {
       //console.log(game.player.doCollide(itemData.x,itemData.y, itemData.width,itemData.height),game.input.Key.isDown(38));
       if(game.player.doCollide(itemData.x,itemData.y, itemData.width,itemData.height))
         {
-          self.trigger();
+          console.log("switches: " + game.level.numSwitches)
+          if(game.level.numSwitches == 0)
+            self.trigger();
         }
     }
   }

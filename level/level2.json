@@ -24,8 +24,8 @@
                  "properties":
                     {
                      "img":"switch.png",
-                     "moveX":"23",
-                     "moveY":"4"
+                     "moveX":"0",
+                     "moveY":"8"
                     },
                  "type":"SwitchBehavior",
                  "visible":true,
@@ -82,8 +82,8 @@
                     },
                  "type":"PlatformBehavior",
                  "visible":true,
-                 "width":560,
-                 "x":400,
+                 "width":520,
+                 "x":440,
                  "y":560
                 }, 
                 {

@@ -212,12 +212,9 @@ module.exports = function Game() {
 
       if(player)
         player.update(input, physics.playerPosition, physics.playerVelocity);
+
+       self.level.update(self);
     }
-
-
-    if(self.level)
-      self.level.update(self);
-
   };
 
   this.loop = function() {
