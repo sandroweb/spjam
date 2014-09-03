@@ -2,7 +2,7 @@ var Resources = require('./Resources'),
   Preloader = require('./Preloader'),
   Level = require('./Level'),
   Begin = require('./Begin'),
-  LevelEnd = require('./LevelEnd'),
+  // LevelEnd = require('./LevelEnd'),
   GameOver = require('./GameOver'),
   Light = require('./Light'),
   Tweenable = require('./vendor/shifty'),
@@ -341,7 +341,7 @@ module.exports = function Game() {
 
   this.loaded = function() {
     self.begin = new Begin(this);
-    self.levelend = new LevelEnd(this);
+    // self.levelend = new LevelEnd(this);
     self.gameover = new GameOver(this);
     self.preloader.hide();
     self.begin.show();

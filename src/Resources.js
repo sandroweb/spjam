@@ -4,12 +4,12 @@ module.exports = function Resources() {
   // Howler.mute();
 
   // images
-  this.background = 'img/bg-default.jpg';
-  this.btnPlay ='img/btn-play.png';
-  this.btnNext ='img/btn-next.png';
-  this.btnRestart ='img/btn-restart.png';
-  this.textLevelEnd ='img/text-level-end.png';
-  this.textGameOver ='img/text-game-over.png';
+  // this.background = 'img/bg-default.jpg';
+  // this.btnPlay ='img/btn-play.png';
+  // this.btnNext ='img/btn-next.png';
+  // this.btnRestart ='img/btn-restart.png';
+  // this.textLevelEnd ='img/text-level-end.png';
+  // this.textGameOver ='img/text-game-over.png';
 
   // sprites
   this.textGameOver ='img/sprites/player.json';
