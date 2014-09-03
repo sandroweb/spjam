@@ -112,14 +112,12 @@ module.exports = function Game() {
   lightContainer = new PIXI.DisplayObjectContainer();
 
   this.restart = function() {
-    console.log('Game.js - this.restart()');
     var i = self.level.index;
     self.level.dispose();
     this.loadLevel(i);
   }
 
   this.nextLevel = function() {
-    console.log('Game.js - this.nextLevel()');
     this.loadLevel(this.level.index + 1);
   }
 
@@ -151,7 +149,7 @@ module.exports = function Game() {
     physics.playerPosition.x = player.view.position.x;
     physics.playerPosition.y = player.view.position.y;
 
-    console.log(newLevel.playerPos.x + " " + newLevel.playerPos.y);
+    // console.log(newLevel.playerPos.x + " " + newLevel.playerPos.y);
     self.player = player;
 
     self.loop();
@@ -170,11 +168,11 @@ module.exports = function Game() {
     }
 
     // levelIndex = 2;
-    console.log("level/level" + levelIndex + ".json");
+    // console.log("level/level" + levelIndex + ".json");
     var pixiLoader = new PIXI.JsonLoader("level/level" + levelIndex + ".json");
     pixiLoader.on('loaded', function(evt) {
       //data is in evt.content.json
-      console.log("json loaded!");
+      // console.log("json loaded!");
       self.setLevel(evt.content.json, levelIndex);
       gameRunning = true;
       lost = false;
@@ -322,24 +320,23 @@ module.exports = function Game() {
   }
 
   this.loadSound = function() {
-    var i,
-      total = self.soundFiles.length,
-      obj;
-    for (i = 0; i < total; ++i) {
+    var i = (self.itemsLoaded - self.pixiFiles.length),
       obj = self.soundFiles[i];
-        self.resources[obj.name] = new Howl({
-          urls: obj.urls,
-          autoplay: obj.autoPlay || false,
-          loop: obj.loop || false,
-          volume: obj.volume || 1,
-          onload: function() {
-            self.itemsLoaded++;
-            if (self.itemsLoaded == self.totalItems) {
-              self.loaded();
-            }
-          }
-        });
-    }
+    self.resources[obj.name] = new Howl({
+      urls: obj.urls,
+      autoplay: obj.autoPlay || false,
+      loop: obj.loop || false,
+      volume: obj.volume || 1,
+      onload: function() {
+        self.itemsLoaded++;
+        self.preloader.progress(self.itemsLoaded, self.totalItems);
+        if (self.itemsLoaded == self.totalItems) {
+          self.loaded();
+        } else {
+          self.loadSound();
+        }
+      }
+    });
   }
 
   this.loaded = function() {
@@ -438,7 +435,7 @@ module.exports = function Game() {
   var phrase3 = null;
   this.showEndStory = function()
   {
-    console.log("show end story", gameRunning);
+    // console.log("show end story", gameRunning);
 
     if(!gameRunning)
       return;
