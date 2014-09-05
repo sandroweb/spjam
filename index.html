@@ -4,14 +4,72 @@
     <title>SPJAM2014</title>
     <meta charset="utf-8" />
     <style type="text/css">
-      * { margin:0; padding:0; background-color: #000  }
+      * { margin:0; padding:0; background-color: #000; }
+
+      .content {
+        position: absolute;
+        box-sizing: border-box;
+        width: 960px;
+        height: 665px;
+        margin: auto;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding-bottom: 645px;
+      }
 
       /* centralize */
-      canvas { position: absolute; margin: auto; top: 0; right: 0; bottom: 0; left: 0; }
+      canvas {
+        position: absolute;
+        margin: 0;
+        border: 0;
+        top: 25px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .footer {
+        position: relative;
+        text-align: center;
+      }
+
+      .page-link {
+        color: #555;
+        font-family: 'Trebuchet MS';
+        font-size: 14px;
+        line-height: 20px;
+        vertical-align: middle;
+        text-decoration: none;
+      }
+
+      .page-link:hover {
+        text-decoration: underline;
+      }
+
+      /* FB Like */
+      #fb-like {
+        position: absolute;
+        right: 0;
+        width: 84px;
+        height: 20px;
+        border: 0;
+        margin: 0;
+        vertical-align: middle;
+      }
     </style>
 </head>
 <body>
-  <canvas id="canvas"></canvas>
+  <div class="content">
+    <canvas id="canvas"></canvas>
+    <div class="footer">
+      <a href="https://www.facebook.com/darklightgame" class="page-link" target="_blank">facebook.com/darklightgame</a>
+      <iframe id="fb-like" src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.darklightgame.com&width&layout=button_count&action=like&show_faces=false&share=false&height=21&appId=553803254708088"></iframe>
+    </div>
+  </div>
+  
+  
   <script type="text/javascript" src="src/vendor/howler.min.js"></script>
   <script type="text/javascript" src="src/vendor/pixi.dev.js"></script>
   <script type="text/javascript" src="build.js"></script>
